@@ -20,7 +20,7 @@ export function About() {
 								id="about-title"
 								className="text-3xl lg:text-4xl font-bold text-foreground mb-4"
 							>
-								À propos de moi
+								À propos
 							</h2>
 							<p
 								id="about-description"

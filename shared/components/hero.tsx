@@ -1,12 +1,11 @@
 "use client";
 
-import { BackgroundLines } from "@/shared/components/ui/background-lines";
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 
 export function Hero() {
 	return (
-		<BackgroundLines className="flex items-center justify-center w-full flex-col px-4 min-h-screen">
+		<section className="bg-background flex items-center justify-center w-full flex-col px-4 min-h-screen">
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-20">
 				<div className="text-center space-y-8">
 					{/* Titre principal */}
@@ -33,6 +32,6 @@ export function Hero() {
 					</div>
 				</div>
 			</div>
-		</BackgroundLines>
+		</section>
 	);
 }
