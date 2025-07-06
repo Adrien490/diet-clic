@@ -7,66 +7,90 @@ export interface FAQItem {
 export const FAQ_ITEMS: FAQItem[] = [
 	{
 		id: "item-1",
-		question: "Combien coûte une consultation et quelle est sa durée ?",
+		question:
+			"Quelle est la différence entre une diététicienne et une nutritionniste ?",
 		answer: [
-			"Une première consultation dure environ 1h à 1h15 et coûte 60€. Les consultations de suivi durent 45 minutes et coûtent 45€.",
-			"Ce temps nous permet d'établir un bilan complet de vos habitudes alimentaires, de vos objectifs et de construire ensemble un plan personnalisé.",
+			"Le titre de diététicien(ne) nutritionniste est un titre protégé et reconnu par l'État, accessible après un diplôme spécifique (BTS ou BUT en diététique).",
+			"Le terme « nutritionniste » n'est pas réglementé : tout professionnel de santé peut l'utiliser.",
+			"Je suis diététicienne-nutritionniste diplômée, avec un numéro RPPS et une formation reconnue.",
 		],
 	},
 	{
 		id: "item-2",
-		question: "Les consultations sont-elles remboursées ?",
+		question:
+			"Quelle est la différence entre un(e) diététicien(ne) et un médecin nutritionniste ?",
 		answer: [
-			"Les consultations diététiques ne sont pas remboursées par la Sécurité sociale. Cependant, de nombreuses mutuelles proposent une prise en charge partielle ou totale.",
-			"Je vous remets systématiquement une facture que vous pouvez transmettre à votre mutuelle. N'hésitez pas à vous renseigner auprès de votre assurance complémentaire.",
+			"Un médecin nutritionniste est un médecin ayant suivi une formation complémentaire en nutrition (DIU ou DU).",
+			"Il peut poser un diagnostic médical et prescrire un traitement, ce qui n'est pas le rôle d'un diététicien.",
+			"En revanche, le diététicien est le professionnel de référence en éducation nutritionnelle et accompagnement alimentaire.",
+			"Les deux professions sont complémentaires.",
 		],
 	},
 	{
 		id: "item-3",
 		question: "Proposez-vous des téléconsultations ?",
 		answer: [
-			"Oui, je propose des consultations à distance via visioconférence. Cette option est particulièrement adaptée pour les suivis ou si vous avez des difficultés de déplacement.",
-			"La première consultation se fait de préférence en présentiel pour un bilan plus complet, mais nous pouvons nous adapter selon vos besoins et contraintes.",
+			"Oui, je propose des consultations à distance, et également à domicile dans certaines zones.",
+			"Cela permet de s'adapter à votre emploi du temps, vos contraintes ou votre confort.",
+			"Le contenu et la qualité du suivi restent identiques à une consultation en présentiel, et un compte-rendu vous est systématiquement envoyé par mail.",
+			"Vous choisissez ce qui vous convient le mieux.",
 		],
 	},
 	{
 		id: "item-4",
-		question: "Comment me préparer pour ma première consultation ?",
+		question: "Ai-je besoin d'une prescription médicale pour consulter ?",
 		answer: [
-			"Pour optimiser notre première rencontre, je vous recommande de tenir un carnet alimentaire sur 3 à 7 jours avant la consultation. Notez tout ce que vous mangez et buvez, avec les quantités approximatives.",
-			"Apportez également vos dernières analyses biologiques si vous en avez, ainsi que la liste de vos traitements médicaux en cours.",
+			"Non, il est tout à fait possible de consulter une diététicienne sans ordonnance.",
+			"Certaines mutuelles peuvent cependant en demander une pour le remboursement éventuel.",
+			"N'hésitez pas à vérifier auprès de votre complémentaire santé.",
 		],
 	},
 	{
 		id: "item-5",
-		question: "Proposez-vous des régimes restrictifs ?",
+		question: "Est-ce que les consultations sont remboursées ?",
 		answer: [
-			"Non, je ne propose pas de régimes restrictifs. Mon approche se base sur un rééquilibrage alimentaire progressif et durable, sans privation excessive ni interdits alimentaires.",
-			"L'objectif est de vous aider à retrouver une relation saine avec l'alimentation, en intégrant vos goûts, votre mode de vie et vos objectifs de santé.",
+			"Les consultations diététiques ne sont pas remboursées par la Sécurité Sociale.",
+			"Cependant, de nombreuses mutuelles prennent en charge plusieurs séances par an, partiellement ou en totalité.",
+			"Une facture vous sera remise pour vos démarches.",
 		],
 	},
 	{
 		id: "item-6",
-		question: "Combien de temps faut-il pour voir des résultats ?",
+		question: "Combien de séances sont nécessaires ?",
 		answer: [
-			"Les premiers changements se ressentent généralement après 2 à 4 semaines : amélioration de la digestion, de l'énergie et du sommeil. Les résultats sur le poids, s'il y a lieu, sont progressifs et durables.",
-			"Chaque personne est unique, et les résultats dépendent de nombreux facteurs. L'important est de construire ensemble des habitudes pérennes pour votre santé.",
+			"Tout dépend de votre objectif, de votre parcours et de votre rythme.",
+			"Certaines personnes souhaitent une seule consultation, d'autres un suivi régulier.",
+			"Nous choisissons ensemble ce qui vous conviendra le mieux.",
 		],
 	},
 	{
 		id: "item-7",
-		question: "Recevez-vous des enfants et adolescents ?",
+		question:
+			"Est-ce que je vais devoir peser mes aliments ou compter les calories ?",
 		answer: [
-			"Oui, je reçois des enfants et adolescents, toujours accompagnés d'un parent ou tuteur. L'approche est adaptée à leur âge et privilégie l'éducation nutritionnelle ludique.",
-			"Pour les plus jeunes, l'accent est mis sur la découverte des aliments et le plaisir de manger, sans notion de restriction. L'implication de toute la famille est souvent bénéfique.",
+			"Non.",
+			"Je propose une approche bienveillante et comportementale, sans calculs imposés ni régimes restrictifs.",
+			"L'objectif est de simplifier votre rapport à l'alimentation, pas de l'alourdir.",
+			"Pas de contraintes inutiles, sauf en cas de prescription médicale.",
 		],
 	},
 	{
 		id: "item-8",
-		question: "À quelle fréquence dois-je venir en consultation ?",
+		question:
+			"Mon suivi est-il adapté à mon profil particulier ? (sport, végétarisme, troubles digestifs, etc.)",
 		answer: [
-			"Après la première consultation, je recommande généralement un suivi toutes les 3 à 4 semaines au début, puis l'espacement peut se faire progressivement selon vos besoins et votre autonomie.",
-			"La fréquence dépend de vos objectifs, de votre motivation et de votre situation. Nous adaptons ensemble le rythme qui vous convient le mieux.",
+			"Oui, chaque accompagnement est personnalisé selon vos besoins, vos préférences, votre état de santé et votre mode de vie.",
+			"Je m'adapte à votre situation, quel que soit votre profil.",
+			"Mon approche est scientifique, humaine et individualisée.",
+		],
+	},
+	{
+		id: "item-9",
+		question: "Intervenez-vous en établissement ou en entreprise ?",
+		answer: [
+			"Oui, je propose des interventions de groupe en établissements de santé, structures médico-sociales, écoles ou entreprises.",
+			"Éducation nutritionnelle, ateliers, conférences ou accompagnement de projet : tout est adaptable.",
+			"Contactez-moi pour en discuter.",
 		],
 	},
 ];

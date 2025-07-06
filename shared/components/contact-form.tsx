@@ -1,7 +1,8 @@
 "use client";
 
-import { useForm } from "@tanstack/react-form";
+import { mergeForm, useForm, useTransform } from "@tanstack/react-form";
 import { toast } from "sonner";
+import { useContactForm } from "../hooks/use-contact-form";
 import { cn } from "../lib/utils";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
@@ -16,50 +17,33 @@ import {
 import { Textarea } from "./ui/textarea";
 
 export function ContactForm() {
+	const { state, dispatch } = useContactForm({
+		onSuccess: (data) => {
+			toast.success(data.message);
+		},
+	});
+
 	const form = useForm({
 		defaultValues: {
 			fullName: "",
 			email: "",
 			subject: "",
 			message: "",
-			attachment: [] as File[], // Fichiers uploadés
+			attachment: null as File | null, // Fichier uploadé
 		},
-		onSubmit: async ({ value }) => {
-			console.log("Données du formulaire:", value);
-
-			// Gestion des pièces jointes
-			if (value.attachment.length > 0) {
-				console.log(
-					"Fichiers attachés:",
-					value.attachment.map((f) => f.name)
-				);
-			}
-
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-
-			toast.success("Message envoyé avec succès", {
-				description: `Nous vous répondrons dans les plus brefs délais à l'adresse ${
-					value.email
-				}${
-					value.attachment.length > 0
-						? `. Vos pièces jointes ont été bien reçues.`
-						: ""
-				}`,
-				duration: 5000,
-			});
-
-			form.reset();
-		},
+		transform: useTransform(
+			(baseForm) => mergeForm(baseForm, (state as unknown) ?? {}),
+			[state]
+		),
 	});
+
+	console.log(state);
 
 	return (
 		<form
+			action={dispatch}
 			className="space-y-6"
-			onSubmit={(e) => {
-				e.preventDefault();
-				e.stopPropagation();
-				form.handleSubmit();
-			}}
+			onSubmit={form.handleSubmit}
 			aria-labelledby="contact-form-title"
 			noValidate
 		>
@@ -117,8 +101,8 @@ export function ContactForm() {
 											!field.state.meta.isValid
 												? `${field.name}-error`
 												: field.state.value.length > 0
-												? `${field.name}-help`
-												: undefined
+													? `${field.name}-help`
+													: undefined
 										}
 										aria-required="true"
 										autoComplete="name"
@@ -231,6 +215,7 @@ export function ContactForm() {
 										</span>
 									</Label>
 									<Select
+										name={field.name}
 										value={field.state.value}
 										onValueChange={(value) => field.handleChange(value)}
 									>
@@ -251,6 +236,7 @@ export function ContactForm() {
 										>
 											<SelectValue placeholder="Sélectionnez le motif de votre demande" />
 										</SelectTrigger>
+
 										<SelectContent className="w-full">
 											<SelectItem value="premiere-consultation">
 												Première consultation diététique
@@ -290,20 +276,19 @@ export function ContactForm() {
 							{(field) => (
 								<div className="space-y-2">
 									<Label className="text-sm font-medium">
-										Pièces jointes{" "}
+										Pièce jointe{" "}
 										<span className="text-gray-500">(optionnel)</span>
 									</Label>
 									<div className="space-y-3">
 										<input
 											type="file"
 											id="file-upload"
-											multiple
 											accept="image/*,.pdf,.doc,.docx,.txt"
 											onChange={(e) => {
-												const files = Array.from(e.target.files || []);
-												if (files.length > 0) {
-													field.handleChange([...field.state.value, ...files]);
-													toast.success("Fichier(s) ajouté(s) avec succès");
+												const file = e.target.files?.[0];
+												if (file) {
+													field.handleChange(file);
+													toast.success("Fichier ajouté avec succès");
 												}
 											}}
 											className="hidden"
@@ -316,38 +301,27 @@ export function ContactForm() {
 											}
 											className="w-full h-10 bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground border border-border rounded-md px-4 py-2 font-medium transition-colors duration-200 focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
 										>
-											Ajouter des fichiers
+											Ajouter un fichier
 										</Button>
-										{field.state.value.length > 0 && (
+										{field.state.value && (
 											<div className="space-y-2">
 												<p className="text-sm text-gray-600">
-													Fichiers attachés:
+													Fichier attaché:
 												</p>
-												<ul className="space-y-1">
-													{field.state.value.map((file, index) => (
-														<li
-															key={index}
-															className="flex items-center justify-between text-sm bg-gray-50 p-2 rounded"
-														>
-															<span className="text-gray-700 truncate">
-																{file.name}
-															</span>
-															<button
-																type="button"
-																onClick={() => {
-																	const newAttachments =
-																		field.state.value.filter(
-																			(_, i) => i !== index
-																		);
-																	field.handleChange(newAttachments);
-																}}
-																className="text-red-600 hover:text-red-800 ml-2"
-															>
-																Supprimer
-															</button>
-														</li>
-													))}
-												</ul>
+												<div className="flex items-center justify-between text-sm bg-gray-50 p-2 rounded">
+													<span className="text-gray-700 truncate">
+														{field.state.value.name}
+													</span>
+													<button
+														type="button"
+														onClick={() => {
+															field.handleChange(null);
+														}}
+														className="text-red-600 hover:text-red-800 ml-2"
+													>
+														Supprimer
+													</button>
+												</div>
 											</div>
 										)}
 									</div>
@@ -473,16 +447,7 @@ export function ContactForm() {
 							aria-disabled={!canSubmit || isSubmitting}
 							aria-describedby={!canSubmit ? "submit-help" : undefined}
 						>
-							{isSubmitting ? (
-								<>
-									<span className="sr-only">
-										Envoi en cours, veuillez patienter
-									</span>
-									<span aria-hidden="true">Envoi en cours...</span>
-								</>
-							) : (
-								"Envoyer ma demande"
-							)}
+							Envoyer ma demande
 						</Button>
 					)}
 				</form.Subscribe>

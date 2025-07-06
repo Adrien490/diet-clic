@@ -23,13 +23,7 @@ export const contactSchema = z.object({
 		.min(10, "Le message doit contenir au moins 10 caractères")
 		.max(1000, "Le message ne peut pas dépasser 1000 caractères"),
 
-	attachment: z
-		.array(z.string().url("URL de fichier invalide"))
-		.optional()
-		.default([])
-		.refine((urls) => {
-			return urls.length <= 3;
-		}, "Vous ne pouvez déposer que 3 fichiers maximum"),
+	attachment: z.string().url("URL de fichier invalide").optional(),
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
