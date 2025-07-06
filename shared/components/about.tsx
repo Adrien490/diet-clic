@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { ABOUT_STEPS, type AboutStep } from "../constants/about-steps";
 
 export function About() {
@@ -12,18 +13,35 @@ export function About() {
 		>
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-left mb-12">
-					<h2
-						id="about-title"
-						className="text-3xl lg:text-4xl font-bold text-foreground mb-4"
-					>
-						À propos de moi
-					</h2>
-					<p
-						id="about-description"
-						className="text-lg text-muted-foreground max-w-2xl"
-					>
-						Manon Chaillou, diététicienne nutritionniste diplômée
-					</p>
+					{/* Titre, description et photo alignés */}
+					<div className="flex flex-col sm:flex-row sm:items-start sm:gap-6 mb-8">
+						<div className="flex-1">
+							<h2
+								id="about-title"
+								className="text-3xl lg:text-4xl font-bold text-foreground mb-4"
+							>
+								À propos de moi
+							</h2>
+							<p
+								id="about-description"
+								className="text-lg text-muted-foreground max-w-2xl"
+							>
+								Manon Chaillou, diététicienne nutritionniste diplômée
+							</p>
+						</div>
+
+						{/* Photo alignée avec le titre */}
+						<div className="flex-shrink-0 mt-4 sm:mt-0">
+							<div className="relative h-32 w-32 overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg sm:h-36 sm:w-36">
+								<Image
+									src="/manon.png"
+									alt="Manon Chaillou, diététicienne nutritionniste"
+									fill
+									className="object-cover object-center"
+								/>
+							</div>
+						</div>
+					</div>
 				</div>
 
 				{/* Timeline responsive */}
@@ -31,45 +49,35 @@ export function About() {
 					{/* Ligne horizontale pour desktop */}
 					<div className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-border/30 rounded-full" />
 
-					{/* Ligne verticale pour mobile */}
-					<div className="lg:hidden absolute left-8 top-0 bottom-0 w-1 bg-border/30 rounded-full" />
-
 					{/* Étapes du parcours */}
-					<div className="flex flex-col lg:flex-row lg:justify-between lg:items-start space-y-12 lg:space-y-0">
-						{ABOUT_STEPS.map((step: AboutStep, index: number) => (
+					<div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 lg:gap-12">
+						{ABOUT_STEPS.map((step: AboutStep) => (
 							<article
 								key={step.id}
-								className="flex flex-col lg:items-start lg:w-1/3 relative"
+								className="flex flex-col items-start lg:w-1/3 relative text-left"
 								aria-labelledby={`about-${step.id}-title`}
 							>
-								{/* Layout mobile : horizontal */}
-								<div className="flex items-start lg:flex-col lg:items-start">
-									{/* Bulle décorative */}
-									<div className="relative z-10 lg:mb-8 flex-shrink-0">
-										<div className="w-16 h-16 rounded-full border-4 border-background bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
-											{step.icon}
-										</div>
+								{/* Bulle décorative */}
+								<div className="relative z-10 mb-6 flex-shrink-0">
+									<div className="w-16 h-16 rounded-full border-4 border-background bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
+										{step.icon}
 									</div>
+								</div>
 
-									{/* Contenu */}
-									<div
-										className={`ml-6 lg:ml-0 lg:px-4 ${
-											index === 0 ? "lg:pl-0" : index === 2 ? "lg:pr-0" : ""
-										}`}
+								{/* Contenu */}
+								<div>
+									<h3
+										id={`about-${step.id}-title`}
+										className="text-xl font-semibold text-foreground mb-4 text-left"
 									>
-										<h3
-											id={`about-${step.id}-title`}
-											className="text-xl font-semibold text-foreground mb-4 text-left"
-										>
-											{step.title}
-										</h3>
-										<div className="text-sm text-muted-foreground leading-relaxed text-left space-y-3">
-											{step.description.map(
-												(paragraph: string, paragraphIndex: number) => (
-													<p key={paragraphIndex}>{paragraph}</p>
-												)
-											)}
-										</div>
+										{step.title}
+									</h3>
+									<div className="text-sm text-muted-foreground leading-relaxed text-left space-y-3">
+										{step.description.map(
+											(paragraph: string, paragraphIndex: number) => (
+												<p key={paragraphIndex}>{paragraph}</p>
+											)
+										)}
 									</div>
 								</div>
 							</article>

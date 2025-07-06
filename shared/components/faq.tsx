@@ -29,7 +29,7 @@ export function FAQ() {
 					</p>
 				</div>
 
-				<div>
+				<div className="max-w-4xl">
 					<Accordion
 						type="single"
 						collapsible

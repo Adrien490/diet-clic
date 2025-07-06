@@ -16,7 +16,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export function Navbar() {
-	const isScrolled = useIsScrolled(20);
+	const isScrolled = useIsScrolled(140);
 
 	return (
 		<header role="banner" className="sticky top-0 z-50 w-full">
@@ -24,8 +24,8 @@ export function Navbar() {
 				role="navigation"
 				aria-label="Navigation principale"
 				className={cn(
-					"border-b bg-background/80 backdrop-blur-md transition-all duration-300 ease-in-out",
-					isScrolled && "shadow-lg bg-background/95"
+					"bg-transparent transition-all duration-300 ease-in-out",
+					isScrolled && "shadow-md bg-background/10 backdrop-blur-md"
 				)}
 			>
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
