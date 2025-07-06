@@ -24,8 +24,8 @@ export function Navbar() {
 				role="navigation"
 				aria-label="Navigation principale"
 				className={cn(
-					"bg-transparent transition-all duration-300 ease-in-out",
-					isScrolled && "shadow-md bg-background/10 backdrop-blur-md"
+					"bg-transparent transition-all duration-300 ease-in-out relative z-30",
+					isScrolled && "shadow-md bg-background backdrop-blur-md"
 				)}
 			>
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
@@ -33,7 +33,7 @@ export function Navbar() {
 						{/* Logo avec amélioration accessibilité */}
 						<Link
 							href="/"
-							className="group flex items-center space-x-3 rounded-lg p-2 -m-2 transition-all duration-200 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+							className="group flex items-center space-x-3 rounded-lg p-2 -m-2 transition-all duration-200 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring relative z-30"
 							aria-label="Retour à l'accueil - Manon Diététicienne"
 						>
 							<div
@@ -57,7 +57,10 @@ export function Navbar() {
 						</Link>
 
 						{/* Navigation desktop avec indicateur de page active */}
-						<nav className="hidden md:block" aria-label="Menu principal">
+						<nav
+							className="hidden md:block relative z-30"
+							aria-label="Menu principal"
+						>
 							<ul className="flex items-center space-x-1">
 								{navbarItems.map((item) => {
 									return (
@@ -80,7 +83,7 @@ export function Navbar() {
 						</nav>
 
 						{/* Bouton CTA desktop */}
-						<div className="hidden md:block">
+						<div className="hidden md:block relative z-30">
 							<Button
 								asChild
 								className="shadow-sm transition-shadow duration-200"
@@ -95,7 +98,7 @@ export function Navbar() {
 								<Button
 									variant="ghost"
 									size="icon"
-									className="md:hidden hover:bg-accent focus-visible:bg-accent"
+									className="md:hidden hover:bg-accent focus-visible:bg-accent relative z-30"
 									aria-label="Ouvrir le menu de navigation"
 								>
 									<Menu className="h-5 w-5" />
