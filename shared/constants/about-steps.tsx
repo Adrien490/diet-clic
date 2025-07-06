@@ -35,9 +35,8 @@ export const ABOUT_STEPS: AboutStep[] = [
 		icon: <Search className="h-6 w-6" />,
 		title: "Mon approche",
 		description: [
-			"Mon approche est individuelle, scientifique, et personnalisée. Elle repose sur une démarche rigoureuse, nourrie par les dernières recommandations officielles (Haute Autorité de Santé, ANSES, PNNS…).",
-			"Pas de régime à la mode. Pas de croyances alimentaires. Je travaille aussi avec une approche comportementale, fondée sur la relation de confiance.",
-			"Nous prenons le temps d'explorer ensemble votre vécu alimentaire, vos habitudes, votre histoire personnelle. Car votre rapport à l'alimentation est unique.",
+			"Mon approche est individuelle, scientifique, et personnalisée. Elle repose sur une démarche rigoureuse, nourrie par les dernières recommandations officielles : pas de régime à la mode, ni de croyances alimentaires.",
+			"Je travaille aussi avec une approche comportementale, fondée sur la relation de confiance. Nous prenons le temps d'explorer ensemble votre vécu alimentaire, vos habitudes, votre histoire personnelle. Car votre rapport à l'alimentation est unique.",
 			"Le suivi est totalement personnalisé. Je pars de vous, de vos habitudes, de vos contraintes, de vos valeurs. Ensemble, nous construisons un chemin vers une alimentation plus apaisée.",
 		],
 	},
