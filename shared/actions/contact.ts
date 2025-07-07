@@ -1,8 +1,12 @@
 "use server";
 
 import { render } from "@react-email/render";
-import { ContactEmailTemplate } from "../components/email-template";
-import { ContactFormData, contactSchema } from "../schemas/contact-schema";
+import { ContactEmailTemplate } from "../components/emails/contact-email-template";
+import {
+	ContactFormData,
+	contactSchema,
+	subjectOptions,
+} from "../schemas/contact-schema";
 import {
 	ActionStatus,
 	ServerAction,
@@ -19,19 +23,16 @@ export const contact: ServerAction<
 	typeof contactSchema
 > = async (_, formData) => {
 	try {
-		// 1. Récupération des données du formulaire
-		const attachmentUrl = formData.get("attachment") as string;
+		// Récupération des URLs d'attachments (peut être plusieurs)
+		const attachments = formData.getAll("attachments") as string[];
+
 		const rawData = {
 			fullName: formData.get("fullName") as string,
 			email: formData.get("email") as string,
 			subject: formData.get("subject") as string,
 			message: formData.get("message") as string,
-			attachment:
-				attachmentUrl && attachmentUrl.trim() !== ""
-					? attachmentUrl
-					: undefined,
+			attachments: attachments.filter((url) => url && url.trim() !== ""),
 		};
-
 		console.log("rawData", rawData);
 
 		// 2. Validation des données avec Zod
@@ -45,6 +46,8 @@ export const contact: ServerAction<
 		}
 
 		const validatedData = validation.data;
+		const subject =
+			subjectOptions[validatedData.subject as keyof typeof subjectOptions];
 
 		// 3. Envoi de l'email de notification avec le template React
 		try {
@@ -59,7 +62,7 @@ export const contact: ServerAction<
 
 			const email = await sendEmail({
 				to: ADMIN_EMAIL,
-				subject: `${validatedData.subject}`,
+				subject: `${validatedData.fullName} - ${subject}`,
 				html: emailHtml,
 				replyTo: validatedData.email,
 			});

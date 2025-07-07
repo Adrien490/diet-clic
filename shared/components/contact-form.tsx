@@ -1,9 +1,13 @@
 "use client";
 
 import { mergeForm, useForm, useTransform } from "@tanstack/react-form";
+import { Upload, X } from "lucide-react";
 import { toast } from "sonner";
 import { useContactForm } from "../hooks/use-contact-form";
-import { cn } from "../lib/utils";
+import { subjectOptions } from "../schemas/contact-schema";
+import { cn } from "../utils";
+import { UploadDropzone, useUploadThing } from "../utils/uploadthing";
+import { SpinnerLoader } from "./loaders/spinner-loader";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -17,11 +21,8 @@ import {
 import { Textarea } from "./ui/textarea";
 
 export function ContactForm() {
-	const { state, dispatch, isPending } = useContactForm({
-		onSuccess: (data) => {
-			toast.success(data.message);
-		},
-	});
+	const { state, dispatch, isPending } = useContactForm();
+	const { isUploading } = useUploadThing("contactAttachment");
 
 	const form = useForm({
 		defaultValues: {
@@ -29,7 +30,7 @@ export function ContactForm() {
 			email: "",
 			subject: "",
 			message: "",
-			attachment: null as File | null, // Fichier uploadé
+			attachments: [] as { url: string; name: string }[],
 		},
 		transform: useTransform(
 			(baseForm) => mergeForm(baseForm, (state as unknown) ?? {}),
@@ -51,6 +52,22 @@ export function ContactForm() {
 			<h2 id="contact-form-title" className="sr-only">
 				Formulaire de contact
 			</h2>
+
+			{/* Champ caché pour les URLs des pièces jointes */}
+			<form.Subscribe selector={(state) => [state.values.attachments]}>
+				{([attachments]) => (
+					<>
+						{attachments.map((attachment, index) => (
+							<input
+								key={index}
+								type="hidden"
+								name="attachments"
+								value={attachment.url}
+							/>
+						))}
+					</>
+				)}
+			</form.Subscribe>
 
 			{/* Grille 2 colonnes */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
@@ -83,7 +100,10 @@ export function ContactForm() {
 								<div className="space-y-2">
 									<Label htmlFor={field.name} className="text-sm font-medium">
 										Nom et prénom{" "}
-										<span className="text-red-500" aria-label="champ requis">
+										<span
+											className="text-destructive"
+											aria-label="champ requis"
+										>
 											*
 										</span>
 									</Label>
@@ -98,7 +118,7 @@ export function ContactForm() {
 										className={cn(
 											"max-w-full",
 											!field.state.meta.isValid
-												? "border-red-500 focus:border-red-500"
+												? "border-destructive focus:border-destructive"
 												: ""
 										)}
 										aria-invalid={!field.state.meta.isValid}
@@ -117,7 +137,7 @@ export function ContactForm() {
 										field.state.meta.errors.length > 0 && (
 											<p
 												id={`${field.name}-error`}
-												className="text-sm text-red-600"
+												className="text-sm text-destructive"
 												role="alert"
 												aria-live="polite"
 											>
@@ -149,7 +169,10 @@ export function ContactForm() {
 								<div className="space-y-2">
 									<Label htmlFor={field.name} className="text-sm font-medium">
 										Adresse email{" "}
-										<span className="text-red-500" aria-label="champ requis">
+										<span
+											className="text-destructive"
+											aria-label="champ requis"
+										>
 											*
 										</span>
 									</Label>
@@ -164,7 +187,7 @@ export function ContactForm() {
 										className={cn(
 											"max-w-full",
 											!field.state.meta.isValid
-												? "border-red-500 focus:border-red-500"
+												? "border-destructive focus:border-destructive"
 												: ""
 										)}
 										aria-invalid={!field.state.meta.isValid}
@@ -182,7 +205,7 @@ export function ContactForm() {
 									field.state.meta.errors.length > 0 ? (
 										<p
 											id={`${field.name}-error`}
-											className="text-sm text-red-600"
+											className="text-sm text-destructive"
 											role="alert"
 											aria-live="polite"
 										>
@@ -215,7 +238,10 @@ export function ContactForm() {
 								<div className="space-y-2">
 									<Label htmlFor={field.name} className="text-sm font-medium">
 										Motif{" "}
-										<span className="text-red-500" aria-label="champ requis">
+										<span
+											className="text-destructive"
+											aria-label="champ requis"
+										>
 											*
 										</span>
 									</Label>
@@ -229,7 +255,7 @@ export function ContactForm() {
 											className={cn(
 												"w-full max-w-full",
 												!field.state.meta.isValid
-													? "border-red-500 focus:border-red-500"
+													? "border-destructive focus:border-destructive"
 													: ""
 											)}
 											aria-invalid={!field.state.meta.isValid}
@@ -244,23 +270,18 @@ export function ContactForm() {
 										</SelectTrigger>
 
 										<SelectContent className="w-full">
-											<SelectItem value="premiere-consultation">
-												Première consultation diététique
-											</SelectItem>
-											<SelectItem value="consultation-suivi">
-												Consultation de suivi diététique
-											</SelectItem>
-											<SelectItem value="prestation-groupe">
-												Prestation de groupe
-											</SelectItem>
-											<SelectItem value="autre">Autre</SelectItem>
+											{Object.entries(subjectOptions).map(([key, value]) => (
+												<SelectItem key={key} value={key}>
+													{value}
+												</SelectItem>
+											))}
 										</SelectContent>
 									</Select>
 									{!field.state.meta.isValid &&
 									field.state.meta.errors.length > 0 ? (
 										<p
 											id={`${field.name}-error`}
-											className="text-sm text-red-600"
+											className="text-sm text-destructive"
 											role="alert"
 											aria-live="polite"
 										>
@@ -278,71 +299,227 @@ export function ContactForm() {
 							)}
 						</form.Field>
 
-						<form.Field name="attachment">
+						<form.Field name="attachments" mode="array">
 							{(field) => (
 								<div className="space-y-2">
 									<Label htmlFor="file-upload" className="text-sm font-medium">
-										Pièce jointe{" "}
-										<span className="text-foreground/60">(optionnel)</span>
+										Pièces jointes{" "}
+										<span className="text-foreground/60">
+											(optionnel, max 3)
+										</span>
 									</Label>
 									<div className="space-y-3">
-										<input
-											type="file"
-											id="file-upload"
-											name="attachment"
-											accept="image/*,.pdf,.doc,.docx,.txt"
-											onChange={(e) => {
-												const file = e.target.files?.[0];
-												if (file) {
-													field.handleChange(file);
-													toast.success("Fichier ajouté avec succès");
-												}
-											}}
-											className="hidden"
-											aria-describedby="file-upload-help"
-										/>
-										<Button
-											type="button"
-											variant="outline"
-											onClick={() =>
-												document.getElementById("file-upload")?.click()
-											}
-											className="w-full h-10 bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground border border-border rounded-md px-4 py-2 font-medium transition-colors duration-200 focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-											aria-describedby="file-upload-help"
-										>
-											Ajouter un fichier
-										</Button>
-										{field.state.value && (
+										{/* Liste des fichiers uploadés */}
+										{field.state.value.length > 0 && (
 											<div className="space-y-2">
-												<p className="text-sm text-foreground/70">
-													Fichier attaché :
-												</p>
-												<div className="flex items-center justify-between text-sm bg-muted/50 p-2 rounded border">
-													<span className="text-foreground truncate">
-														{field.state.value.name}
-													</span>
-													<Button
-														type="button"
-														variant="ghost"
-														size="sm"
-														onClick={() => {
-															field.handleChange(null);
-															toast.success("Fichier supprimé");
-														}}
-														className="text-red-600 hover:text-red-800 hover:bg-red-50 h-auto p-1 ml-2"
-														aria-label={`Supprimer le fichier ${field.state.value.name}`}
+												{field.state.value.map((attachment, index) => (
+													<div
+														key={index}
+														className="flex items-center gap-3 p-3 bg-primary/10 border border-primary/20 rounded-lg"
 													>
-														Supprimer
-													</Button>
-												</div>
+														<Upload className="h-4 w-4 text-primary flex-shrink-0" />
+														<div className="w-0 flex-grow">
+															<p className="text-sm font-medium text-foreground truncate">
+																{attachment.name}
+															</p>
+															<p className="text-xs text-primary">
+																Fichier uploadé avec succès
+															</p>
+														</div>
+														<Button
+															type="button"
+															variant="ghost"
+															size="sm"
+															onClick={() => {
+																field.removeValue(index);
+															}}
+															className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 h-8 w-8 p-0 flex-shrink-0"
+															aria-label="Supprimer le fichier"
+														>
+															<X className="h-4 w-4" />
+														</Button>
+													</div>
+												))}
+											</div>
+										)}
+
+										{/* Zone d'upload - affichée seulement si moins de 3 fichiers */}
+										{field.state.value.length < 3 && (
+											<div className="relative">
+												<UploadDropzone
+													endpoint="contactAttachment"
+													onClientUploadComplete={(res) => {
+														if (res && res.length > 0) {
+															res.forEach((file) => {
+																if (field.state.value.length < 3) {
+																	field.pushValue({
+																		url: file.ufsUrl,
+																		name: file.name,
+																	});
+																}
+															});
+														}
+													}}
+													onUploadError={(error) => {
+														toast.error(
+															`Erreur lors de l'upload: ${error.message}`
+														);
+													}}
+													className="w-full [&>*]:after:!hidden [&>*]:before:!hidden [&>*::after]:!hidden [&>*::before]:!hidden ut-loading-text:!hidden ut-readying:!hidden ut-uploading:after:!hidden"
+													appearance={{
+														container: ({ isDragActive, isUploading }) => ({
+															border: "2px dashed",
+															borderColor: isDragActive
+																? "hsl(var(--primary))"
+																: "hsl(var(--border))",
+															borderRadius: "0.5rem",
+															backgroundColor: isDragActive
+																? "hsl(var(--primary) / 0.05)"
+																: "hsl(var(--background))",
+															padding: "0.75rem",
+															transition: "all 0.2s ease-in-out",
+															minHeight: "60px",
+															display: "flex",
+															flexDirection: "column",
+															alignItems: "center",
+															justifyContent: "center",
+															gap: "0.25rem",
+															cursor: isUploading ? "not-allowed" : "pointer",
+															opacity: isUploading ? 0.7 : 1,
+															position: "relative",
+														}),
+														uploadIcon: ({ isDragActive, isUploading }) => ({
+															color: isDragActive
+																? "hsl(var(--primary))"
+																: "hsl(var(--muted-foreground))",
+															width: "2rem",
+															height: "2rem",
+															transition: "all 0.2s ease-in-out",
+															transform: isDragActive
+																? "scale(1.1)"
+																: "scale(1)",
+															opacity: isUploading ? 0.5 : 1,
+														}),
+														label: ({ isDragActive, isUploading }) => ({
+															color: isDragActive
+																? "hsl(var(--primary))"
+																: "hsl(var(--foreground))",
+															fontSize: "1rem",
+															fontWeight: "500",
+															textAlign: "center",
+															transition: "color 0.2s ease-in-out",
+															opacity: isUploading ? 0.5 : 1,
+														}),
+														allowedContent: ({ isUploading }) => ({
+															color: "hsl(var(--muted-foreground))",
+															fontSize: "0.875rem",
+															textAlign: "center",
+															marginTop: "0.5rem",
+															opacity: isUploading ? 0.5 : 1,
+														}),
+														button: ({ isUploading }) => ({
+															backgroundColor: "hsl(var(--primary))",
+															color: "hsl(var(--primary-foreground))",
+															border: "none",
+															borderRadius: "0.375rem",
+															padding: "0.5rem 1rem",
+															fontSize: "0.875rem",
+															fontWeight: "500",
+															cursor: isUploading ? "not-allowed" : "pointer",
+															opacity: isUploading ? 0.5 : 1,
+															transition: "all 0.2s ease-in-out",
+														}),
+													}}
+													content={{
+														uploadIcon: ({
+															isDragActive,
+															isUploading,
+															uploadProgress,
+														}) => {
+															if (isUploading) {
+																return (
+																	<div className="flex flex-col items-center">
+																		<SpinnerLoader size="md" color="primary" />
+																		<span className="text-sm mt-2">
+																			{uploadProgress}%
+																		</span>
+																	</div>
+																);
+															}
+															return (
+																<Upload
+																	className={cn(
+																		"h-8 w-8 transition-all duration-200",
+																		isDragActive
+																			? "text-primary scale-110"
+																			: "text-muted-foreground"
+																	)}
+																/>
+															);
+														},
+														label: ({ isDragActive, isUploading }) => {
+															if (isUploading) {
+																return (
+																	<div className="text-center">
+																		<p className="text-sm font-medium">
+																			Upload en cours...
+																		</p>
+																		<p className="text-xs text-muted-foreground mt-1">
+																			Veuillez patienter
+																		</p>
+																	</div>
+																);
+															}
+
+															if (isDragActive) {
+																return (
+																	<div className="text-center">
+																		<p className="text-sm font-medium text-primary">
+																			Relâchez pour uploader
+																		</p>
+																		<p className="text-xs text-primary/80 mt-1">
+																			{3 - field.state.value.length}
+																			fichier(s) restant(s)
+																		</p>
+																	</div>
+																);
+															}
+
+															return (
+																<div className="text-center">
+																	<p className="text-sm font-medium">
+																		Glissez vos fichiers ici
+																	</p>
+																	<p className="text-xs text-muted-foreground mt-1">
+																		ou cliquez pour sélectionner
+																	</p>
+																</div>
+															);
+														},
+														allowedContent: ({ fileTypes }) => (
+															<p className="text-xs text-muted-foreground text-center">
+																Formats acceptés : {fileTypes.join(", ")} (max
+																4MB)
+															</p>
+														),
+														button: ({ isUploading }) => (
+															<span className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
+																{isUploading
+																	? "Upload..."
+																	: "Choisir des fichiers"}
+															</span>
+														),
+													}}
+													config={{
+														mode: "auto",
+													}}
+												/>
 											</div>
 										)}
 									</div>
-									<p
-										id="file-upload-help"
-										className="text-sm text-foreground/70"
-									>
-										Formats acceptés : Images et documents (max 4MB par fichier)
+									<p className="text-sm text-foreground/70">
+										Formats acceptés : Images, PDF, Documents (max 4MB par
+										fichier, 3 fichiers maximum)
 									</p>
 								</div>
 							)}
@@ -362,8 +539,8 @@ export function ContactForm() {
 								if (value.trim().length < 10) {
 									return "Le message doit contenir au moins 10 caractères";
 								}
-								if (value.trim().length > 1000) {
-									return "Le message ne peut pas dépasser 1000 caractères";
+								if (value.trim().length > 2000) {
+									return "Le message ne peut pas dépasser 2000 caractères";
 								}
 								return undefined;
 							},
@@ -373,7 +550,7 @@ export function ContactForm() {
 							<div className="space-y-2 h-full">
 								<Label htmlFor={field.name} className="text-sm font-medium">
 									Message{" "}
-									<span className="text-red-500" aria-label="champ requis">
+									<span className="text-destructive" aria-label="champ requis">
 										*
 									</span>
 								</Label>
@@ -384,11 +561,11 @@ export function ContactForm() {
 									onChange={(e) => field.handleChange(e.target.value)}
 									onBlur={field.handleBlur}
 									placeholder="Décrivez votre demande, vos objectifs nutritionnels, ou toute question que vous souhaitez aborder. Plus vous êtes précis, mieux nous pourrons vous accompagner."
-									rows={16}
+									rows={15}
 									className={cn(
 										"resize-none w-full max-w-full min-w-0 break-words overflow-hidden box-border",
 										!field.state.meta.isValid
-											? "border-red-500 focus:border-red-500"
+											? "border-destructive focus:border-destructive"
 											: ""
 									)}
 									aria-invalid={!field.state.meta.isValid}
@@ -398,14 +575,14 @@ export function ContactForm() {
 											: `${field.name}-help`
 									}
 									aria-required="true"
-									maxLength={1000}
+									maxLength={2000}
 									required
 								/>
 								{!field.state.meta.isValid &&
 								field.state.meta.errors.length > 0 ? (
 									<p
 										id={`${field.name}-error`}
-										className="text-sm text-red-600"
+										className="text-sm text-destructive"
 										role="alert"
 										aria-live="polite"
 									>
@@ -417,7 +594,7 @@ export function ContactForm() {
 										className="text-sm text-foreground/70"
 										aria-live="polite"
 									>
-										{field.state.value.length}/1000 caractères
+										{field.state.value.length}/2000 caractères
 									</p>
 								)}
 							</div>
@@ -430,7 +607,7 @@ export function ContactForm() {
 			<div className="space-y-4 border-t pt-6">
 				<div className="text-sm text-foreground/70">
 					<p>
-						<span className="text-red-500" aria-hidden="true">
+						<span className="text-destructive" aria-hidden="true">
 							*
 						</span>
 						<span className="ml-1">Champs obligatoires</span>
@@ -441,11 +618,11 @@ export function ContactForm() {
 					{([errorMap]) =>
 						errorMap.onSubmit ? (
 							<div
-								className="p-3 bg-red-50 border border-red-200 rounded-md"
+								className="p-3 bg-destructive/10 border border-destructive/20 rounded-md"
 								role="alert"
 								aria-live="assertive"
 							>
-								<p className="text-sm text-red-600">
+								<p className="text-sm text-destructive">
 									Erreur lors de l&apos;envoi : {errorMap.onSubmit}
 								</p>
 							</div>
@@ -459,7 +636,7 @@ export function ContactForm() {
 					{([canSubmit]) => (
 						<Button
 							type="submit"
-							disabled={!canSubmit || isPending}
+							disabled={!canSubmit || isPending || isUploading}
 							aria-disabled={!canSubmit || isPending}
 							aria-describedby={!canSubmit ? "submit-help" : undefined}
 						>

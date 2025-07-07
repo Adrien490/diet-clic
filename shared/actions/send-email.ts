@@ -10,12 +10,12 @@ interface SendEmailOptions {
 	react?: ReactElement;
 	from?: string;
 	replyTo?: string;
-	attachments?: File[];
+	attachmentUrl?: string;
 }
 
 export async function sendEmail(options: SendEmailOptions) {
 	try {
-		const { to, subject, html, react, from, replyTo, attachments } = options;
+		const { to, subject, html, react, from, replyTo, attachmentUrl } = options;
 
 		// Validation des données requises
 		if (!to || !subject) {
@@ -50,16 +50,6 @@ export async function sendEmail(options: SendEmailOptions) {
 		// Initialisation de Resend
 		const resend = new Resend(resendApiKey);
 
-		// Préparation des pièces jointes
-		const resolvedAttachments = attachments
-			? await Promise.all(
-					attachments.map(async (attachment) => ({
-						filename: attachment.name,
-						content: Buffer.from(await attachment.arrayBuffer()),
-					}))
-				)
-			: undefined;
-
 		// Préparation des données d'envoi
 		const emailData = {
 			from: fromEmail,
@@ -67,7 +57,7 @@ export async function sendEmail(options: SendEmailOptions) {
 			subject,
 			text: "Veuillez afficher ce message dans un client email qui supporte le HTML.", // Fallback texte requis
 			replyTo,
-			attachments: resolvedAttachments,
+			attachmentUrl,
 		} as const;
 
 		// Ajout du contenu (HTML ou React)
@@ -76,7 +66,7 @@ export async function sendEmail(options: SendEmailOptions) {
 			: { ...emailData, html };
 
 		// Envoi de l'email
-		const { data, error } = await resend.emails.send(finalEmailData);
+		const { error } = await resend.emails.send(finalEmailData);
 
 		if (error) {
 			console.error("Erreur Resend:", error);
@@ -87,8 +77,6 @@ export async function sendEmail(options: SendEmailOptions) {
 
 		return {
 			success: true,
-			emailId: data?.id,
-			message: "Email envoyé avec succès",
 		};
 	} catch (error) {
 		console.error("Erreur server action send-email:", error);

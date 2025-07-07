@@ -21,22 +21,22 @@ export const contactSchema = z.object({
 		.string()
 		.min(1, "Le message est requis")
 		.min(10, "Le message doit contenir au moins 10 caractères")
-		.max(1000, "Le message ne peut pas dépasser 1000 caractères"),
+		.max(2000, "Le message ne peut pas dépasser 2000 caractères"),
 
-	attachment: z.string().url("URL de fichier invalide").optional(),
+	attachments: z
+		.array(
+			z.object({
+				url: z.string().url("L'URL du fichier doit être valide"),
+				name: z.string().min(1, "Le nom du fichier est requis"),
+			})
+		)
+		.max(3, "Maximum 3 pièces jointes autorisées")
+		.default([]),
 });
 
 export type ContactFormData = z.infer<typeof contactSchema>;
 
-// Schéma pour les valeurs du select subject
-export const subjectOptions = [
-	"premiere-consultation",
-	"consultation-suivi",
-	"prestation-groupe",
-	"autre",
-] as const;
-
-export const subjectLabels = {
+export const subjectOptions = {
 	"premiere-consultation": "Première consultation diététique",
 	"consultation-suivi": "Consultation de suivi diététique",
 	"prestation-groupe": "Prestation de groupe",

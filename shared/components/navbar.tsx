@@ -11,14 +11,14 @@ import {
 } from "@/shared/components/ui/sheet";
 import { navbarItems } from "@/shared/constants/navbar-items";
 import { useIsScrolled } from "@/shared/hooks/use-is-scrolled";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/utils";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { useIsMobile } from "../hooks/use-mobile";
 
 export function Navbar() {
 	const isMobile = useIsMobile();
-	const threshold = isMobile ? 25 : 120;
+	const threshold = isMobile ? 25 : 100;
 	const isScrolled = useIsScrolled(threshold);
 
 	return (

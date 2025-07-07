@@ -3,7 +3,7 @@
 import * as SliderPrimitive from "@radix-ui/react-slider";
 import * as React from "react";
 
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/utils";
 
 function Slider({
 	className,
@@ -18,8 +18,8 @@ function Slider({
 			Array.isArray(value)
 				? value
 				: Array.isArray(defaultValue)
-				? defaultValue
-				: [min, max],
+					? defaultValue
+					: [min, max],
 		[value, defaultValue, min, max]
 	);
 

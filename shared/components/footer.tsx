@@ -1,5 +1,5 @@
 import { navbarItems } from "@/shared/constants/navbar-items";
-import { cn } from "@/shared/lib/utils";
+import { cn } from "@/shared/utils";
 import { Heart } from "lucide-react";
 import Link from "next/link";
 
