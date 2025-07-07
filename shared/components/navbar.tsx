@@ -14,9 +14,12 @@ import { useIsScrolled } from "@/shared/hooks/use-is-scrolled";
 import { cn } from "@/shared/lib/utils";
 import { Menu } from "lucide-react";
 import Link from "next/link";
+import { useIsMobile } from "../hooks/use-mobile";
 
 export function Navbar() {
-	const isScrolled = useIsScrolled(25);
+	const isMobile = useIsMobile();
+	const threshold = isMobile ? 25 : 120;
+	const isScrolled = useIsScrolled(threshold);
 
 	return (
 		<header role="banner" className="sticky top-0 z-50 w-full">
