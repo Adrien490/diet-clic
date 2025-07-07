@@ -89,7 +89,7 @@ export function ContactEmailTemplate({
 											target="_blank"
 											style={attachmentLink}
 										>
-											{attachment.name}
+											📄 {attachment.name}
 										</Link>
 									))}
 								</div>

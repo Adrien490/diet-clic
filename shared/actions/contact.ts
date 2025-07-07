@@ -23,15 +23,27 @@ export const contact: ServerAction<
 	typeof contactSchema
 > = async (_, formData) => {
 	try {
-		// Récupération des URLs d'attachments (peut être plusieurs)
-		const attachments = formData.getAll("attachments") as string[];
+		// Récupération des attachments avec url et name
+		const attachments: { url: string; name: string }[] = [];
+		let index = 0;
+
+		// Récupérer tous les attachments indexés
+		while (true) {
+			const url = formData.get(`attachments[${index}].url`) as string;
+			const name = formData.get(`attachments[${index}].name`) as string;
+
+			if (!url || !name) break;
+
+			attachments.push({ url, name });
+			index++;
+		}
 
 		const rawData = {
 			fullName: formData.get("fullName") as string,
 			email: formData.get("email") as string,
 			subject: formData.get("subject") as string,
 			message: formData.get("message") as string,
-			attachments: attachments.filter((url) => url && url.trim() !== ""),
+			attachments: attachments,
 		};
 		console.log("rawData", rawData);
 

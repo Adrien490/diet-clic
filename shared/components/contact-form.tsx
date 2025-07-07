@@ -7,7 +7,7 @@ import { useContactForm } from "../hooks/use-contact-form";
 import { subjectOptions } from "../schemas/contact-schema";
 import { cn } from "../utils";
 import { UploadDropzone, useUploadThing } from "../utils/uploadthing";
-import { SpinnerLoader } from "./loaders/spinner-loader";
+import { MiniDotsLoader } from "./loaders";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
@@ -53,17 +53,23 @@ export function ContactForm() {
 				Formulaire de contact
 			</h2>
 
-			{/* Champ caché pour les URLs des pièces jointes */}
+			{/* Champs cachés pour les attachments */}
 			<form.Subscribe selector={(state) => [state.values.attachments]}>
 				{([attachments]) => (
 					<>
-						{attachments.map((attachment, index) => (
-							<input
-								key={index}
-								type="hidden"
-								name="attachments"
-								value={attachment.url}
-							/>
+						{attachments?.map((attachment, index) => (
+							<div key={index}>
+								<input
+									type="hidden"
+									name={`attachments[${index}].url`}
+									value={attachment.url}
+								/>
+								<input
+									type="hidden"
+									name={`attachments[${index}].name`}
+									value={attachment.name}
+								/>
+							</div>
 						))}
 					</>
 				)}
@@ -314,30 +320,32 @@ export function ContactForm() {
 											<div className="space-y-2">
 												{field.state.value.map((attachment, index) => (
 													<div
-														key={index}
-														className="flex items-center gap-3 p-3 bg-primary/10 border border-primary/20 rounded-lg"
+														key={`${attachment.url}-${index}`}
+														className="overflow-hidden"
 													>
-														<Upload className="h-4 w-4 text-primary flex-shrink-0" />
-														<div className="w-0 flex-grow">
-															<p className="text-sm font-medium text-foreground truncate">
-																{attachment.name}
-															</p>
-															<p className="text-xs text-primary">
-																Fichier uploadé avec succès
-															</p>
+														<div className="flex items-center gap-3 p-3 bg-primary/10 border border-primary/20 rounded-lg">
+															<Upload className="h-4 w-4 text-primary flex-shrink-0" />
+															<div className="w-0 flex-grow">
+																<p className="text-sm font-medium text-foreground truncate">
+																	{attachment.name}
+																</p>
+																<p className="text-xs text-primary">
+																	Fichier uploadé avec succès
+																</p>
+															</div>
+															<Button
+																type="button"
+																variant="ghost"
+																size="sm"
+																onClick={() => {
+																	field.removeValue(index);
+																}}
+																className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 h-8 w-8 p-0 flex-shrink-0"
+																aria-label="Supprimer le fichier"
+															>
+																<X className="h-4 w-4" />
+															</Button>
 														</div>
-														<Button
-															type="button"
-															variant="ghost"
-															size="sm"
-															onClick={() => {
-																field.removeValue(index);
-															}}
-															className="text-destructive hover:text-destructive/80 hover:bg-destructive/10 h-8 w-8 p-0 flex-shrink-0"
-															aria-label="Supprimer le fichier"
-														>
-															<X className="h-4 w-4" />
-														</Button>
 													</div>
 												))}
 											</div>
@@ -439,7 +447,7 @@ export function ContactForm() {
 															if (isUploading) {
 																return (
 																	<div className="flex flex-col items-center">
-																		<SpinnerLoader size="md" color="primary" />
+																		<MiniDotsLoader size="md" color="primary" />
 																		<span className="text-sm mt-2">
 																			{uploadProgress}%
 																		</span>

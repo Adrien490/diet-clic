@@ -17,5 +17,6 @@ export interface ShimmerLoaderProps extends HTMLAttributes<HTMLDivElement> {
 	size?: ShimmerLoaderSize;
 	color?: ShimmerLoaderColor;
 	width?: string;
+	text?: string;
 	className?: string;
 }
