@@ -512,7 +512,11 @@ export function ContactForm() {
 																4MB)
 															</p>
 														),
-														button: () => <></>,
+														button: () => (
+															<span className="sr-only">
+																Sélectionner des fichiers
+															</span>
+														),
 													}}
 													config={{
 														mode: "auto",
