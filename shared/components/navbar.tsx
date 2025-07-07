@@ -85,7 +85,7 @@ export function Navbar() {
 												className={cn(
 													"relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
 													isActive
-														? "text-primary-foreground bg-primary font-semibold shadow-sm"
+														? "text-primary bg-primary/20 font-semibold ring-1 ring-primary/30"
 														: "text-foreground/90"
 												)}
 												aria-current={isActive ? "page" : undefined}
@@ -165,7 +165,7 @@ export function Navbar() {
 															className={cn(
 																"flex items-center rounded-lg px-4 py-3 text-base font-medium transition-colors duration-200 w-full text-left hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
 																isActive
-																	? "text-primary-foreground bg-primary font-semibold"
+																	? "text-primary bg-primary/20 font-semibold ring-1 ring-primary/30"
 																	: "text-foreground"
 															)}
 															aria-current={isActive ? "page" : undefined}
