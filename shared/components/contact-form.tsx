@@ -382,29 +382,32 @@ export function ContactForm() {
 															border: "2px dashed",
 															borderColor: isDragActive
 																? "hsl(var(--primary))"
-																: "hsl(var(--border))",
-															borderRadius: "0.5rem",
+																: "hsl(var(--muted-foreground) / 0.25)",
+															borderRadius: "0.75rem",
 															backgroundColor: isDragActive
 																? "hsl(var(--primary) / 0.05)"
-																: "hsl(var(--background))",
-															padding: "0.75rem",
+																: "hsl(var(--muted) / 0.3)",
+															padding: "1.5rem",
 															transition: "all 0.2s ease-in-out",
-															height: "125px",
+															height: "140px",
 															display: "flex",
 															flexDirection: "column",
 															alignItems: "center",
 															justifyContent: "center",
-															gap: "0.25rem",
+															gap: "0.5rem",
 															cursor: isUploading ? "not-allowed" : "pointer",
 															opacity: isUploading ? 0.7 : 1,
 															position: "relative",
+															boxShadow: isDragActive
+																? "0 0 0 1px hsl(var(--primary) / 0.2), 0 4px 12px hsl(var(--primary) / 0.1)"
+																: "0 1px 3px rgba(0, 0, 0, 0.1)",
 														}),
 														uploadIcon: ({ isDragActive, isUploading }) => ({
 															color: isDragActive
 																? "hsl(var(--primary))"
-																: "hsl(var(--muted-foreground))",
-															width: "2rem",
-															height: "2rem",
+																: "hsl(var(--primary) / 0.7)",
+															width: "2.5rem",
+															height: "2.5rem",
 															transition: "all 0.2s ease-in-out",
 															transform: isDragActive
 																? "scale(1.1)"
@@ -465,10 +468,10 @@ export function ContactForm() {
 															return (
 																<Upload
 																	className={cn(
-																		"h-8 w-8 transition-all duration-200",
+																		"h-10 w-10 transition-all duration-200",
 																		isDragActive
 																			? "text-primary scale-110"
-																			: "text-muted-foreground"
+																			: "text-primary/70"
 																	)}
 																/>
 															);
@@ -481,10 +484,10 @@ export function ContactForm() {
 															if (isDragActive) {
 																return (
 																	<div className="text-center">
-																		<p className="text-sm font-medium text-primary">
+																		<p className="text-base font-medium text-primary">
 																			Relâchez pour uploader
 																		</p>
-																		<p className="text-xs text-primary/80 mt-1">
+																		<p className="text-sm text-primary/80 mt-1">
 																			{3 - field.state.value.length}
 																			fichier(s) restant(s)
 																		</p>
@@ -494,10 +497,10 @@ export function ContactForm() {
 
 															return (
 																<div className="text-center">
-																	<p className="text-sm font-medium">
+																	<p className="text-base font-medium">
 																		Glissez vos fichiers ici
 																	</p>
-																	<p className="text-xs text-muted-foreground mt-1">
+																	<p className="text-sm text-muted-foreground mt-1">
 																		ou cliquez pour sélectionner
 																	</p>
 																</div>
