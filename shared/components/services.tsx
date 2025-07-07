@@ -1,4 +1,5 @@
 import { PRESTATIONS } from "@/shared/constants/prestations";
+import { User, Users } from "lucide-react";
 import { PRESTATIONS_GROUPE } from "../constants/prestations-groupe";
 import { ServiceItem } from "./service-item";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -34,14 +35,29 @@ export function Services() {
 				</div>
 
 				<Tabs defaultValue="individuelles" className="w-full">
-					<TabsList className="grid w-full grid-cols-2">
-						<TabsTrigger value="individuelles">
-							Prestations individuelles
+					<TabsList className="grid w-full grid-cols-2 bg-background/70 backdrop-blur-sm border border-border/50 rounded-xl p-2 h-auto gap-2 shadow-sm">
+						<TabsTrigger
+							value="individuelles"
+							className="flex items-center gap-3 px-6 py-4 text-base font-medium rounded-lg transition-all duration-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+						>
+							<User className="w-5 h-5" aria-hidden="true" />
+							<span className="hidden sm:inline">Prestations</span>
+							<span className="font-semibold">individuelles</span>
 						</TabsTrigger>
-						<TabsTrigger value="groupe">Prestations de groupe</TabsTrigger>
+						<TabsTrigger
+							value="groupe"
+							className="flex items-center gap-3 px-6 py-4 text-base font-medium rounded-lg transition-all duration-200 data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md hover:bg-accent/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+						>
+							<Users className="w-5 h-5" aria-hidden="true" />
+							<span className="hidden sm:inline">Prestations de</span>
+							<span className="font-semibold">groupe</span>
+						</TabsTrigger>
 					</TabsList>
 
-					<TabsContent value="individuelles" className="mt-8">
+					<TabsContent
+						value="individuelles"
+						className="mt-12 focus:outline-none"
+					>
 						<div className="text-left mb-8">
 							<h3
 								id="services-individual-title"
@@ -69,7 +85,7 @@ export function Services() {
 						</div>
 					</TabsContent>
 
-					<TabsContent value="groupe" className="mt-8">
+					<TabsContent value="groupe" className="mt-12 focus:outline-none">
 						<div className="text-left mb-8">
 							<h3
 								id="services-group-title"
