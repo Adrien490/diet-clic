@@ -16,8 +16,75 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-	title: "Manon Diététique",
-	description: "Manon Diététique",
+	title: {
+		default: "Manon Chaillou - Diététicienne Nutritionniste à Nantes",
+		template: "%s | Manon Chaillou - Diététicienne Nutritionniste",
+	},
+	description:
+		"Manon Chaillou, diététicienne nutritionniste diplômée à Nantes. Spécialisée en rééquilibrage alimentaire, nutrition cardiologie, accompagnement obésité et nutrition clinique. Consultation personnalisée.",
+	keywords: [
+		"diététicienne Nantes",
+		"nutritionniste Nantes",
+		"rééquilibrage alimentaire",
+		"nutrition cardiologie",
+		"accompagnement obésité",
+		"nutrition clinique",
+		"diététique Loire-Atlantique",
+		"consultation nutritionnelle",
+		"perte de poids Nantes",
+		"nutrition thérapeutique",
+	],
+	authors: [{ name: "Manon Chaillou", url: "https://manon-dietetique.fr" }],
+	creator: "Manon Chaillou",
+	publisher: "Manon Chaillou",
+	formatDetection: {
+		email: false,
+		address: false,
+		telephone: false,
+	},
+	metadataBase: new URL("https://manon-dietetique.fr"),
+	alternates: {
+		canonical: "/",
+	},
+	openGraph: {
+		type: "website",
+		locale: "fr_FR",
+		url: "https://manon-dietetique.fr",
+		title: "Manon Chaillou - Diététicienne Nutritionniste à Nantes",
+		description:
+			"Diététicienne nutritionniste diplômée à Nantes, spécialisée en rééquilibrage alimentaire, nutrition cardiologie et accompagnement personnalisé.",
+		siteName: "Manon Diététique",
+		images: [
+			{
+				url: "/manon.png",
+				width: 1200,
+				height: 630,
+				alt: "Manon Chaillou - Diététicienne Nutritionniste à Nantes",
+			},
+		],
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "Manon Chaillou - Diététicienne Nutritionniste à Nantes",
+		description:
+			"Diététicienne nutritionniste diplômée à Nantes, spécialisée en rééquilibrage alimentaire, nutrition cardiologie et accompagnement personnalisé.",
+		images: ["/manon.png"],
+	},
+	robots: {
+		index: true,
+		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			"max-video-preview": -1,
+			"max-image-preview": "large",
+			"max-snippet": -1,
+		},
+	},
+	verification: {
+		google: "your-google-site-verification-code",
+	},
+	category: "healthcare",
 };
 
 export default function RootLayout({
@@ -32,7 +99,9 @@ export default function RootLayout({
 			>
 				<Toaster position="top-right" richColors />
 				<Navbar />
-				<main className="min-h-screen">{children}</main>
+				<main role="main" className="min-h-screen bg-background">
+					{children}
+				</main>
 				<Footer />
 			</body>
 		</html>

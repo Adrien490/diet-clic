@@ -30,7 +30,7 @@ export function Hero() {
 						et la nutrition clinique.
 					</p>
 
-					{/* Boutons CTA optimisés */}
+					{/* Boutons CTA optimisés avec liens internes SEO */}
 					<div className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center relative z-20">
 						<Button
 							asChild
@@ -41,7 +41,7 @@ export function Hero() {
 								href="/contact"
 								aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste à Nantes - Consultation personnalisée"
 							>
-								Prendre rendez-vous
+								Prendre rendez-vous maintenant
 							</Link>
 						</Button>
 						<Button
@@ -54,9 +54,41 @@ export function Hero() {
 								href="#about"
 								aria-label="Découvrir le parcours et les spécialités de Manon Chaillou, diététicienne nutritionniste à Nantes"
 							>
-								En savoir plus
+								Découvrir mon parcours professionnel
 							</Link>
 						</Button>
+					</div>
+
+					{/* Liens de navigation internes optimisés SEO */}
+					<div className="pt-8 space-y-4">
+						<p className="text-sm text-muted-foreground">
+							Explorez mes services de diététique et nutrition :
+						</p>
+						<div className="flex flex-wrap justify-center gap-4 text-sm">
+							<Link
+								href="#services"
+								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
+								aria-label="Consulter toutes mes prestations de diététique à Nantes"
+							>
+								Mes prestations de nutrition
+							</Link>
+							<span className="text-muted-foreground/50">•</span>
+							<Link
+								href="#faq"
+								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
+								aria-label="Consulter les questions fréquentes sur la diététique et nutrition"
+							>
+								Questions fréquentes sur la diététique
+							</Link>
+							<span className="text-muted-foreground/50">•</span>
+							<Link
+								href="/contact"
+								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
+								aria-label="Contacter Manon Chaillou pour une consultation diététique à Nantes"
+							>
+								Me contacter directement
+							</Link>
+						</div>
 					</div>
 				</div>
 			</div>

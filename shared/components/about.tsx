@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { ABOUT_STEPS, type AboutStep } from "../constants/about-steps";
 
 export function About() {
@@ -20,16 +21,37 @@ export function About() {
 								id="about-title"
 								className="text-3xl lg:text-4xl font-bold text-foreground mb-4"
 							>
-								À propos
+								À propos de votre diététicienne à Nantes
 							</h2>
 							<p
 								id="about-description"
-								className="text-lg text-muted-foreground max-w-2xl"
+								className="text-lg text-muted-foreground max-w-2xl mb-4"
 							>
 								Forte de mon expérience hospitalière en cardiologie, nutrition
 								de l&apos;obésité, gériatrie et pédiatrie au CHU de Nantes,
 								j&apos;exerce également en libéral pour un accompagnement
 								personnalisé et bienveillant.
+							</p>
+
+							{/* Lien interne contextuel */}
+							<p className="text-sm text-muted-foreground">
+								Découvrez{" "}
+								<Link
+									href="#services"
+									className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-2 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm"
+									aria-label="Consulter mes prestations de diététique et nutrition à Nantes"
+								>
+									mes spécialisations en nutrition clinique
+								</Link>{" "}
+								et{" "}
+								<Link
+									href="/contact"
+									className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-2 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm"
+									aria-label="Prendre rendez-vous pour une consultation diététique personnalisée"
+								>
+									prenez rendez-vous pour une consultation personnalisée
+								</Link>
+								.
 							</p>
 						</div>
 
@@ -90,6 +112,36 @@ export function About() {
 								</div>
 							</article>
 						))}
+					</div>
+				</div>
+
+				{/* Section CTA avec liens internes */}
+				<div className="mt-16 text-center">
+					<div className="bg-muted/30 p-8 rounded-lg border border-border/30">
+						<h3 className="text-xl font-semibold text-foreground mb-4">
+							Prêt(e) à commencer votre accompagnement nutritionnel ?
+						</h3>
+						<p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+							Que vous souhaitiez perdre du poids, améliorer votre santé ou
+							optimiser vos performances sportives, je vous accompagne avec
+							bienveillance vers vos objectifs.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4 justify-center">
+							<Link
+								href="/contact"
+								className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+								aria-label="Réserver votre première consultation de diététique à Nantes"
+							>
+								Réserver ma consultation
+							</Link>
+							<Link
+								href="#faq"
+								className="inline-flex items-center justify-center px-6 py-3 border border-border text-foreground rounded-md font-medium hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+								aria-label="Consulter les questions fréquentes avant votre consultation"
+							>
+								Questions fréquentes
+							</Link>
+						</div>
 					</div>
 				</div>
 			</div>
