@@ -10,6 +10,7 @@ import {
 	SheetTrigger,
 } from "@/shared/components/ui/sheet";
 import { navbarItems } from "@/shared/constants/navbar-items";
+import { useActiveNavbarItem } from "@/shared/hooks/use-active-navbar-item";
 import { useIsScrolled } from "@/shared/hooks/use-is-scrolled";
 import { cn } from "@/shared/utils";
 import { Menu } from "lucide-react";
@@ -20,6 +21,7 @@ export function Navbar() {
 	const isMobile = useIsMobile();
 	const threshold = isMobile ? 25 : 100;
 	const isScrolled = useIsScrolled(threshold);
+	const { isMenuItemActive } = useActiveNavbarItem();
 
 	return (
 		<header role="banner" className="sticky top-0 z-50 w-full">
@@ -68,23 +70,25 @@ export function Navbar() {
 							</div>
 						</Link>
 
-						{/* Navigation desktop avec indicateur de page active */}
+						{/* Navigation desktop */}
 						<nav
 							className="hidden md:block relative z-30"
 							aria-label="Menu principal"
 						>
 							<ul className="flex items-center space-x-1">
 								{navbarItems.map((item) => {
+									const isActive = isMenuItemActive(item.href);
 									return (
 										<li key={item.href}>
 											<Link
 												href={item.href}
 												className={cn(
-													"relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200",
-													"hover:bg-accent hover:text-accent-foreground",
-													"focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-													"text-foreground/90"
+													"relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200 hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+													isActive
+														? "text-primary bg-primary/10 font-semibold"
+														: "text-foreground/90"
 												)}
+												aria-current={isActive ? "page" : undefined}
 											>
 												{item.label}
 											</Link>
@@ -109,7 +113,7 @@ export function Navbar() {
 							</Button>
 						</div>
 
-						{/* Menu mobile amélioré */}
+						{/* Menu mobile */}
 						<Sheet>
 							<SheetTrigger asChild>
 								<Button
@@ -152,17 +156,19 @@ export function Navbar() {
 								<nav className="flex-1 p-6" aria-label="Menu mobile">
 									<ul className="space-y-2">
 										{navbarItems.map((item) => {
+											const isActive = isMenuItemActive(item.href);
 											return (
 												<li key={item.href}>
 													<SheetClose asChild>
 														<Link
 															href={item.href}
 															className={cn(
-																"flex items-center rounded-lg px-4 py-3 text-base font-medium transition-colors duration-200 w-full text-left",
-																"hover:bg-accent hover:text-accent-foreground",
-																"focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-																"text-foreground"
+																"flex items-center rounded-lg px-4 py-3 text-base font-medium transition-colors duration-200 w-full text-left hover:bg-accent hover:text-accent-foreground focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+																isActive
+																	? "text-primary bg-primary/10 font-semibold"
+																	: "text-foreground"
 															)}
+															aria-current={isActive ? "page" : undefined}
 														>
 															{item.label}
 														</Link>
