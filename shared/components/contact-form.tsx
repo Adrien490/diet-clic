@@ -442,8 +442,6 @@ export function ContactForm() {
 															cursor: isUploading ? "not-allowed" : "pointer",
 															opacity: isUploading ? 0.5 : 1,
 															transition: "all 0.2s ease-in-out",
-															"aria-label":
-																"Sélectionner des fichiers à joindre",
 														}),
 													}}
 													content={{
