@@ -1,6 +1,6 @@
 import { navbarItems } from "@/shared/constants/navbar-items";
 import { cn } from "@/shared/utils";
-import { Heart } from "lucide-react";
+import { ArrowUp, Heart } from "lucide-react";
 import Link from "next/link";
 
 const legalLinks = [
@@ -135,11 +135,21 @@ export function Footer() {
 					</nav>
 				</div>
 
-				{/* Copyright */}
+				{/* Copyright et retour en haut */}
 				<div className="pt-6 border-t border-border/30">
-					<p className="text-sm text-foreground/70 text-center">
-						© 2025 Manon Diététique. Tous droits réservés.
-					</p>
+					<div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+						<p className="text-sm text-foreground/70 text-center sm:text-left">
+							© 2025 Manon Diététique. Tous droits réservés.
+						</p>
+						<Link
+							href="#"
+							className="inline-flex items-center gap-2 text-sm text-foreground/70 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm px-2 py-1 -m-1"
+							aria-label="Retour en haut de la page"
+						>
+							<ArrowUp className="h-4 w-4" aria-hidden="true" />
+							Retour en haut
+						</Link>
+					</div>
 				</div>
 			</div>
 		</footer>
