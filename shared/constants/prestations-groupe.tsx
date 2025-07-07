@@ -1,5 +1,3 @@
-"use client";
-
 import { Brain, Calculator, ChefHat, Trophy } from "lucide-react";
 
 export const PRESTATIONS_GROUPE = [

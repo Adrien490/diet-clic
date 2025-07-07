@@ -102,7 +102,7 @@ export function Services() {
 				</Tabs>
 
 				{/* Section d'information supplémentaire avec mots-clés longue traîne */}
-				<div className="mt-16 text-center">
+				<aside className="mt-16 text-center">
 					<div className="bg-background/50 p-8 rounded-lg border border-border/50">
 						<h3 className="text-xl font-semibold text-foreground mb-4">
 							Pourquoi consulter une diététicienne nutritionniste à Nantes ?
@@ -150,7 +150,7 @@ export function Services() {
 							</div>
 						</div>
 					</div>
-				</div>
+				</aside>
 			</div>
 		</section>
 	);
