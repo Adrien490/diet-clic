@@ -21,9 +21,7 @@ export function useContactForm({ onSuccess }: UseContactFormProps) {
 					toast.success(data.message);
 				}
 			},
-			onError: (error) => {
-				toast.error(error.message || "Une erreur s'est produite");
-			},
+			onError: () => {},
 		}),
 		undefined
 	);
