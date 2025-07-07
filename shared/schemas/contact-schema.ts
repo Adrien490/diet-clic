@@ -1,3 +1,4 @@
+import { ServerResponse } from "http";
 import { z } from "zod";
 
 export const contactSchema = z.object({
@@ -34,7 +35,7 @@ export const contactSchema = z.object({
 		.default([]),
 });
 
-export type ContactFormData = z.infer<typeof contactSchema>;
+export type ContactFormResponse = ServerResponse;
 
 export const subjectOptions = {
 	"premiere-consultation": "Première consultation diététique",

@@ -21,8 +21,13 @@ import {
 import { Textarea } from "./ui/textarea";
 
 export function ContactForm() {
-	const { state, dispatch, isPending } = useContactForm();
-	const { isUploading } = useUploadThing("contactAttachment");
+	const { state, dispatch, isPending } = useContactForm({
+		onSuccess: (message) => {
+			toast.success(message);
+			form.reset();
+		},
+	});
+	const { startUpload, isUploading } = useUploadThing("contactAttachment");
 
 	const form = useForm({
 		defaultValues: {
@@ -356,15 +361,13 @@ export function ContactForm() {
 											<div className="relative">
 												<UploadDropzone
 													endpoint="contactAttachment"
-													onClientUploadComplete={(res) => {
-														if (res && res.length > 0) {
-															res.forEach((file) => {
-																if (field.state.value.length < 3) {
-																	field.pushValue({
-																		url: file.ufsUrl,
-																		name: file.name,
-																	});
-																}
+													onChange={async (files) => {
+														const res = await startUpload(files);
+														const attachmentUrl = res?.[0]?.ufsUrl;
+														if (attachmentUrl) {
+															field.pushValue({
+																url: attachmentUrl,
+																name: files[0].name,
 															});
 														}
 													}}
