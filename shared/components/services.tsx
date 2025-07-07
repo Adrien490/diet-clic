@@ -1,5 +1,6 @@
 import { PRESTATIONS } from "@/shared/constants/prestations";
 import { User, Users } from "lucide-react";
+import Link from "next/link";
 import { PRESTATIONS_GROUPE } from "../constants/prestations-groupe";
 import { ServiceItem } from "./service-item";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
@@ -117,56 +118,35 @@ export function Services() {
 					</TabsContent>
 				</Tabs>
 
-				{/* Section d'information supplémentaire avec mots-clés longue traîne */}
-				<aside className="mt-16 text-center">
-					<div className="bg-background/50 p-8 rounded-lg border border-border/50">
+				{/* Section CTA avec liens internes */}
+				<div className="mt-16 text-center">
+					<div className="bg-muted/30 p-8 rounded-lg border border-border/30">
 						<h3 className="text-xl font-semibold text-foreground mb-4">
-							Pourquoi consulter une diététicienne nutritionniste à Nantes ?
+							Prêt(e) à commencer votre accompagnement nutritionnel ?
 						</h3>
-						<div className="grid md:grid-cols-2 gap-6 text-left">
-							<div>
-								<h4 className="font-medium text-foreground mb-2">
-									Expertise professionnelle
-								</h4>
-								<p className="text-sm text-foreground/80">
-									Diplômée en diététique et nutrition, je vous accompagne avec
-									une approche scientifique et personnalisée pour votre
-									équilibre alimentaire et votre bien-être.
-								</p>
-							</div>
-							<div>
-								<h4 className="font-medium text-foreground mb-2">
-									Suivi personnalisé
-								</h4>
-								<p className="text-sm text-foreground/80">
-									Chaque consultation est adaptée à vos besoins spécifiques, vos
-									objectifs et votre mode de vie pour un accompagnement
-									nutritionnel durable et efficace.
-								</p>
-							</div>
-							<div>
-								<h4 className="font-medium text-foreground mb-2">
-									Approche bienveillante
-								</h4>
-								<p className="text-sm text-foreground/80">
-									Sans régime restrictif ni contrainte, je privilégie une
-									démarche respectueuse de votre relation à l&apos;alimentation
-									pour retrouver le plaisir de manger.
-								</p>
-							</div>
-							<div>
-								<h4 className="font-medium text-foreground mb-2">
-									Localisation pratique
-								</h4>
-								<p className="text-sm text-foreground/80">
-									Cabinet situé à Nantes (Loire-Atlantique) avec possibilité de
-									consultations à domicile et téléconsultations pour
-									s&apos;adapter à vos contraintes.
-								</p>
-							</div>
+						<p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
+							Que vous souhaitiez perdre du poids, améliorer votre santé ou
+							optimiser vos performances sportives, je vous accompagne avec
+							bienveillance vers vos objectifs.
+						</p>
+						<div className="flex flex-col sm:flex-row gap-4 justify-center">
+							<Link
+								href="/contact"
+								className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+								aria-label="Réserver votre première consultation de diététique à Nantes"
+							>
+								Réserver ma consultation
+							</Link>
+							<Link
+								href="#faq"
+								className="inline-flex items-center justify-center px-6 py-3 border border-border text-foreground rounded-md font-medium hover:bg-muted/50 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+								aria-label="Consulter les questions fréquentes avant votre consultation"
+							>
+								Questions fréquentes
+							</Link>
 						</div>
 					</div>
-				</aside>
+				</div>
 			</div>
 		</section>
 	);
