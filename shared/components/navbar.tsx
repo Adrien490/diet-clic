@@ -16,7 +16,7 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export function Navbar() {
-	const isScrolled = useIsScrolled(120);
+	const isScrolled = useIsScrolled(25);
 
 	return (
 		<header role="banner" className="sticky top-0 z-50 w-full">
