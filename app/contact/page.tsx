@@ -23,9 +23,7 @@ export default function ContactPage() {
 						</h1>
 						<p className="text-lg text-muted-foreground max-w-3xl">
 							Prenez rendez-vous pour une consultation diététique personnalisée
-							ou posez-moi vos questions. Je vous réponds rapidement pour
-							commencer ensemble votre parcours vers une alimentation
-							équilibrée.
+							ou posez-moi vos questions.
 						</p>
 					</div>
 
