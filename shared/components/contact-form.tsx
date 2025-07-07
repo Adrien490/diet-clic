@@ -3,8 +3,8 @@
 import { mergeForm, useForm, useTransform } from "@tanstack/react-form";
 import { Upload, X } from "lucide-react";
 import { toast } from "sonner";
+import { subjectOptions } from "../constants/contact-form-subject-options";
 import { useContactForm } from "../hooks/use-contact-form";
-import { subjectOptions } from "../schemas/contact-schema";
 import { cn } from "../utils";
 import { UploadDropzone, useUploadThing } from "../utils/uploadthing";
 import { MiniDotsLoader } from "./loaders";

@@ -1,4 +1,3 @@
-import { ServerResponse } from "http";
 import { z } from "zod";
 
 export const contactSchema = z.object({
@@ -34,12 +33,3 @@ export const contactSchema = z.object({
 		.max(3, "Maximum 3 pièces jointes autorisées")
 		.default([]),
 });
-
-export type ContactFormResponse = ServerResponse;
-
-export const subjectOptions = {
-	"premiere-consultation": "Première consultation diététique",
-	"consultation-suivi": "Consultation de suivi diététique",
-	"prestation-groupe": "Prestation de groupe",
-	autre: "Autre",
-} as const;

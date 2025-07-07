@@ -10,6 +10,7 @@ import {
 	Section,
 	Text,
 } from "@react-email/components";
+import { subjectOptions } from "../../constants/contact-form-subject-options";
 
 interface ContactEmailTemplateProps {
 	fullName: string;
@@ -50,7 +51,9 @@ export function ContactEmailTemplate({
 							</Link>
 						</Text>
 						<Text style={text}>
-							<strong>Motif :</strong> {subject}
+							<strong>Motif :</strong>{" "}
+							{subjectOptions[subject as keyof typeof subjectOptions] ||
+								subject}
 						</Text>
 					</Section>
 
