@@ -45,7 +45,7 @@ export function About() {
 								</Link>{" "}
 								et{" "}
 								<Link
-									href="/contact"
+									href="#contact"
 									className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-2 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm"
 									aria-label="Prendre rendez-vous pour une consultation diététique personnalisée"
 								>

@@ -36,7 +36,7 @@ export function Hero() {
 							className="text-base focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
 						>
 							<Link
-								href="/contact"
+								href="#contact"
 								aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste à Nantes - Consultation personnalisée"
 							>
 								Prendre rendez-vous
@@ -80,7 +80,7 @@ export function Hero() {
 							</Link>
 							<span className="text-muted-foreground/50">•</span>
 							<Link
-								href="/contact"
+								href="#contact"
 								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
 								aria-label="Contacter Manon Chaillou pour une consultation diététique à Nantes"
 							>

@@ -131,7 +131,7 @@ export function Services() {
 						</p>
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<Link
-								href="/contact"
+								href="#contact"
 								className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-md font-medium hover:bg-primary/90 transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
 								aria-label="Réserver votre première consultation de diététique à Nantes"
 							>

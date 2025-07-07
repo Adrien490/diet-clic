@@ -105,7 +105,7 @@ export function Navbar() {
 								className="shadow-sm transition-shadow duration-200"
 							>
 								<Link
-									href="/contact"
+									href="#contact"
 									aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste"
 								>
 									Prendre rendez-vous
@@ -183,7 +183,7 @@ export function Navbar() {
 									<SheetClose asChild>
 										<Button asChild className="w-full">
 											<Link
-												href="/contact"
+												href="#contact"
 												aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste"
 											>
 												Prendre rendez-vous
