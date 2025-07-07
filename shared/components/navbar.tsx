@@ -60,7 +60,7 @@ export function Navbar() {
 							</div>
 							<div className="hidden sm:block">
 								<div className="text-base font-semibold text-foreground transition-colors">
-									Manon
+									Manon Chaillou
 								</div>
 								<div className="text-xs text-foreground/70">
 									Diététicienne Nutritionniste
