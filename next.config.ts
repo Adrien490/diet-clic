@@ -14,7 +14,6 @@ const nextConfig: NextConfig = {
 
 	// Optimisations CSS et JS
 	experimental: {
-		optimizeCss: true,
 		// Optimisation des polices
 		optimizePackageImports: ["lucide-react"],
 	},
