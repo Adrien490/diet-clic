@@ -73,7 +73,7 @@ export const createToastCallbacks = <
 		// Gère l'erreur
 		onError: (result: ActionState<TData, TSchema>) => {
 			if (result?.message) {
-				toast.error(result.message);
+				//toast.error(result.message);
 			}
 
 			// Si l'utilisateur a défini son propre comportement
