@@ -1,12 +1,10 @@
 "use server";
 
 import { render } from "@react-email/render";
+import z from "zod";
 import { ContactEmailTemplate } from "../components/emails/contact-email-template";
-import {
-	ContactFormData,
-	contactSchema,
-	subjectOptions,
-} from "../schemas/contact-schema";
+import { subjectOptions } from "../constants/contact-form-subject-options";
+import { contactSchema } from "../schemas/contact-schema";
 import {
 	ActionStatus,
 	ServerAction,
@@ -19,7 +17,7 @@ import { sendEmail } from "./send-email";
 const ADMIN_EMAIL = "adrien.poirier49@gmail.com"; // Email de test Resend
 
 export const contact: ServerAction<
-	ContactFormData,
+	z.infer<typeof contactSchema>,
 	typeof contactSchema
 > = async (_, formData) => {
 	try {
