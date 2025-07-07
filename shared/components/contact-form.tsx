@@ -453,7 +453,7 @@ export function ContactForm() {
 																		<MiniDotsLoader size="md" color="primary" />
 																		<div className="text-center">
 																			<p className="text-sm font-medium text-primary">
-																				Upload en cours...
+																				Chargement du fichier...
 																			</p>
 																			<p className="text-lg font-semibold text-primary mt-1">
 																				{uploadProgress}%
