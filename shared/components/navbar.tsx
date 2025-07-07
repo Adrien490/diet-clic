@@ -16,10 +16,18 @@ import { Menu } from "lucide-react";
 import Link from "next/link";
 
 export function Navbar() {
-	const isScrolled = useIsScrolled(140);
+	const isScrolled = useIsScrolled(120);
 
 	return (
 		<header role="banner" className="sticky top-0 z-50 w-full">
+			{/* Skip link pour l'accessibilité */}
+			<Link
+				href="#main-content"
+				className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:rounded-md focus:outline-none focus:ring-2 focus:ring-ring"
+			>
+				Aller au contenu principal
+			</Link>
+
 			<nav
 				role="navigation"
 				aria-label="Navigation principale"
@@ -34,13 +42,14 @@ export function Navbar() {
 						<Link
 							href="/"
 							className="group flex items-center space-x-3 rounded-lg p-2 -m-2 transition-all duration-200 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring relative z-30"
-							aria-label="Retour à l'accueil - Manon Diététicienne"
+							aria-label="Retour à l'accueil - Manon Chaillou, Diététicienne Nutritionniste"
 						>
 							<div
 								className={cn(
 									"flex h-9 w-9 items-center justify-center rounded-full bg-primary transition-all duration-300",
 									isScrolled && "h-8 w-8"
 								)}
+								aria-hidden="true"
 							>
 								<span className="text-sm font-bold text-primary-foreground">
 									M
@@ -50,7 +59,7 @@ export function Navbar() {
 								<div className="text-base font-semibold text-foreground transition-colors">
 									Manon
 								</div>
-								<div className="text-xs text-muted-foreground">
+								<div className="text-xs text-foreground/70">
 									Diététicienne Nutritionniste
 								</div>
 							</div>
@@ -71,7 +80,7 @@ export function Navbar() {
 													"relative rounded-md px-4 py-2 text-sm font-medium transition-all duration-200",
 													"hover:bg-accent hover:text-accent-foreground",
 													"focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
-													"text-foreground/80"
+													"text-foreground/90"
 												)}
 											>
 												{item.label}
@@ -88,7 +97,12 @@ export function Navbar() {
 								asChild
 								className="shadow-sm transition-shadow duration-200"
 							>
-								<Link href="/contact">Prendre rendez-vous</Link>
+								<Link
+									href="/contact"
+									aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste"
+								>
+									Prendre rendez-vous
+								</Link>
 							</Button>
 						</div>
 
@@ -100,15 +114,19 @@ export function Navbar() {
 									size="icon"
 									className="md:hidden hover:bg-accent focus-visible:bg-accent relative z-30"
 									aria-label="Ouvrir le menu de navigation"
+									aria-expanded="false"
 								>
-									<Menu className="h-5 w-5" />
+									<Menu className="h-5 w-5" aria-hidden="true" />
 								</Button>
 							</SheetTrigger>
 							<SheetContent side="right" className="w-80 p-0">
 								<SheetHeader className="border-b p-6">
 									<div className="flex items-center justify-between">
 										<div className="flex items-center space-x-3">
-											<div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
+											<div
+												className="flex h-8 w-8 items-center justify-center rounded-full bg-primary"
+												aria-hidden="true"
+											>
 												<span className="text-sm font-bold text-primary-foreground">
 													M
 												</span>
@@ -117,7 +135,7 @@ export function Navbar() {
 												<div className="font-semibold text-foreground">
 													Manon
 												</div>
-												<div className="text-xs text-muted-foreground">
+												<div className="text-xs text-foreground/70">
 													Diététicienne
 												</div>
 											</div>
@@ -155,7 +173,12 @@ export function Navbar() {
 								<div className="border-t p-6">
 									<SheetClose asChild>
 										<Button asChild className="w-full">
-											<Link href="/contact">Prendre rendez-vous</Link>
+											<Link
+												href="/contact"
+												aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste"
+											>
+												Prendre rendez-vous
+											</Link>
 										</Button>
 									</SheetClose>
 								</div>

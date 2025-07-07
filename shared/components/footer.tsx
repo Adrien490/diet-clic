@@ -42,7 +42,7 @@ export function Footer() {
 					<div>
 						<Link
 							href="/"
-							className="flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity"
+							className="flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md p-1 -m-1"
 							aria-label="Manon Diététique - Retour à l'accueil"
 						>
 							<Heart className="h-6 w-6 text-primary" aria-hidden="true" />
@@ -51,7 +51,7 @@ export function Footer() {
 							</span>
 						</Link>
 
-						<p className="text-sm text-muted-foreground">
+						<p className="text-sm text-foreground/70">
 							Votre équilibre nutritionnel sur mesure
 						</p>
 					</div>
@@ -69,7 +69,7 @@ export function Footer() {
 								<li key={index} role="listitem">
 									<Link
 										href={item.href}
-										className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+										className="text-sm text-foreground/70 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
 									>
 										{item.label}
 									</Link>
@@ -91,7 +91,7 @@ export function Footer() {
 								<li key={index} role="listitem">
 									<Link
 										href={link.href}
-										className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+										className="text-sm text-foreground/70 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
 									>
 										{link.label}
 									</Link>
@@ -113,7 +113,7 @@ export function Footer() {
 								<li key={index} role="listitem">
 									<Link
 										href={source.href}
-										className="text-sm text-muted-foreground hover:text-foreground transition-colors inline-flex items-center gap-1"
+										className="text-sm text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
 										target={source.external ? "_blank" : undefined}
 										rel={source.external ? "noopener noreferrer" : undefined}
 										aria-label={
@@ -136,8 +136,8 @@ export function Footer() {
 				</div>
 
 				{/* Copyright */}
-				<div className="pt-6">
-					<p className="text-sm text-muted-foreground text-center">
+				<div className="pt-6 border-t border-border/30">
+					<p className="text-sm text-foreground/70 text-center">
 						© 2025 Manon Diététique. Tous droits réservés.
 					</p>
 				</div>

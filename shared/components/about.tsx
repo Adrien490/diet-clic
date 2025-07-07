@@ -47,24 +47,26 @@ export function About() {
 				{/* Timeline responsive */}
 				<div className="relative">
 					{/* Ligne horizontale pour desktop */}
-					<div className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-border/30 rounded-full" />
+					<div
+						className="hidden lg:block absolute top-20 left-0 right-0 h-1 bg-border/30 rounded-full"
+						aria-hidden="true"
+					/>
 
 					{/* Étapes du parcours */}
 					<div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 lg:gap-12">
 						{ABOUT_STEPS.map((step: AboutStep) => (
 							<article
 								key={step.id}
-								className="flex flex-col items-start lg:w-1/3 relative text-left"
+								className="flex flex-col items-start lg:w-1/3 relative text-left focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 rounded-lg p-2 -m-2"
 								aria-labelledby={`about-${step.id}-title`}
+								tabIndex={0}
 							>
-								{/* Bulle décorative */}
 								<div className="relative z-10 mb-6 flex-shrink-0">
 									<div className="w-16 h-16 rounded-full border-4 border-background bg-primary flex items-center justify-center text-primary-foreground shadow-lg">
-										{step.icon}
+										<span aria-hidden="true">{step.icon}</span>
 									</div>
 								</div>
 
-								{/* Contenu */}
 								<div>
 									<h3
 										id={`about-${step.id}-title`}
@@ -72,7 +74,7 @@ export function About() {
 									>
 										{step.title}
 									</h3>
-									<div className="text-sm text-muted-foreground leading-relaxed text-left space-y-3">
+									<div className="text-sm text-foreground/90 leading-relaxed text-left space-y-3">
 										{step.description.map(
 											(paragraph: string, paragraphIndex: number) => (
 												<p key={paragraphIndex}>{paragraph}</p>

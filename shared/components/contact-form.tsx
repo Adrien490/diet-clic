@@ -17,7 +17,7 @@ import {
 import { Textarea } from "./ui/textarea";
 
 export function ContactForm() {
-	const { state, dispatch } = useContactForm({
+	const { state, dispatch, isPending } = useContactForm({
 		onSuccess: (data) => {
 			toast.success(data.message);
 		},
@@ -47,6 +47,11 @@ export function ContactForm() {
 			aria-labelledby="contact-form-title"
 			noValidate
 		>
+			{/* Titre du formulaire (caché mais référencé) */}
+			<h2 id="contact-form-title" className="sr-only">
+				Formulaire de contact
+			</h2>
+
 			{/* Grille 2 colonnes */}
 			<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 				{/* Colonne de gauche : Champs de base */}
@@ -186,7 +191,7 @@ export function ContactForm() {
 									) : (
 										<p
 											id={`${field.name}-help`}
-											className="text-sm text-gray-600"
+											className="text-sm text-foreground/70"
 										>
 											Nous utiliserons cet email pour vous recontacter
 										</p>
@@ -220,6 +225,7 @@ export function ContactForm() {
 										onValueChange={(value) => field.handleChange(value)}
 									>
 										<SelectTrigger
+											id={field.name}
 											className={cn(
 												"w-full max-w-full",
 												!field.state.meta.isValid
@@ -263,7 +269,7 @@ export function ContactForm() {
 									) : (
 										<p
 											id={`${field.name}-help`}
-											className="text-sm text-gray-600"
+											className="text-sm text-foreground/70"
 										>
 											Cela nous aide à mieux vous orienter
 										</p>
@@ -275,14 +281,15 @@ export function ContactForm() {
 						<form.Field name="attachment">
 							{(field) => (
 								<div className="space-y-2">
-									<Label className="text-sm font-medium">
+									<Label htmlFor="file-upload" className="text-sm font-medium">
 										Pièce jointe{" "}
-										<span className="text-gray-500">(optionnel)</span>
+										<span className="text-foreground/60">(optionnel)</span>
 									</Label>
 									<div className="space-y-3">
 										<input
 											type="file"
 											id="file-upload"
+											name="attachment"
 											accept="image/*,.pdf,.doc,.docx,.txt"
 											onChange={(e) => {
 												const file = e.target.files?.[0];
@@ -292,6 +299,7 @@ export function ContactForm() {
 												}
 											}}
 											className="hidden"
+											aria-describedby="file-upload-help"
 										/>
 										<Button
 											type="button"
@@ -300,32 +308,40 @@ export function ContactForm() {
 												document.getElementById("file-upload")?.click()
 											}
 											className="w-full h-10 bg-transparent text-foreground hover:bg-accent hover:text-accent-foreground border border-border rounded-md px-4 py-2 font-medium transition-colors duration-200 focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+											aria-describedby="file-upload-help"
 										>
 											Ajouter un fichier
 										</Button>
 										{field.state.value && (
 											<div className="space-y-2">
-												<p className="text-sm text-gray-600">
-													Fichier attaché:
+												<p className="text-sm text-foreground/70">
+													Fichier attaché :
 												</p>
-												<div className="flex items-center justify-between text-sm bg-gray-50 p-2 rounded">
-													<span className="text-gray-700 truncate">
+												<div className="flex items-center justify-between text-sm bg-muted/50 p-2 rounded border">
+													<span className="text-foreground truncate">
 														{field.state.value.name}
 													</span>
-													<button
+													<Button
 														type="button"
+														variant="ghost"
+														size="sm"
 														onClick={() => {
 															field.handleChange(null);
+															toast.success("Fichier supprimé");
 														}}
-														className="text-red-600 hover:text-red-800 ml-2"
+														className="text-red-600 hover:text-red-800 hover:bg-red-50 h-auto p-1 ml-2"
+														aria-label={`Supprimer le fichier ${field.state.value.name}`}
 													>
 														Supprimer
-													</button>
+													</Button>
 												</div>
 											</div>
 										)}
 									</div>
-									<p className="text-sm text-gray-600">
+									<p
+										id="file-upload-help"
+										className="text-sm text-foreground/70"
+									>
 										Formats acceptés : Images et documents (max 4MB par fichier)
 									</p>
 								</div>
@@ -398,7 +414,7 @@ export function ContactForm() {
 								) : (
 									<p
 										id={`${field.name}-help`}
-										className="text-sm text-gray-600"
+										className="text-sm text-foreground/70"
 										aria-live="polite"
 									>
 										{field.state.value.length}/1000 caractères
@@ -412,7 +428,7 @@ export function ContactForm() {
 
 			{/* Section en bas pour les erreurs et le bouton */}
 			<div className="space-y-4 border-t pt-6">
-				<div className="text-sm text-gray-600">
+				<div className="text-sm text-foreground/70">
 					<p>
 						<span className="text-red-500" aria-hidden="true">
 							*
@@ -440,14 +456,14 @@ export function ContactForm() {
 				<form.Subscribe
 					selector={(state) => [state.canSubmit, state.isSubmitting]}
 				>
-					{([canSubmit, isSubmitting]) => (
+					{([canSubmit]) => (
 						<Button
 							type="submit"
-							disabled={!canSubmit || isSubmitting}
-							aria-disabled={!canSubmit || isSubmitting}
+							disabled={!canSubmit || isPending}
+							aria-disabled={!canSubmit || isPending}
 							aria-describedby={!canSubmit ? "submit-help" : undefined}
 						>
-							Envoyer ma demande
+							{isPending ? "Envoi en cours..." : "Envoyer ma demande"}
 						</Button>
 					)}
 				</form.Subscribe>
@@ -455,7 +471,7 @@ export function ContactForm() {
 				{!form.state.canSubmit &&
 					form.state.isTouched &&
 					!form.state.isSubmitting && (
-						<p id="submit-help" className="text-sm text-gray-600">
+						<p id="submit-help" className="text-sm text-foreground/70">
 							Veuillez corriger les erreurs ci-dessus avant d&apos;envoyer le
 							formulaire
 						</p>

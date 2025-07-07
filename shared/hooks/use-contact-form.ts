@@ -14,7 +14,6 @@ export function useContactForm({ onSuccess }: UseContactFormProps) {
 		withCallbacks(
 			contact,
 			createToastCallbacks<ContactFormData, typeof contactSchema>({
-				loadingMessage: "Envoi du message en cours...",
 				onSuccess: (data) => {
 					if (onSuccess && data.data) {
 						onSuccess(data.data);

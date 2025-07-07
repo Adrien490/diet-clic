@@ -5,11 +5,18 @@ import Link from "next/link";
 
 export function Hero() {
 	return (
-		<section className="flex items-center justify-center w-full flex-col px-4 min-h-screen">
+		<section
+			id="main-content"
+			aria-labelledby="hero-title"
+			className="flex items-center justify-center w-full flex-col px-4 min-h-screen"
+		>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-20">
 				<div className="text-center space-y-8">
 					{/* Titre principal */}
-					<h1 className="bg-clip-text text-transparent text-center bg-gradient-to-b from-foreground to-foreground/70 text-4xl md:text-6xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight">
+					<h1
+						id="hero-title"
+						className="text-center bg-gradient-to-b from-foreground to-foreground/80 bg-clip-text text-4xl md:text-6xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight"
+					>
 						Manon Chaillou
 						<br />
 						Diététicienne Nutritionniste
@@ -23,11 +30,30 @@ export function Hero() {
 
 					{/* Boutons */}
 					<div className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center relative z-20">
-						<Button asChild size="lg" className="text-base">
-							<Link href="/contact">Prendre rendez-vous</Link>
+						<Button
+							asChild
+							size="lg"
+							className="text-base focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+						>
+							<Link
+								href="/contact"
+								aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste"
+							>
+								Prendre rendez-vous
+							</Link>
 						</Button>
-						<Button asChild variant="outline" size="lg" className="text-base">
-							<a href="#about">En savoir plus</a>
+						<Button
+							asChild
+							variant="outline"
+							size="lg"
+							className="text-base focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+						>
+							<Link
+								href="#about"
+								aria-label="En savoir plus sur les services de Manon Chaillou, diététicienne nutritionniste"
+							>
+								En savoir plus
+							</Link>
 						</Button>
 					</div>
 				</div>

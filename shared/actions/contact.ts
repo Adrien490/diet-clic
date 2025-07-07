@@ -59,7 +59,7 @@ export const contact: ServerAction<
 
 			const email = await sendEmail({
 				to: ADMIN_EMAIL,
-				subject: `Nouvelle demande de contact - ${validatedData.subject}`,
+				subject: `${validatedData.subject}`,
 				html: emailHtml,
 				replyTo: validatedData.email,
 			});
