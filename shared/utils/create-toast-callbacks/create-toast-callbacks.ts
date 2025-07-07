@@ -34,7 +34,7 @@ export const createToastCallbacks = <
 		// Affiche le toast de chargement
 		onStart: () => {
 			// On garde le toast de chargement sans fermer les autres
-			//return toast.loading(options.loadingMessage || "Chargement...");
+			return toast.loading(options.loadingMessage || "Chargement...");
 		},
 
 		// Ferme le toast de chargement
@@ -73,7 +73,7 @@ export const createToastCallbacks = <
 		// Gère l'erreur
 		onError: (result: ActionState<TData, TSchema>) => {
 			if (result?.message) {
-				//toast.error(result.message);
+				toast.error(result.message);
 			}
 
 			// Si l'utilisateur a défini son propre comportement
