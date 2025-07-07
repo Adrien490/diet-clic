@@ -1,6 +1,7 @@
 import { PRESTATIONS } from "@/shared/constants/prestations";
 import { Brain, Calculator, ChefHat, Trophy } from "lucide-react";
 import { ServiceItem } from "./service-item";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./ui/tabs";
 
 const PRESTATIONS_GROUPE = [
 	{
@@ -40,86 +41,92 @@ export function Services() {
 			aria-describedby="services-description"
 		>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-				<div className="text-center mb-16">
+				<div className="text-left mb-16">
 					<h2
 						id="services-title"
 						className="text-3xl lg:text-4xl font-bold text-foreground mb-6"
 					>
-						Mes prestations de diététique et nutrition
+						Prestations
 					</h2>
 					<p
 						id="services-description"
-						className="text-lg text-foreground/80 max-w-3xl mx-auto"
+						className="text-lg text-foreground/80 max-w-3xl"
 					>
 						Consultations personnalisées et accompagnement nutritionnel adapté à
 						vos besoins. Que ce soit pour un rééquilibrage alimentaire, une
 						perte de poids ou un suivi thérapeutique, je vous propose un
-						accompagnement bienveillant et professionnel à Nantes.
+						accompagnement bienveillant et professionnel à Nantes ou en
+						téléconsultation.
 					</p>
 				</div>
 
-				{/* Consultations individuelles */}
-				<div className="mb-16">
-					<div className="text-left mb-8">
-						<h3
-							id="services-individual-title"
-							className="text-2xl md:text-3xl font-bold text-foreground mb-4"
+				<Tabs defaultValue="individuelles" className="w-full">
+					<TabsList className="grid w-full grid-cols-2">
+						<TabsTrigger value="individuelles">
+							Prestations individuelles
+						</TabsTrigger>
+						<TabsTrigger value="groupe">Prestations de groupe</TabsTrigger>
+					</TabsList>
+
+					<TabsContent value="individuelles" className="mt-8">
+						<div className="text-left mb-8">
+							<h3
+								id="services-individual-title"
+								className="text-2xl md:text-3xl font-bold text-foreground mb-4"
+							>
+								Consultations individuelles de diététique
+							</h3>
+							<p className="text-lg text-foreground/80 max-w-2xl">
+								Accompagnement personnalisé et sur mesure pour atteindre vos
+								objectifs nutritionnels dans le respect de vos habitudes
+								alimentaires et de votre mode de vie.
+							</p>
+						</div>
+
+						<div
+							className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+							role="list"
+							aria-labelledby="services-individual-title"
 						>
-							Consultations individuelles de diététique
-						</h3>
-						<p className="text-lg text-foreground/80 max-w-2xl">
-							Accompagnement personnalisé et sur mesure pour atteindre vos
-							objectifs nutritionnels dans le respect de vos habitudes
-							alimentaires et de votre mode de vie.
-						</p>
-					</div>
+							{PRESTATIONS.map((prestation, index) => (
+								<div key={prestation.title} role="listitem">
+									<ServiceItem {...prestation} index={index} />
+								</div>
+							))}
+						</div>
+					</TabsContent>
 
-					{/* Grille des prestations individuelles avec mots-clés optimisés */}
-					<div
-						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-						role="list"
-						aria-labelledby="services-individual-title"
-					>
-						{PRESTATIONS.map((prestation, index) => (
-							<div key={prestation.title} role="listitem">
-								<ServiceItem {...prestation} index={index} />
-							</div>
-						))}
-					</div>
-				</div>
+					<TabsContent value="groupe" className="mt-8">
+						<div className="text-left mb-8">
+							<h3
+								id="services-group-title"
+								className="text-2xl md:text-3xl font-bold text-foreground mb-4"
+							>
+								Ateliers collectifs de nutrition à Nantes
+							</h3>
+							<p className="text-lg text-foreground/80 max-w-2xl">
+								Participez à des ateliers collectifs pour apprendre, échanger et
+								partager autour de l&apos;alimentation dans une ambiance
+								conviviale et éducative.
+							</p>
+						</div>
 
-				{/* Prestations de groupe */}
-				<div>
-					<div className="text-left mb-8">
-						<h3
-							id="services-group-title"
-							className="text-2xl md:text-3xl font-bold text-foreground mb-4"
+						<div
+							className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+							role="list"
+							aria-labelledby="services-group-title"
 						>
-							Ateliers collectifs de nutrition à Nantes
-						</h3>
-						<p className="text-lg text-foreground/80 max-w-2xl">
-							Participez à des ateliers collectifs pour apprendre, échanger et
-							partager autour de l&apos;alimentation dans une ambiance
-							conviviale et éducative.
-						</p>
-					</div>
-
-					{/* Grille des prestations de groupe */}
-					<div
-						className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-						role="list"
-						aria-labelledby="services-group-title"
-					>
-						{PRESTATIONS_GROUPE.map((prestation, index) => (
-							<div key={prestation.title} role="listitem">
-								<ServiceItem
-									{...prestation}
-									index={index + PRESTATIONS.length}
-								/>
-							</div>
-						))}
-					</div>
-				</div>
+							{PRESTATIONS_GROUPE.map((prestation, index) => (
+								<div key={prestation.title} role="listitem">
+									<ServiceItem
+										{...prestation}
+										index={index + PRESTATIONS.length}
+									/>
+								</div>
+							))}
+						</div>
+					</TabsContent>
+				</Tabs>
 
 				{/* Section d'information supplémentaire avec mots-clés longue traîne */}
 				<div className="mt-16 text-center">

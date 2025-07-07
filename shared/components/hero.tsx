@@ -41,7 +41,7 @@ export function Hero() {
 								href="/contact"
 								aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste à Nantes - Consultation personnalisée"
 							>
-								Prendre rendez-vous maintenant
+								Prendre rendez-vous
 							</Link>
 						</Button>
 						<Button
