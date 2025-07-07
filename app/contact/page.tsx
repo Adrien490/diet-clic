@@ -12,6 +12,7 @@ export default function ContactPage() {
 		<div className="min-h-screen bg-background">
 			{/* Hero Section */}
 			<section
+				id="main-content"
 				role="region"
 				aria-label="Contactez-moi"
 				className="py-16 lg:py-24"

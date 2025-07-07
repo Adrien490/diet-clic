@@ -225,7 +225,7 @@ export function ContactForm() {
 									) : (
 										<p
 											id={`${field.name}-help`}
-											className="text-sm text-foreground/70"
+											className="text-sm text-muted-foreground"
 										>
 											Nous utiliserons cet email pour vous recontacter
 										</p>
@@ -301,7 +301,7 @@ export function ContactForm() {
 									) : (
 										<p
 											id={`${field.name}-help`}
-											className="text-sm text-foreground/70"
+											className="text-sm text-muted-foreground"
 										>
 											Cela nous aide à mieux vous orienter
 										</p>
@@ -315,7 +315,7 @@ export function ContactForm() {
 								<div className="space-y-2">
 									<Label htmlFor="file-upload" className="text-sm font-medium">
 										Pièces jointes{" "}
-										<span className="text-foreground/60">
+										<span className="text-muted-foreground">
 											(optionnel, max 3)
 										</span>
 									</Label>
@@ -442,6 +442,8 @@ export function ContactForm() {
 															cursor: isUploading ? "not-allowed" : "pointer",
 															opacity: isUploading ? 0.5 : 1,
 															transition: "all 0.2s ease-in-out",
+															"aria-label":
+																"Sélectionner des fichiers à joindre",
 														}),
 													}}
 													content={{
@@ -517,11 +519,12 @@ export function ContactForm() {
 													config={{
 														mode: "auto",
 													}}
+													aria-label="Sélectionner des fichiers à joindre"
 												/>
 											</div>
 										)}
 									</div>
-									<p className="text-sm text-foreground/70">
+									<p className="text-sm text-muted-foreground">
 										Formats acceptés : Images, PDF, Documents (max 4MB par
 										fichier, 3 fichiers maximum)
 									</p>
@@ -595,7 +598,7 @@ export function ContactForm() {
 								) : (
 									<p
 										id={`${field.name}-help`}
-										className="text-sm text-foreground/70"
+										className="text-sm text-muted-foreground"
 										aria-live="polite"
 									>
 										{field.state.value.length}/2000 caractères
@@ -609,7 +612,7 @@ export function ContactForm() {
 
 			{/* Section en bas pour les erreurs et le bouton */}
 			<div className="space-y-4 border-t pt-6">
-				<div className="text-sm text-foreground/70">
+				<div className="text-sm text-muted-foreground">
 					<p>
 						<span className="text-destructive" aria-hidden="true">
 							*
@@ -659,7 +662,7 @@ export function ContactForm() {
 				{!form.state.canSubmit &&
 					form.state.isTouched &&
 					!form.state.isSubmitting && (
-						<p id="submit-help" className="text-sm text-foreground/70">
+						<p id="submit-help" className="text-sm text-muted-foreground">
 							Veuillez corriger les erreurs ci-dessus avant d&apos;envoyer le
 							formulaire
 						</p>
