@@ -386,7 +386,7 @@ export function ContactForm() {
 																: "hsl(var(--background))",
 															padding: "0.75rem",
 															transition: "all 0.2s ease-in-out",
-															minHeight: "60px",
+															height: "125px",
 															display: "flex",
 															flexDirection: "column",
 															alignItems: "center",
@@ -446,11 +446,16 @@ export function ContactForm() {
 														}) => {
 															if (isUploading) {
 																return (
-																	<div className="flex flex-col items-center">
+																	<div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-background/80 backdrop-blur-sm rounded-lg z-10">
 																		<MiniDotsLoader size="md" color="primary" />
-																		<span className="text-sm mt-2">
-																			{uploadProgress}%
-																		</span>
+																		<div className="text-center">
+																			<p className="text-sm font-medium text-primary">
+																				Upload en cours...
+																			</p>
+																			<p className="text-lg font-semibold text-primary mt-1">
+																				{uploadProgress}%
+																			</p>
+																		</div>
 																	</div>
 																);
 															}
@@ -467,16 +472,7 @@ export function ContactForm() {
 														},
 														label: ({ isDragActive, isUploading }) => {
 															if (isUploading) {
-																return (
-																	<div className="text-center">
-																		<p className="text-sm font-medium">
-																			Upload en cours...
-																		</p>
-																		<p className="text-xs text-muted-foreground mt-1">
-																			Veuillez patienter
-																		</p>
-																	</div>
-																);
+																return null;
 															}
 
 															if (isDragActive) {
@@ -510,13 +506,7 @@ export function ContactForm() {
 																4MB)
 															</p>
 														),
-														button: ({ isUploading }) => (
-															<span className="inline-flex items-center justify-center rounded-md border border-input bg-background px-3 py-1.5 text-xs font-medium text-foreground shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50">
-																{isUploading
-																	? "Upload..."
-																	: "Choisir des fichiers"}
-															</span>
-														),
+														button: () => <></>,
 													}}
 													config={{
 														mode: "auto",
