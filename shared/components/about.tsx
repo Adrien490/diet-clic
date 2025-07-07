@@ -6,7 +6,7 @@ export function About() {
 		<section
 			id="about"
 			className="py-16 lg:py-24 bg-background min-h-screen"
-			aria-label="À propos de moi"
+			aria-label="À propos de Manon Chaillou, diététicienne nutritionniste à Nantes"
 			role="region"
 			aria-labelledby="about-title"
 			aria-describedby="about-description"
@@ -26,18 +26,24 @@ export function About() {
 								id="about-description"
 								className="text-lg text-muted-foreground max-w-2xl"
 							>
-								Manon Chaillou, diététicienne nutritionniste diplômée
+								Forte de mon expérience hospitalière en cardiologie, nutrition
+								de l&apos;obésité, gériatrie et pédiatrie au CHU de Nantes,
+								j&apos;exerce également en libéral pour un accompagnement
+								personnalisé et bienveillant.
 							</p>
 						</div>
 
-						{/* Photo alignée avec le titre */}
+						{/* Photo optimisée SEO */}
 						<div className="flex-shrink-0 mt-4 sm:mt-0">
 							<div className="relative h-32 w-32 overflow-hidden rounded-xl bg-gradient-to-br from-primary/10 to-primary/5 shadow-lg sm:h-36 sm:w-36">
 								<Image
 									src="/manon.png"
-									alt="Manon Chaillou, diététicienne nutritionniste"
+									alt="Manon Chaillou, diététicienne nutritionniste diplômée à Nantes - Portrait professionnel"
 									fill
 									className="object-cover object-center"
+									priority
+									quality={90}
+									sizes="(max-width: 640px) 128px, 144px"
 								/>
 							</div>
 						</div>
@@ -52,7 +58,7 @@ export function About() {
 						aria-hidden="true"
 					/>
 
-					{/* Étapes du parcours */}
+					{/* Étapes du parcours professionnel */}
 					<div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 lg:gap-12">
 						{ABOUT_STEPS.map((step: AboutStep) => (
 							<article

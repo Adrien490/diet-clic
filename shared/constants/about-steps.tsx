@@ -13,7 +13,7 @@ export const ABOUT_STEPS: AboutStep[] = [
 		icon: <GraduationCap className="h-6 w-6" />,
 		title: "Mon parcours",
 		description: [
-			"Je suis Manon Chaillou, diététicienne nutritionniste diplômée. J'ai obtenu un Bachelor Universitaire de Technologie (BUT) en Génie Biologique – parcours Diététique et Nutrition à l'IUT de Nancy, une formation reconnue pour sa qualité.",
+			"J'ai obtenu un Bachelor Universitaire de Technologie (BUT) en Génie Biologique – parcours Diététique et Nutrition à l'IUT de Nancy, une formation reconnue pour sa qualité.",
 			"Ce diplôme, validé par l'État, me permet d'exercer le métier de diététicienne nutritionniste, un titre protégé. J'ai également complété mon cursus avec un Diplôme Universitaire en Éducation Thérapeutique du Patient (ETP).",
 			"Mon expérience professionnelle s'est construite en milieu hospitalier : en cardiologie à Lunéville, dans un centre spécialisé dans l'obésité aux Trois-Épis, en gériatrie et en pédiatrie au CHU de Nantes, ainsi que lors d'interventions à domicile.",
 			"Aujourd'hui, j'exerce également en libéral pour accompagner les personnes dans leur quotidien, au plus près de leurs besoins, pour des changements durables et concrets.",

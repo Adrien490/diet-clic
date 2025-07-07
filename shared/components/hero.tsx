@@ -12,23 +12,25 @@ export function Hero() {
 		>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-20">
 				<div className="text-center space-y-8">
-					{/* Titre principal */}
+					{/* Titre principal optimisé SEO avec géolocalisation */}
 					<h1
 						id="hero-title"
 						className="text-center bg-gradient-to-b from-foreground to-foreground/80 bg-clip-text text-4xl md:text-6xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight"
 					>
 						Manon Chaillou
 						<br />
-						Diététicienne Nutritionniste
+						Diététicienne Nutritionniste à Nantes
 					</h1>
 
-					{/* Description */}
+					{/* Description optimisée avec mots-clés et spécialisations à la première personne */}
 					<p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground text-center relative z-20">
-						Votre partenaire pour une alimentation équilibrée. Consultations
-						personnalisées pour tous vos objectifs nutritionnels.
+						Je suis diététicienne nutritionniste diplômée à Nantes
+						(Loire-Atlantique), spécialisée dans le rééquilibrage alimentaire,
+						la nutrition en cardiologie, l&apos;accompagnement de l&apos;obésité
+						et la nutrition clinique.
 					</p>
 
-					{/* Boutons */}
+					{/* Boutons CTA optimisés */}
 					<div className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center relative z-20">
 						<Button
 							asChild
@@ -37,7 +39,7 @@ export function Hero() {
 						>
 							<Link
 								href="/contact"
-								aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste"
+								aria-label="Prendre rendez-vous avec Manon Chaillou, diététicienne nutritionniste à Nantes - Consultation personnalisée"
 							>
 								Prendre rendez-vous
 							</Link>
@@ -50,7 +52,7 @@ export function Hero() {
 						>
 							<Link
 								href="#about"
-								aria-label="En savoir plus sur les services de Manon Chaillou, diététicienne nutritionniste"
+								aria-label="Découvrir le parcours et les spécialités de Manon Chaillou, diététicienne nutritionniste à Nantes"
 							>
 								En savoir plus
 							</Link>
