@@ -34,7 +34,7 @@ export const createToastCallbacks = <
 		// Affiche le toast de chargement
 		onStart: () => {
 			// On garde le toast de chargement sans fermer les autres
-			return toast.loading(options.loadingMessage || "Chargement...");
+			//return toast.loading(options.loadingMessage || "Chargement...");
 		},
 
 		// Ferme le toast de chargement

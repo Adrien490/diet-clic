@@ -641,7 +641,14 @@ export function ContactForm() {
 							aria-disabled={!canSubmit || isPending}
 							aria-describedby={!canSubmit ? "submit-help" : undefined}
 						>
-							{isPending ? "Envoi en cours..." : "Envoyer ma demande"}
+							{isPending ? (
+								<>
+									<MiniDotsLoader size="sm" color="default" />
+									Envoi en cours...
+								</>
+							) : (
+								"Envoyer ma demande"
+							)}
 						</Button>
 					)}
 				</form.Subscribe>
