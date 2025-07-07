@@ -119,7 +119,7 @@ export function Services() {
 				</Tabs>
 
 				{/* Section CTA avec liens internes */}
-				<div className="mt-16 text-center">
+				<aside className="mt-16 text-center">
 					<div className="bg-muted/30 p-8 rounded-lg border border-border/30">
 						<h3 className="text-xl font-semibold text-foreground mb-4">
 							Prêt(e) à commencer votre accompagnement nutritionnel ?
@@ -146,7 +146,7 @@ export function Services() {
 							</Link>
 						</div>
 					</div>
-				</div>
+				</aside>
 			</div>
 		</section>
 	);
