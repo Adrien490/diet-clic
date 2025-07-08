@@ -12,9 +12,14 @@ export function Services() {
 			className="py-16 lg:py-24 bg-muted/50"
 			aria-label="Prestations et services de diététique à Nantes"
 			role="region"
-			aria-labelledby="services-title"
-			aria-describedby="services-description"
+			data-voice-queries="consultation diététique nantes,nutritionniste près de moi,diététicienne spécialisée"
+			data-service-types="individual,group,therapeutic"
 		>
+			<p className="sr-only">
+				Manon Chaillou propose des consultations de diététique à Nantes.
+				Services individuels et ateliers de groupe disponibles. Spécialisations
+				: poids, grossesse, pathologies, dénutrition.
+			</p>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
 				<div className="text-left mb-16">
 					<h2

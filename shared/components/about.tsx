@@ -9,9 +9,16 @@ export function About() {
 			className="py-16 lg:py-24 bg-background min-h-screen"
 			aria-label="À propos de Manon Chaillou, diététicienne nutritionniste à Nantes"
 			role="region"
-			aria-labelledby="about-title"
-			aria-describedby="about-description"
+			data-voice-queries="qui est manon chaillou,diététicienne nantes expérience,parcours nutritionniste"
+			data-content-type="professional-biography"
+			itemScope
+			itemType="https://schema.org/Person"
 		>
+			<p className="sr-only">
+				Manon Chaillou est une diététicienne nutritionniste expérimentée à
+				Nantes. Elle a travaillé au CHU de Nantes en cardiologie, obésité,
+				gériatrie et pédiatrie.
+			</p>
 			<div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="text-left mb-12">
 					{/* Titre, description et photo alignés */}
@@ -33,8 +40,32 @@ export function About() {
 								personnalisé et bienveillant.
 							</p>
 
+							{/* Local SEO Reinforcement */}
+							<div className="mt-4 text-sm text-muted-foreground">
+								<span>Zone d&apos;intervention : </span>
+								<span
+									itemProp="areaServed"
+									itemScope
+									itemType="https://schema.org/City"
+								>
+									<span itemProp="name">Nantes</span>
+								</span>{" "}
+								et
+								<span
+									itemProp="areaServed"
+									itemScope
+									itemType="https://schema.org/State"
+								>
+									<span itemProp="name"> Loire-Atlantique</span>
+								</span>
+								<span>
+									{" "}
+									- Consultations au cabinet, à domicile et en téléconsultation
+								</span>
+							</div>
+
 							{/* Lien interne contextuel */}
-							<p className="text-sm text-muted-foreground">
+							<p className="text-sm text-muted-foreground mt-4">
 								Découvrez{" "}
 								<Link
 									href="#services"
@@ -66,13 +97,72 @@ export function About() {
 									priority
 									quality={90}
 									sizes="(max-width: 640px) 128px, 144px"
+									itemProp="image"
 								/>
 							</div>
 						</div>
 					</div>
 				</div>
 
-				{/* Timeline responsive */}
+				{/* E-A-T Maximum Enhancement */}
+				<section className="mt-8 p-6 bg-muted/30 rounded-lg mb-12">
+					<h3 className="text-xl font-semibold text-foreground mb-4">
+						Qualifications et Certifications
+					</h3>
+					<div className="grid md:grid-cols-2 gap-4">
+						<ul className="space-y-2 text-sm text-foreground/90">
+							<li
+								itemProp="hasCredential"
+								itemScope
+								itemType="https://schema.org/EducationalCredential"
+							>
+								•{" "}
+								<span itemProp="name">
+									Diplôme d&apos;État Diététicienne Nutritionniste
+								</span>
+								<span className="text-xs text-muted-foreground ml-2">
+									(BUT Génie Biologique - IUT Nancy)
+								</span>
+							</li>
+							<li
+								itemProp="worksFor"
+								itemScope
+								itemType="https://schema.org/Hospital"
+							>
+								• Expérience hospitalière{" "}
+								<span itemProp="name">CHU de Nantes</span> (cardiologie,
+								obésité)
+							</li>
+							<li>
+								• Formation continue en nutrition clinique et thérapeutique
+							</li>
+							<li>
+								• Membre du réseau professionnel des diététiciens
+								Loire-Atlantique
+							</li>
+						</ul>
+						<ul className="space-y-2 text-sm text-foreground/90">
+							<li>
+								• <span itemProp="knowsAbout">Nutrition cardiologie</span> -
+								Spécialisation hospitalière
+							</li>
+							<li>
+								• <span itemProp="knowsAbout">Accompagnement obésité</span> -
+								Centre spécialisé
+							</li>
+							<li>
+								• <span itemProp="knowsAbout">Gériatrie et pédiatrie</span> -
+								CHU de Nantes
+							</li>
+							<li>
+								• <span itemProp="knowsAbout">Éducation thérapeutique</span> -
+								Diplôme universitaire
+							</li>
+						</ul>
+					</div>
+				</section>
+
+				{/* Timeline responsive avec Performance Critical Rendering */}
 				<div className="relative">
 					{/* Ligne horizontale pour desktop */}
 					<div
@@ -82,12 +172,19 @@ export function About() {
 
 					{/* Étapes du parcours professionnel */}
 					<div className="flex flex-col lg:flex-row lg:justify-between lg:items-start gap-8 lg:gap-12">
-						{ABOUT_STEPS.map((step: AboutStep) => (
+						{ABOUT_STEPS.map((step: AboutStep, index) => (
 							<article
 								key={step.id}
+								style={{
+									contentVisibility: index > 2 ? "auto" : "visible", // Lazy render steps 4+
+									containIntrinsicSize: "auto 300px",
+								}}
 								className="flex flex-col items-start lg:w-1/3 relative text-left focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 rounded-lg p-2 -m-2"
 								aria-labelledby={`about-${step.id}-title`}
 								tabIndex={0}
+								itemProp="alumniOf"
+								itemScope
+								itemType="https://schema.org/EducationalOrganization"
 							>
 								<div className="relative z-10 mb-6 flex-shrink-0">
 									<div className="w-16 h-16 rounded-full border-4 border-background bg-primary flex items-center justify-center text-primary-foreground shadow-lg">

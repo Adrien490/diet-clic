@@ -51,8 +51,19 @@ export function ContactForm() {
 			className="space-y-6"
 			onSubmit={form.handleSubmit}
 			aria-labelledby="contact-form-title"
+			data-voice-queries="formulaire contact diététicienne,prendre rendez-vous nantes,consultation nutrition"
+			data-content-type="contact-form-healthcare"
+			data-ai-category="healthcare-nutrition-booking"
+			data-form-purpose="appointment-booking"
+			itemScope
+			itemType="https://schema.org/ContactPoint"
 			noValidate
 		>
+			<p className="sr-only">
+				Formulaire de contact pour prendre rendez-vous avec Manon Chaillou,
+				diététicienne nutritionniste à Nantes. Remplissez vos coordonnées et
+				décrivez votre demande pour une consultation personnalisée.
+			</p>
 			{/* Titre du formulaire (caché mais référencé) */}
 			<h2 id="contact-form-title" className="sr-only">
 				Formulaire de contact

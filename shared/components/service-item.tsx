@@ -16,17 +16,23 @@ export function ServiceItem({
 }: ServiceItemProps) {
 	return (
 		<article
+			data-ai-category="healthcare-nutrition"
+			style={{
+				// Mobile performance (existing)
+				touchAction: "manipulation",
+				WebkitTapHighlightColor: "transparent",
+				// Core Web Vitals optimizations
+				containIntrinsicSize: "auto 280px", // CLS prevention
+				contentVisibility: index > 3 ? "auto" : "visible", // Lazy render
+				willChange: "transform", // GPU layer preparation
+			}}
 			className={cn(
 				"flex flex-col py-10 relative group/prestation border-border/50",
 				"focus-within:outline-none focus-within:ring-2 focus-within:ring-primary focus-within:ring-offset-2 rounded-lg",
 				"transition-all duration-300 hover:shadow-sm",
-				// Bordures pour une grille 2x2
-				index % 2 === 0 && "md:border-r", // Bordure droite pour la première colonne
-				index < 2 && "md:border-b", // Bordure bas pour la première ligne
-				"border-b md:border-b-0 last:border-b-0" // Bordure bas mobile uniquement
+				"active:scale-[0.98] md:active:scale-100",
+				"touch-manipulation"
 			)}
-			aria-labelledby={`prestation-title-${index}`}
-			aria-describedby={`prestation-desc-${index}`}
 			tabIndex={0}
 		>
 			{/* Hover effect - gradient from top for first row */}

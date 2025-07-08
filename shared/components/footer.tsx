@@ -1,31 +1,37 @@
 import { navbarItems } from "@/shared/constants/navbar-items";
 import { cn } from "@/shared/utils";
-import { ArrowUp, Heart } from "lucide-react";
+import { ArrowUp, Heart, Mail, MapPin, Phone } from "lucide-react";
 import Link from "next/link";
+import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
 const legalLinks = [
 	{ label: "Mentions légales", href: "/legal" },
 	{ label: "Confidentialité", href: "/privacy" },
 ];
 
-const officialSources = [
-	{ label: "ANSES", href: "https://www.anses.fr", external: true },
-
-	{
-		label: "Mangerbouger.fr",
-		href: "https://www.mangerbouger.fr",
-		external: true,
-	},
-	{
-		label: "AFDN",
-		href: "https://www.afdn.org",
-		external: true,
-	},
+const seoLinks = [
+	{ label: "Plan du site", href: "/sitemap.xml" },
+	{ label: "Robots.txt", href: "/robots.txt" },
 ];
 
 export function Footer() {
 	return (
-		<footer className="relative" role="contentinfo">
+		<footer
+			className="relative"
+			role="contentinfo"
+			data-voice-queries="contact diététicienne nantes,coordonnées nutritionniste,sources nutrition officielles"
+			data-content-type="footer-business"
+			data-ai-category="healthcare-nutrition-footer"
+			itemScope
+			itemType="https://schema.org/Organization"
+		>
+			{/* Contenu sr-only pour voice search */}
+			<p className="sr-only">
+				Footer du site de Manon Chaillou, diététicienne nutritionniste à Nantes.
+				Retrouvez les coordonnées de contact, mentions légales et sources
+				officielles de nutrition.
+			</p>
+
 			{/* Grille de fond subtile */}
 			<div className={cn("absolute inset-0 opacity-50")} aria-hidden="true" />
 
@@ -78,6 +84,74 @@ export function Footer() {
 						</ul>
 					</nav>
 
+					{/* Section Contact */}
+					<div>
+						<h3 className="font-medium text-foreground mb-3 text-sm">
+							Contact
+						</h3>
+						<div
+							itemProp="contactPoint"
+							itemScope
+							itemType="https://schema.org/ContactPoint"
+							className="space-y-2"
+						>
+							<div className="flex items-center gap-2">
+								<Phone
+									className="h-3 w-3 text-primary flex-shrink-0"
+									aria-hidden="true"
+								/>
+								<a
+									href="tel:+33781515310"
+									itemProp="telephone"
+									className="text-sm text-foreground/70 hover:text-foreground transition-colors"
+									aria-label="Appeler Manon Chaillou"
+								>
+									07 81 51 53 10
+								</a>
+							</div>
+
+							<div className="flex items-center gap-2 min-w-0 overflow-hidden">
+								<Mail
+									className="h-3 w-3 text-primary flex-shrink-0"
+									aria-hidden="true"
+								/>
+								<div className="min-w-0 flex-1 overflow-hidden">
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<a
+												href={`mailto:${process.env.ADMIN_EMAIL}`}
+												itemProp="email"
+												className="text-sm text-foreground/70 hover:text-foreground transition-colors block truncate max-w-full"
+												aria-label="Envoyer un email à Manon Chaillou"
+												aria-describedby="footer-email-tooltip"
+											>
+												{process.env.ADMIN_EMAIL}
+											</a>
+										</TooltipTrigger>
+										<TooltipContent id="footer-email-tooltip" role="tooltip">
+											<p>{process.env.ADMIN_EMAIL}</p>
+										</TooltipContent>
+									</Tooltip>
+								</div>
+							</div>
+
+							<div
+								itemProp="areaServed"
+								itemScope
+								itemType="https://schema.org/City"
+								className="flex items-center gap-2"
+							>
+								<MapPin
+									className="h-3 w-3 text-primary flex-shrink-0"
+									aria-hidden="true"
+								/>
+								<span className="text-sm text-foreground/70">
+									<span itemProp="name">Nantes</span> et environs
+								</span>
+							</div>
+						</div>
+					</div>
+
 					{/* Informations légales */}
 					<nav aria-labelledby="footer-legal-title">
 						<h3
@@ -98,36 +172,19 @@ export function Footer() {
 								</li>
 							))}
 						</ul>
-					</nav>
 
-					{/* Sources officielles */}
-					<nav aria-labelledby="footer-sources-title">
-						<h3
-							id="footer-sources-title"
-							className="font-medium text-foreground mb-3 text-sm"
-						>
-							Sources officielles
-						</h3>
+						{/* Liens SEO */}
+						<h4 className="font-medium text-foreground mb-3 text-sm mt-4">
+							Plan du site
+						</h4>
 						<ul className="space-y-2" role="list">
-							{officialSources.map((source, index) => (
+							{seoLinks.map((link, index) => (
 								<li key={index} role="listitem">
 									<Link
-										href={source.href}
-										className="text-sm text-foreground/70 hover:text-foreground transition-colors inline-flex items-center gap-1 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
-										target={source.external ? "_blank" : undefined}
-										rel={source.external ? "noopener noreferrer" : undefined}
-										aria-label={
-											source.external
-												? `${source.label} (lien externe)`
-												: source.label
-										}
+										href={link.href}
+										className="text-sm text-foreground/70 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
 									>
-										{source.label}
-										{source.external && (
-											<span className="text-xs" aria-hidden="true">
-												↗
-											</span>
-										)}
+										{link.label}
 									</Link>
 								</li>
 							))}
