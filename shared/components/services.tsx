@@ -83,31 +83,34 @@ export function Services() {
 							</p>
 						</div>
 
-						<Stagger
-							delay={0.1}
-							staggerDelay={0.1}
-							className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-							aria-labelledby="services-individual-title"
-						>
-							{PRESTATIONS.map((prestation, index) => (
-								<div
-									key={prestation.title}
-									role="listitem"
-									itemScope
-									itemType="https://schema.org/MedicalProcedure"
-								>
-									<ServiceItem {...prestation} index={index} />
-									<div className="sr-only">
-										<span itemProp="name">{prestation.title}</span>
-										<span itemProp="description">{prestation.description}</span>
-										<span itemProp="procedureType">
-											Consultation individuelle
-										</span>
-										<span itemProp="category">Diététique et nutrition</span>
+						<div role="list" aria-labelledby="services-individual-title">
+							<Stagger
+								delay={0.1}
+								staggerDelay={0.1}
+								className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+							>
+								{PRESTATIONS.map((prestation, index) => (
+									<div
+										key={prestation.title}
+										role="listitem"
+										itemScope
+										itemType="https://schema.org/MedicalProcedure"
+									>
+										<ServiceItem {...prestation} index={index} />
+										<div className="sr-only">
+											<span itemProp="name">{prestation.title}</span>
+											<span itemProp="description">
+												{prestation.description}
+											</span>
+											<span itemProp="procedureType">
+												Consultation individuelle
+											</span>
+											<span itemProp="category">Diététique et nutrition</span>
+										</div>
 									</div>
-								</div>
-							))}
-						</Stagger>
+								))}
+							</Stagger>
+						</div>
 
 						{/* Section Tarifs */}
 						<div className="mt-12 bg-background/50 p-8 rounded-lg border border-border/30">
@@ -194,33 +197,36 @@ export function Services() {
 							</p>
 						</div>
 
-						<Stagger
-							delay={0.1}
-							staggerDelay={0.1}
-							className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
-							aria-labelledby="services-group-title"
-						>
-							{PRESTATIONS_GROUPE.map((prestation, index) => (
-								<div
-									key={prestation.title}
-									role="listitem"
-									itemScope
-									itemType="https://schema.org/EducationalEvent"
-								>
-									<ServiceItem
-										{...prestation}
-										index={index + PRESTATIONS.length}
-									/>
-									<div className="sr-only">
-										<span itemProp="name">{prestation.title}</span>
-										<span itemProp="description">{prestation.description}</span>
-										<span itemProp="eventType">Atelier collectif</span>
-										<span itemProp="category">Éducation nutritionnelle</span>
-										<span itemProp="audience">Groupe</span>
+						<div role="list" aria-labelledby="services-group-title">
+							<Stagger
+								delay={0.1}
+								staggerDelay={0.1}
+								className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4"
+							>
+								{PRESTATIONS_GROUPE.map((prestation, index) => (
+									<div
+										key={prestation.title}
+										role="listitem"
+										itemScope
+										itemType="https://schema.org/EducationalEvent"
+									>
+										<ServiceItem
+											{...prestation}
+											index={index + PRESTATIONS.length}
+										/>
+										<div className="sr-only">
+											<span itemProp="name">{prestation.title}</span>
+											<span itemProp="description">
+												{prestation.description}
+											</span>
+											<span itemProp="eventType">Atelier collectif</span>
+											<span itemProp="category">Éducation nutritionnelle</span>
+											<span itemProp="audience">Groupe</span>
+										</div>
 									</div>
-								</div>
-							))}
-						</Stagger>
+								))}
+							</Stagger>
+						</div>
 
 						{/* Section Tarifs Groupe */}
 						<div className="mt-12 bg-background/50 p-8 rounded-lg border border-border/30 text-center">
