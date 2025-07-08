@@ -2,27 +2,27 @@ import { Heart, Scale, Stethoscope, Users } from "lucide-react";
 
 export const PRESTATIONS = [
 	{
-		title: "Équilibre alimentaire et poids",
+		title: "Équilibre alimentaire & poids",
 		description:
-			"Accompagnement personnalisé pour retrouver un équilibre alimentaire durable et atteindre vos objectifs de poids en toute bienveillance.",
+			"Optimisation de vos choix alimentaires durablement pour atteindre vos objectifs : perte, prise, stabilisation du poids.",
 		icon: <Scale className="w-8 h-8" aria-hidden="true" />,
 	},
 	{
 		title: "Alimentation de la femme",
 		description:
-			"Suivi nutritionnel adapté aux différentes étapes de la vie féminine : grossesse, allaitement, ménopause et cycles hormonaux.",
+			"Grossesse, allaitement, ménopause, troubles hormonaux… Conseils alimentaires personnalisés pour vivre sereinement ces périodes de vie.",
 		icon: <Heart className="w-8 h-8" aria-hidden="true" />,
 	},
 	{
-		title: "Alimentation et dénutrition",
+		title: "Dénutrition & perte d'appétit",
 		description:
-			"Prise en charge nutritionnelle spécialisée pour prévenir et traiter la dénutrition chez les personnes âgées ou fragilisées.",
+			"Solutions simples, concrètes et adaptées pour prévenir et lutter contre la perte de poids involontaire.",
 		icon: <Users className="w-8 h-8" aria-hidden="true" />,
 	},
 	{
-		title: "Alimentation et pathologie",
+		title: "Alimentation & pathologies",
 		description:
-			"Accompagnement nutritionnel thérapeutique pour les pathologies chroniques : diabète, maladies cardiovasculaires, troubles digestifs.",
+			"Recommandations fiables pour conjuguer maladie et plaisir de manger (diabète, troubles digestifs et cardiaques, MICI, intolérances, allergies…)",
 		icon: <Stethoscope className="w-8 h-8" aria-hidden="true" />,
 	},
 ];

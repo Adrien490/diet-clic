@@ -1,6 +1,6 @@
 import { navbarItems } from "@/shared/constants/navbar-items";
 import { cn } from "@/shared/utils";
-import { ArrowUp, Heart, Mail, MapPin, Phone } from "lucide-react";
+import { ArrowUp, Heart, Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 import { Tooltip, TooltipContent, TooltipTrigger } from "./ui/tooltip";
 
@@ -92,21 +92,6 @@ export function Footer() {
 							itemType="https://schema.org/ContactPoint"
 							className="space-y-2"
 						>
-							<div className="flex items-center gap-2">
-								<Phone
-									className="h-3 w-3 text-primary flex-shrink-0"
-									aria-hidden="true"
-								/>
-								<a
-									href="tel:+33781515310"
-									itemProp="telephone"
-									className="text-sm text-foreground/70 hover:text-foreground transition-colors"
-									aria-label="Appeler Manon Chaillou"
-								>
-									07 81 51 53 10
-								</a>
-							</div>
-
 							<div className="flex items-center gap-2 min-w-0 overflow-hidden">
 								<Mail
 									className="h-3 w-3 text-primary flex-shrink-0"

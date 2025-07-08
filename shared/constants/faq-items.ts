@@ -28,36 +28,6 @@ export const FAQ_ITEMS: FAQItem[] = [
 	},
 	{
 		id: "item-3",
-		question: "Combien de temps dure une consultation de diététique ?",
-		answer: [
-			"Une première consultation dure généralement entre 60 et 90 minutes pour faire le point complet sur votre situation.",
-			"Les consultations de suivi durent environ 45 minutes à 1 heure selon vos besoins.",
-			"Ce temps permet d'aborder tous les aspects de votre alimentation et de vos objectifs de manière approfondie.",
-			"Nous prenons le temps nécessaire pour un accompagnement de qualité, sans précipitation.",
-		],
-	},
-	{
-		id: "item-4",
-		question: "Les consultations sont-elles remboursées par la mutuelle ?",
-		answer: [
-			"La Sécurité Sociale ne rembourse pas les consultations de diététique, mais de nombreuses mutuelles proposent des forfaits annuels.",
-			"La plupart des complémentaires santé remboursent entre 3 et 8 consultations par an, de 20€ à 60€ par séance.",
-			"Contactez votre mutuelle pour connaître votre forfait « médecines douces » ou « prévention santé ».",
-			"Je vous fournis une facture détaillée pour faciliter vos démarches de remboursement.",
-		],
-	},
-	{
-		id: "item-6",
-		question: "Proposez-vous des téléconsultations ?",
-		answer: [
-			"Oui, je propose des consultations à distance, et également à domicile dans certaines zones.",
-			"Cela permet de s'adapter à votre emploi du temps, vos contraintes ou votre confort.",
-			"Le contenu et la qualité du suivi restent identiques à une consultation en présentiel, et un compte-rendu vous est systématiquement envoyé par mail.",
-			"Vous choisissez ce qui vous convient le mieux.",
-		],
-	},
-	{
-		id: "item-7",
 		question: "Ai-je besoin d'une prescription médicale pour consulter ?",
 		answer: [
 			"Non, il est tout à fait possible de consulter une diététicienne sans ordonnance.",
@@ -66,17 +36,16 @@ export const FAQ_ITEMS: FAQItem[] = [
 		],
 	},
 	{
-		id: "item-8",
-		question: "Comment prendre rendez-vous rapidement ?",
+		id: "item-4",
+		question: "Est-ce que les consultations sont remboursées ?",
 		answer: [
-			"Vous pouvez me contacter par téléphone au 07 81 51 53 10 ou par email.",
-			"Je vous réponds généralement sous 24h pour convenir d'un rendez-vous.",
-			"Les créneaux sont disponibles du lundi au vendredi de 9h à 18h, et le samedi matin de 9h à 13h.",
-			"En cas d'urgence ou de besoin particulier, n'hésitez pas à me le préciser lors de votre prise de contact.",
+			"Les consultations diététiques ne sont pas remboursées par la Sécurité Sociale.",
+			"Cependant, de nombreuses mutuelles prennent en charge plusieurs séances par an, partiellement ou en totalité.",
+			"Une facture vous sera remise pour vos démarches.",
 		],
 	},
 	{
-		id: "item-9",
+		id: "item-5",
 		question: "Combien de séances sont nécessaires ?",
 		answer: [
 			"Tout dépend de votre objectif, de votre parcours et de votre rythme.",
@@ -85,18 +54,7 @@ export const FAQ_ITEMS: FAQItem[] = [
 		],
 	},
 	{
-		id: "item-10",
-		question:
-			"Est-ce que je vais devoir peser mes aliments ou compter les calories ?",
-		answer: [
-			"Non.",
-			"Je propose une approche bienveillante et comportementale, sans calculs imposés ni régimes restrictifs.",
-			"L'objectif est de simplifier votre rapport à l'alimentation, pas de l'alourdir.",
-			"Pas de contraintes inutiles, sauf en cas de prescription médicale.",
-		],
-	},
-	{
-		id: "item-11",
+		id: "item-6",
 		question:
 			"Mon suivi est-il adapté à mon profil particulier ? (sport, végétarisme, troubles digestifs, etc.)",
 		answer: [
@@ -106,12 +64,12 @@ export const FAQ_ITEMS: FAQItem[] = [
 		],
 	},
 	{
-		id: "item-12",
-		question: "Intervenez-vous en établissement ou en entreprise ?",
+		id: "item-7",
+		question: "Comment se déroule une consultation diététique ?",
 		answer: [
-			"Oui, je propose des interventions de groupe en établissements de santé, structures médico-sociales, écoles ou entreprises.",
-			"Éducation nutritionnelle, ateliers, conférences ou accompagnement de projet : tout est adaptable.",
-			"Contactez-moi pour en discuter.",
+			"Lors du bilan initial, nous échangeons sur votre santé, vos habitudes et vos besoins pour définir ensemble des objectifs concrets.",
+			"Je vous prodigue des conseils personnalisés, et un compte-rendu écrit vous est envoyé sous 5 jours.",
+			"Les consultations de suivi servent à faire le point, ajuster les conseils, et s'adapter à votre évolution.",
 		],
 	},
 ];
