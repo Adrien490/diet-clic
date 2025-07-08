@@ -122,7 +122,7 @@ export function Services() {
 									</h4>
 									<div className="text-center mb-6">
 										<p className="text-muted-foreground">
-											En consultation à domicile ou téléconsultation
+											En consultation à domicile à Nantes ou téléconsultation
 										</p>
 									</div>
 
