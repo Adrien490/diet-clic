@@ -14,6 +14,8 @@ export function Services() {
 			role="region"
 			data-voice-queries="consultation diététique nantes,nutritionniste près de moi,diététicienne spécialisée"
 			data-service-types="individual,group,therapeutic"
+			itemScope
+			itemType="https://schema.org/MedicalBusiness"
 		>
 			<p className="sr-only">
 				Manon Chaillou propose des consultations de diététique à Nantes.
@@ -84,8 +86,21 @@ export function Services() {
 							aria-labelledby="services-individual-title"
 						>
 							{PRESTATIONS.map((prestation, index) => (
-								<div key={prestation.title} role="listitem">
+								<div
+									key={prestation.title}
+									role="listitem"
+									itemScope
+									itemType="https://schema.org/MedicalProcedure"
+								>
 									<ServiceItem {...prestation} index={index} />
+									<div className="sr-only">
+										<span itemProp="name">{prestation.title}</span>
+										<span itemProp="description">{prestation.description}</span>
+										<span itemProp="procedureType">
+											Consultation individuelle
+										</span>
+										<span itemProp="category">Diététique et nutrition</span>
+									</div>
 								</div>
 							))}
 						</div>
@@ -112,11 +127,23 @@ export function Services() {
 							aria-labelledby="services-group-title"
 						>
 							{PRESTATIONS_GROUPE.map((prestation, index) => (
-								<div key={prestation.title} role="listitem">
+								<div
+									key={prestation.title}
+									role="listitem"
+									itemScope
+									itemType="https://schema.org/EducationalEvent"
+								>
 									<ServiceItem
 										{...prestation}
 										index={index + PRESTATIONS.length}
 									/>
+									<div className="sr-only">
+										<span itemProp="name">{prestation.title}</span>
+										<span itemProp="description">{prestation.description}</span>
+										<span itemProp="eventType">Atelier collectif</span>
+										<span itemProp="category">Éducation nutritionnelle</span>
+										<span itemProp="audience">Groupe</span>
+									</div>
 								</div>
 							))}
 						</div>

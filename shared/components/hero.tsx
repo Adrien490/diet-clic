@@ -9,6 +9,8 @@ export function Hero() {
 			data-voice-queries="diététicienne nantes,nutritionniste nantes,consultation nutrition"
 			data-business-intent="healthcare-nutrition"
 			className="flex items-center justify-center w-full flex-col px-4 min-h-screen"
+			itemScope
+			itemType="https://schema.org/Person"
 		>
 			<p className="sr-only">
 				Vous cherchez une diététicienne nutritionniste à Nantes ? Je suis Manon
@@ -21,18 +23,72 @@ export function Hero() {
 						id="hero-title"
 						className="text-center bg-gradient-to-b from-foreground to-foreground/80 bg-clip-text text-4xl md:text-6xl lg:text-7xl font-sans py-2 md:py-10 relative z-20 font-bold tracking-tight"
 					>
-						Manon Chaillou
+						<span itemProp="name">Manon Chaillou</span>
 						<br />
-						Diététicienne Nutritionniste à Nantes
+						<span itemProp="jobTitle">
+							Diététicienne Nutritionniste diplômée
+						</span>{" "}
+						à{" "}
+						<span
+							itemProp="workLocation"
+							itemScope
+							itemType="https://schema.org/Place"
+						>
+							<span itemProp="name">Nantes</span>
+						</span>
 					</h1>
 
 					{/* Description optimisée avec mots-clés et spécialisations à la première personne */}
 					<p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground text-center relative z-20">
-						Je suis diététicienne nutritionniste diplômée à Nantes
-						(Loire-Atlantique), spécialisée dans le rééquilibrage alimentaire,
-						la nutrition en cardiologie, l&apos;accompagnement de l&apos;obésité
-						et la nutrition clinique.
+						Je suis diététicienne nutritionniste diplômée à{" "}
+						<span
+							itemProp="address"
+							itemScope
+							itemType="https://schema.org/PostalAddress"
+						>
+							<span itemProp="addressLocality">Nantes</span> (
+							<span itemProp="addressRegion">Loire-Atlantique</span>)
+						</span>
+						, spécialisée dans le{" "}
+						<span itemProp="knowsAbout">rééquilibrage alimentaire</span>, la{" "}
+						<span itemProp="knowsAbout">nutrition en cardiologie</span>, l&apos;
+						<span itemProp="knowsAbout">
+							accompagnement de l&apos;obésité
+						</span>{" "}
+						et la <span itemProp="knowsAbout">nutrition clinique</span>.
 					</p>
+
+					{/* Informations professionnelles additionnelles */}
+					<div className="sr-only">
+						<span
+							itemProp="hasOccupation"
+							itemScope
+							itemType="https://schema.org/Occupation"
+						>
+							<span itemProp="name">Diététicienne Nutritionniste</span>
+							<span
+								itemProp="occupationLocation"
+								itemScope
+								itemType="https://schema.org/City"
+							>
+								<span itemProp="name">Nantes</span>
+							</span>
+						</span>
+						<span
+							itemProp="alumniOf"
+							itemScope
+							itemType="https://schema.org/EducationalOrganization"
+						>
+							<span itemProp="name">IUT Nancy - BUT Génie Biologique</span>
+						</span>
+						<span
+							itemProp="worksFor"
+							itemScope
+							itemType="https://schema.org/Hospital"
+						>
+							<span itemProp="name">CHU de Nantes</span>
+						</span>
+					</div>
 
 					{/* Boutons CTA optimisés avec liens internes SEO */}
 					<div className="flex flex-col gap-4 sm:flex-row sm:gap-6 justify-center relative z-20">

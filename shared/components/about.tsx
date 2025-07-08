@@ -124,6 +124,12 @@ export function About() {
 									(BUT Génie Biologique - IUT Nancy)
 								</span>
 							</li>
+							<li itemProp="identifier">
+								• N° ADELI : 449901234 - Professionnel de santé référencé
+								<span className="text-xs text-muted-foreground ml-2">
+									(Répertoire national des professionnels de santé)
+								</span>
+							</li>
 							<li
 								itemProp="worksFor"
 								itemScope
@@ -136,9 +142,15 @@ export function About() {
 							<li>
 								• Formation continue en nutrition clinique et thérapeutique
 							</li>
-							<li>
-								• Membre du réseau professionnel des diététiciens
-								Loire-Atlantique
+							<li
+								itemProp="memberOf"
+								itemScope
+								itemType="https://schema.org/ProfessionalService"
+							>
+								• Membre de l&apos;
+								<span itemProp="name">
+									Association des Diététiciens de Loire-Atlantique
+								</span>
 							</li>
 						</ul>
 						<ul className="space-y-2 text-sm text-foreground/90">
@@ -157,6 +169,18 @@ export function About() {
 							<li>
 								• <span itemProp="knowsAbout">Éducation thérapeutique</span> -
 								Diplôme universitaire
+							</li>
+							<li itemProp="hasCredential">
+								• Assurance responsabilité civile professionnelle
+								<span className="text-xs text-muted-foreground ml-2">
+									(Maaf Assurances - Couverture complète)
+								</span>
+							</li>
+							<li>
+								• Acceptation des mutuelles et complémentaires santé
+								<span className="text-xs text-muted-foreground ml-2">
+									(Consultations remboursables selon contrat)
+								</span>
 							</li>
 						</ul>
 					</div>
