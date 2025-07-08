@@ -103,89 +103,6 @@ export function About() {
 					</div>
 				</div>
 
-				{/* 
-				<section className="mt-8 p-6 bg-muted/30 rounded-lg mb-12">
-					<h3 className="text-xl font-semibold text-foreground mb-4">
-						Qualifications et Certifications
-					</h3>
-					<div className="grid md:grid-cols-2 gap-4">
-						<ul className="space-y-2 text-sm text-foreground/90">
-							<li
-								itemProp="hasCredential"
-								itemScope
-								itemType="https://schema.org/EducationalCredential"
-							>
-								•{" "}
-								<span itemProp="name">
-									Diplôme d&apos;État Diététicienne Nutritionniste
-								</span>
-								<span className="text-xs text-muted-foreground ml-2">
-									(BUT Génie Biologique - IUT Nancy)
-								</span>
-							</li>
-							<li itemProp="identifier">
-								• N° ADELI : 449901234 - Professionnel de santé référencé
-								<span className="text-xs text-muted-foreground ml-2">
-									(Répertoire national des professionnels de santé)
-								</span>
-							</li>
-							<li
-								itemProp="worksFor"
-								itemScope
-								itemType="https://schema.org/Hospital"
-							>
-								• Expérience hospitalière{" "}
-								<span itemProp="name">CHU de Nantes</span> (cardiologie,
-								obésité)
-							</li>
-							<li>
-								• Formation continue en nutrition clinique et thérapeutique
-							</li>
-							<li
-								itemProp="memberOf"
-								itemScope
-								itemType="https://schema.org/ProfessionalService"
-							>
-								• Membre de l&apos;
-								<span itemProp="name">
-									Association des Diététiciens de Loire-Atlantique
-								</span>
-							</li>
-						</ul>
-						<ul className="space-y-2 text-sm text-foreground/90">
-							<li>
-								• <span itemProp="knowsAbout">Nutrition cardiologie</span> -
-								Spécialisation hospitalière
-							</li>
-							<li>
-								• <span itemProp="knowsAbout">Accompagnement obésité</span> -
-								Centre spécialisé
-							</li>
-							<li>
-								• <span itemProp="knowsAbout">Gériatrie et pédiatrie</span> -
-								CHU de Nantes
-							</li>
-							<li>
-								• <span itemProp="knowsAbout">Éducation thérapeutique</span> -
-								Diplôme universitaire
-							</li>
-							<li itemProp="hasCredential">
-								• Assurance responsabilité civile professionnelle
-								<span className="text-xs text-muted-foreground ml-2">
-									(Maaf Assurances - Couverture complète)
-								</span>
-							</li>
-							<li>
-								• Acceptation des mutuelles et complémentaires santé
-								<span className="text-xs text-muted-foreground ml-2">
-									(Consultations remboursables selon contrat)
-								</span>
-							</li>
-						</ul>
-					</div>
-				</section>
-				*/}
-
 				{/* Timeline responsive avec Performance Critical Rendering */}
 				<div className="relative">
 					{/* Ligne horizontale pour desktop */}
@@ -234,6 +151,16 @@ export function About() {
 							</article>
 						))}
 					</div>
+				</div>
+
+				{/* Citation mise en valeur */}
+				<div className="mt-16 flex justify-center">
+					<blockquote className="max-w-3xl text-center">
+						<p className="text-xl md:text-2xl font-medium text-foreground leading-relaxed italic">
+							« L&apos;alimentation ne doit pas être un problème. Elle peut et
+							doit rester un plaisir, accessible, serein »
+						</p>
+					</blockquote>
 				</div>
 
 				{/* Section d'information supplémentaire avec mots-clés longue traîne */}
