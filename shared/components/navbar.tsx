@@ -253,44 +253,41 @@ export function Navbar() {
 								itemType="https://schema.org/BreadcrumbList"
 							>
 								{breadcrumbItems.map((item, index) => (
-									<div key={item.href} className="flex items-center">
+									<BreadcrumbItem
+										key={item.href}
+										itemProp="itemListElement"
+										itemScope
+										itemType="https://schema.org/ListItem"
+										className="flex items-center"
+									>
+										<meta itemProp="position" content={String(index + 1)} />
 										{index > 0 && <BreadcrumbSeparator />}
-										<BreadcrumbItem
-											itemProp="itemListElement"
-											itemScope
-											itemType="https://schema.org/ListItem"
-										>
-											<meta itemProp="position" content={String(index + 1)} />
-											{item.isActive && index === breadcrumbItems.length - 1 ? (
-												<BreadcrumbPage
-													itemProp="item"
-													itemScope
-													itemType="https://schema.org/WebPage"
-												>
+										{item.isActive && index === breadcrumbItems.length - 1 ? (
+											<BreadcrumbPage
+												itemProp="item"
+												itemScope
+												itemType="https://schema.org/WebPage"
+											>
+												<span itemProp="name">{item.label}</span>
+												<meta itemProp="url" content={item.href} />
+											</BreadcrumbPage>
+										) : (
+											<BreadcrumbLink
+												asChild
+												itemProp="item"
+												itemScope
+												itemType="https://schema.org/WebPage"
+											>
+												<Link href={item.href}>
+													{index === 0 && (
+														<Home className="h-4 w-4 mr-1" aria-hidden="true" />
+													)}
 													<span itemProp="name">{item.label}</span>
 													<meta itemProp="url" content={item.href} />
-												</BreadcrumbPage>
-											) : (
-												<BreadcrumbLink
-													asChild
-													itemProp="item"
-													itemScope
-													itemType="https://schema.org/WebPage"
-												>
-													<Link href={item.href}>
-														{index === 0 && (
-															<Home
-																className="h-4 w-4 mr-1"
-																aria-hidden="true"
-															/>
-														)}
-														<span itemProp="name">{item.label}</span>
-														<meta itemProp="url" content={item.href} />
-													</Link>
-												</BreadcrumbLink>
-											)}
-										</BreadcrumbItem>
-									</div>
+												</Link>
+											</BreadcrumbLink>
+										)}
+									</BreadcrumbItem>
 								))}
 							</BreadcrumbList>
 						</Breadcrumb>
