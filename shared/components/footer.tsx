@@ -119,17 +119,17 @@ export function Footer() {
 									<Tooltip>
 										<TooltipTrigger asChild>
 											<a
-												href={`mailto:${process.env.EMAIL}`}
+												href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
 												itemProp="email"
 												className="text-sm text-foreground/70 hover:text-foreground transition-colors block truncate max-w-full"
 												aria-label="Envoyer un email à Manon Chaillou"
 												aria-describedby="footer-email-tooltip"
 											>
-												{process.env.EMAIL}
+												{process.env.NEXT_PUBLIC_EMAIL}
 											</a>
 										</TooltipTrigger>
 										<TooltipContent id="footer-email-tooltip" role="tooltip">
-											<p>{process.env.EMAIL}</p>
+											<p>{process.env.NEXT_PUBLIC_EMAIL}</p>
 										</TooltipContent>
 									</Tooltip>
 								</div>

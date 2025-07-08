@@ -96,7 +96,7 @@ import { ContactEmailTemplate } from "./shared/components/email-template";
 
 // Email de contact avec template React
 await sendEmail({
-	to: process.env.EMAIL,
+	to: process.env.NEXT_PUBLIC_EMAIL,
 	subject: "Nouvelle demande de contact",
 	react: ContactEmailTemplate({
 		fullName: "John Doe",
