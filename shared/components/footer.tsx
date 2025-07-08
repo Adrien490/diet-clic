@@ -9,10 +9,7 @@ const legalLinks = [
 	{ label: "Confidentialité", href: "/privacy" },
 ];
 
-const seoLinks = [
-	{ label: "Plan du site", href: "/sitemap.xml" },
-	{ label: "Robots.txt", href: "/robots.txt" },
-];
+// SEO links removed - not user-facing content
 
 export function Footer() {
 	return (
@@ -162,23 +159,6 @@ export function Footer() {
 						</h3>
 						<ul className="space-y-2" role="list">
 							{legalLinks.map((link, index) => (
-								<li key={index} role="listitem">
-									<Link
-										href={link.href}
-										className="text-sm text-foreground/70 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-sm"
-									>
-										{link.label}
-									</Link>
-								</li>
-							))}
-						</ul>
-
-						{/* Liens SEO */}
-						<h4 className="font-medium text-foreground mb-3 text-sm mt-4">
-							Plan du site
-						</h4>
-						<ul className="space-y-2" role="list">
-							{seoLinks.map((link, index) => (
 								<li key={index} role="listitem">
 									<Link
 										href={link.href}
