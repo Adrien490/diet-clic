@@ -6,8 +6,14 @@ export function Hero() {
 		<section
 			id="main-content"
 			aria-labelledby="hero-title"
+			data-voice-queries="diététicienne nantes,nutritionniste nantes,consultation nutrition"
+			data-business-intent="healthcare-nutrition"
 			className="flex items-center justify-center w-full flex-col px-4 min-h-screen"
 		>
+			<p className="sr-only">
+				Vous cherchez une diététicienne nutritionniste à Nantes ? Je suis Manon
+				Chaillou, diplômée et spécialisée en rééquilibrage alimentaire.
+			</p>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl relative z-20">
 				<div className="text-center space-y-8">
 					{/* Titre principal optimisé SEO avec géolocalisation */}
