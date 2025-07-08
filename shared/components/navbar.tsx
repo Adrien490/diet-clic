@@ -35,12 +35,19 @@ export function Navbar() {
 
 			<nav
 				role="navigation"
-				aria-label="Navigation principale"
+				aria-label="Navigation principale - Manon Chaillou Diététicienne Nantes"
+				data-voice-commands="navigation,menu,aller à, retour à"
+				data-business-type="nutrition-healthcare"
 				className={cn(
-					"bg-transparent transition-all duration-300 ease-in-out relative z-30",
-					isScrolled && "shadow-md bg-background backdrop-blur-md"
+					"transition-all duration-300 ease-in-out will-change-transform",
+					isScrolled &&
+						"shadow-md bg-background backdrop-blur-md transform translate3d(0,0,0)"
 				)}
 			>
+				<div id="nav-description" className="sr-only">
+					Navigation du site de Manon Chaillou, diététicienne nutritionniste à
+					Nantes. Accédez aux consultations, conseils et prises de rendez-vous.
+				</div>
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
 					<div className="flex h-16 items-center justify-between">
 						{/* Logo avec amélioration accessibilité */}
@@ -51,13 +58,18 @@ export function Navbar() {
 							aria-label="Retour à l'accueil - Manon Chaillou, Diététicienne Nutritionniste"
 						>
 							<div
-								className={cn(
-									"flex h-9 w-9 items-center justify-center rounded-full bg-primary transition-all duration-300",
-									isScrolled && "h-8 w-8"
-								)}
-								aria-hidden="true"
+								className="flex h-9 w-9 items-center justify-center rounded-full bg-primary transition-all duration-300"
+								style={{
+									containIntrinsicSize: "36px 36px", // Réserve l'espace
+									contentVisibility: "auto", // Optimisation rendering
+								}}
 							>
-								<span className="text-sm font-bold text-primary-foreground">
+								<span
+									className={cn(
+										"text-sm font-bold text-primary-foreground transition-transform duration-300",
+										isScrolled && "transform scale-90" // Pas de CLS !
+									)}
+								>
 									M
 								</span>
 							</div>
