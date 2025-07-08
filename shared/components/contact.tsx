@@ -1,4 +1,4 @@
-import { Reveal, Stagger } from "@/shared/components/animations";
+import { Reveal } from "@/shared/components/animations";
 import { Mail, MapPin } from "lucide-react";
 import Link from "next/link";
 import { ContactForm } from "./contact-form";
@@ -39,87 +39,79 @@ export function Contact() {
 				</Reveal>
 
 				{/* Informations de contact compactes */}
-				<Reveal threshold={0.3} delay={0} duration={0.4}>
-					<div className="bg-muted/20 p-6 rounded-lg border border-border/30 mb-8">
-						<h3 className="text-xl font-semibold text-foreground mb-6">
-							Coordonnées de contact
-						</h3>
+				<div className="bg-muted/20 p-6 rounded-lg border border-border/30 mb-8">
+					<h3 className="text-xl font-semibold text-foreground mb-6">
+						Coordonnées de contact
+					</h3>
 
-						<div itemScope itemType="https://schema.org/ContactPoint">
-							<Stagger
-								delay={0.1}
-								staggerDelay={0.1}
-								className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4"
-							>
-								{/* Email */}
-								<div className="flex items-center gap-2 min-w-0 overflow-hidden">
-									<Mail
-										className="w-4 h-4 text-primary flex-shrink-0"
-										aria-hidden="true"
-									/>
-									<div className="min-w-0 flex-1 overflow-hidden">
-										<p className="text-sm font-medium text-foreground">Email</p>
-										<Tooltip>
-											<TooltipTrigger asChild>
-												<Link
-													href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
-													itemProp="email"
-													className="text-sm text-muted-foreground hover:text-primary transition-colors block truncate max-w-full"
-													aria-label="Envoyer un email à Manon Chaillou"
-													aria-describedby="email-tooltip"
-												>
-													{process.env.NEXT_PUBLIC_EMAIL}
-												</Link>
-											</TooltipTrigger>
-											<TooltipContent id="email-tooltip" role="tooltip">
-												<p>{process.env.NEXT_PUBLIC_EMAIL}</p>
-											</TooltipContent>
-										</Tooltip>
+					<div itemScope itemType="https://schema.org/ContactPoint">
+						<div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+							{/* Email */}
+							<div className="flex items-center gap-2 min-w-0 overflow-hidden">
+								<Mail
+									className="w-4 h-4 text-primary flex-shrink-0"
+									aria-hidden="true"
+								/>
+								<div className="min-w-0 flex-1 overflow-hidden">
+									<p className="text-sm font-medium text-foreground">Email</p>
+									<Tooltip>
+										<TooltipTrigger asChild>
+											<Link
+												href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
+												itemProp="email"
+												className="text-sm text-muted-foreground hover:text-primary transition-colors block truncate max-w-full"
+												aria-label="Envoyer un email à Manon Chaillou"
+												aria-describedby="email-tooltip"
+											>
+												{process.env.NEXT_PUBLIC_EMAIL}
+											</Link>
+										</TooltipTrigger>
+										<TooltipContent id="email-tooltip" role="tooltip">
+											<p>{process.env.NEXT_PUBLIC_EMAIL}</p>
+										</TooltipContent>
+									</Tooltip>
+								</div>
+							</div>
+
+							{/* Zone d'intervention */}
+							<div className="flex items-center gap-2">
+								<MapPin
+									className="w-4 h-4 text-primary flex-shrink-0"
+									aria-hidden="true"
+								/>
+								<div
+									className="min-w-0"
+									itemProp="areaServed"
+									itemScope
+									itemType="https://schema.org/City"
+								>
+									<p className="text-sm font-medium text-foreground">
+										Zone d&apos;intervention
+									</p>
+									<div className="text-sm text-muted-foreground">
+										<span itemProp="name">Nantes</span> et environs
 									</div>
 								</div>
-
-								{/* Zone d'intervention */}
-								<div className="flex items-center gap-2">
-									<MapPin
-										className="w-4 h-4 text-primary flex-shrink-0"
-										aria-hidden="true"
-									/>
-									<div
-										className="min-w-0"
-										itemProp="areaServed"
-										itemScope
-										itemType="https://schema.org/City"
-									>
-										<p className="text-sm font-medium text-foreground">
-											Zone d&apos;intervention
-										</p>
-										<div className="text-sm text-muted-foreground">
-											<span itemProp="name">Nantes</span> et environs
-										</div>
-									</div>
-								</div>
-							</Stagger>
-						</div>
-
-						{/* Note sur les consultations */}
-						<div className="mt-4 p-3 bg-primary/10 rounded-lg">
-							<p className="text-sm text-foreground/80">
-								💡 <strong>Consultations :</strong> À domicile sur Nantes et
-								environs, ou en téléconsultation selon vos préférences
-							</p>
+							</div>
 						</div>
 					</div>
-				</Reveal>
+
+					{/* Note sur les consultations */}
+					<div className="mt-4 p-3 bg-primary/10 rounded-lg">
+						<p className="text-sm text-foreground/80">
+							💡 <strong>Consultations :</strong> À domicile sur Nantes et
+							environs, ou en téléconsultation selon vos préférences
+						</p>
+					</div>
+				</div>
 
 				{/* Formulaire de contact - Pleine largeur */}
-				<Reveal threshold={0.2} delay={0} duration={0.4}>
-					<div className="bg-muted/20 p-6 rounded-lg border border-border/30">
-						<h3 className="text-xl font-semibold text-foreground mb-6">
-							Formulaire de contact
-						</h3>
-						<ContactForm />
-					</div>
-				</Reveal>
+				<div className="bg-muted/20 p-6 rounded-lg border border-border/30">
+					<h3 className="text-xl font-semibold text-foreground mb-6">
+						Formulaire de contact
+					</h3>
+					<ContactForm />
+				</div>
 			</div>
 		</section>
 	);

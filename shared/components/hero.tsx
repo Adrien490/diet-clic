@@ -1,9 +1,4 @@
-import {
-	FadeIn,
-	Reveal,
-	SlideIn,
-	Stagger,
-} from "@/shared/components/animations";
+import { Reveal, SlideIn, Stagger } from "@/shared/components/animations";
 import { Button } from "@/shared/components/ui/button";
 import Link from "next/link";
 
@@ -45,18 +40,15 @@ export function Hero() {
 						</h1>
 					</SlideIn>
 
-					{/* Description optimisée - Animation au scroll */}
-					<Reveal threshold={0.3} delay={0} duration={0.4}>
-						<p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground text-center relative z-20">
-							Diététicienne nutritionniste aux multiples casquettes :{" "}
-							<span itemProp="knowsAbout">
-								diététicienne en milieu hospitalier
-							</span>
-							,{" "}
-							<span itemProp="knowsAbout">suivi individualisé en libéral</span>,{" "}
-							<span itemProp="knowsAbout">présentations de groupe</span>.
-						</p>
-					</Reveal>
+					{/* Description optimisée - Sans animation */}
+					<p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground text-center relative z-20">
+						Diététicienne nutritionniste aux multiples casquettes :{" "}
+						<span itemProp="knowsAbout">
+							diététicienne en milieu hospitalier
+						</span>
+						, <span itemProp="knowsAbout">suivi individualisé en libéral</span>,{" "}
+						<span itemProp="knowsAbout">présentations de groupe</span>.
+					</p>
 
 					{/* Informations professionnelles additionnelles */}
 					<div className="sr-only">
@@ -125,43 +117,37 @@ export function Hero() {
 						</Stagger>
 					</Reveal>
 
-					{/* Liens de navigation internes optimisés SEO - Animation au scroll */}
-					<FadeIn delay={0.8} duration={0.4}>
-						<div className="pt-8 space-y-4">
-							<p className="text-sm text-muted-foreground">
-								Explorez mes services de diététique et nutrition :
-							</p>
-							<Stagger
-								delay={0.2}
-								staggerDelay={0.1}
-								className="flex flex-wrap justify-center gap-4 text-sm"
+					{/* Liens de navigation internes optimisés SEO - Sans animation */}
+					<div className="pt-8 space-y-4">
+						<p className="text-sm text-muted-foreground">
+							Explorez mes services de diététique et nutrition :
+						</p>
+						<div className="flex flex-wrap justify-center gap-4 text-sm">
+							<Link
+								href="#services"
+								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
+								aria-label="Consulter toutes mes prestations de diététique à Nantes"
 							>
-								<Link
-									href="#services"
-									className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
-									aria-label="Consulter toutes mes prestations de diététique à Nantes"
-								>
-									Mes prestations de nutrition
-								</Link>
-								<span className="text-muted-foreground/50">•</span>
-								<Link
-									href="#faq"
-									className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
-									aria-label="Consulter les questions fréquentes sur la diététique et nutrition"
-								>
-									Questions fréquentes sur la diététique
-								</Link>
-								<span className="text-muted-foreground/50">•</span>
-								<Link
-									href="#contact"
-									className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
-									aria-label="Contacter Manon Chaillou pour une consultation diététique à Nantes"
-								>
-									Me contacter directement
-								</Link>
-							</Stagger>
+								Mes prestations de nutrition
+							</Link>
+							<span className="text-muted-foreground/50">•</span>
+							<Link
+								href="#faq"
+								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
+								aria-label="Consulter les questions fréquentes sur la diététique et nutrition"
+							>
+								Questions fréquentes sur la diététique
+							</Link>
+							<span className="text-muted-foreground/50">•</span>
+							<Link
+								href="#contact"
+								className="text-primary hover:text-primary/80 transition-colors underline decoration-1 underline-offset-4 hover:decoration-2 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 rounded-sm px-1"
+								aria-label="Contacter Manon Chaillou pour une consultation diététique à Nantes"
+							>
+								Me contacter directement
+							</Link>
 						</div>
-					</FadeIn>
+					</div>
 				</div>
 			</div>
 		</section>
