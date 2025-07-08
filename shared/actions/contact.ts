@@ -14,7 +14,7 @@ import {
 } from "../types/server-action";
 import { sendEmail } from "./send-email";
 
-const ADMIN_EMAIL = "adrien.poirier49@gmail.com"; // Email de test Resend
+const EMAIL = "adrien.poirier49@gmail.com"; // Email de test Resend
 
 export const contact: ServerAction<
 	z.infer<typeof contactSchema>,
@@ -61,7 +61,7 @@ export const contact: ServerAction<
 
 		// 3. Envoi de l'email de notification avec le template React
 		try {
-			if (!ADMIN_EMAIL) {
+			if (!EMAIL) {
 				return createErrorResponse(
 					ActionStatus.ERROR,
 					"Erreur lors de l'envoi de votre message. Veuillez réessayer."
@@ -71,7 +71,7 @@ export const contact: ServerAction<
 			const emailHtml = await render(ContactEmailTemplate(validatedData));
 
 			const email = await sendEmail({
-				to: ADMIN_EMAIL,
+				to: EMAIL,
 				subject: `${validatedData.fullName} - ${subject}`,
 				html: emailHtml,
 				replyTo: validatedData.email,

@@ -76,17 +76,17 @@ export function Contact() {
 								<Tooltip>
 									<TooltipTrigger asChild>
 										<Link
-											href={`mailto:${process.env.ADMIN_EMAIL}`}
+											href={`mailto:${process.env.EMAIL}`}
 											itemProp="email"
 											className="text-sm text-muted-foreground hover:text-primary transition-colors block truncate max-w-full"
 											aria-label="Envoyer un email à Manon Chaillou"
 											aria-describedby="email-tooltip"
 										>
-											{process.env.ADMIN_EMAIL}
+											{process.env.EMAIL}
 										</Link>
 									</TooltipTrigger>
 									<TooltipContent id="email-tooltip" role="tooltip">
-										<p>{process.env.ADMIN_EMAIL}</p>
+										<p>{process.env.EMAIL}</p>
 									</TooltipContent>
 								</Tooltip>
 							</div>

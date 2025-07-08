@@ -45,7 +45,7 @@ Le site utilise [Resend](https://resend.com) pour l'envoi d'emails avec une mét
 
 ```env
 # Email de l'administrateur (destinataire des messages)
-ADMIN_EMAIL=votre-email@exemple.com
+EMAIL=votre-email@exemple.com
 
 # Clé API Resend (obligatoire)
 RESEND_API_KEY=re_votre_cle_api_resend
@@ -96,7 +96,7 @@ import { ContactEmailTemplate } from "./shared/components/email-template";
 
 // Email de contact avec template React
 await sendEmail({
-	to: process.env.ADMIN_EMAIL,
+	to: process.env.EMAIL,
 	subject: "Nouvelle demande de contact",
 	react: ContactEmailTemplate({
 		fullName: "John Doe",
