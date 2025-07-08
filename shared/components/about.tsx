@@ -34,10 +34,9 @@ export function About() {
 								id="about-description"
 								className="text-lg text-muted-foreground max-w-2xl mb-4"
 							>
-								Forte de mon expérience hospitalière en cardiologie, nutrition
-								de l&apos;obésité, gériatrie et pédiatrie au CHU de Nantes,
-								j&apos;exerce également en libéral pour un accompagnement
-								personnalisé et bienveillant.
+								C&apos;est à l&apos;hôpital que j&apos;ai commencé mon parcours,
+								et je conjugue maintenant cette pratique au suivi en libéral,
+								pour un accompagnement au plus proche de votre quotidien.
 							</p>
 
 							{/* Local SEO Reinforcement */}
@@ -104,7 +103,7 @@ export function About() {
 					</div>
 				</div>
 
-				{/* E-A-T Maximum Enhancement */}
+				{/* 
 				<section className="mt-8 p-6 bg-muted/30 rounded-lg mb-12">
 					<h3 className="text-xl font-semibold text-foreground mb-4">
 						Qualifications et Certifications
@@ -185,6 +184,7 @@ export function About() {
 						</ul>
 					</div>
 				</section>
+				*/}
 
 				{/* Timeline responsive avec Performance Critical Rendering */}
 				<div className="relative">
@@ -240,7 +240,7 @@ export function About() {
 				<aside className="mt-16 text-center">
 					<div className="bg-background/50 p-8 rounded-lg border border-border/50">
 						<h3 className="text-xl font-semibold text-foreground mb-4">
-							Pourquoi consulter une diététicienne nutritionniste ?
+							Pourquoi consulter une diététicienne ?
 						</h3>
 						<div className="grid md:grid-cols-2 gap-6 text-left">
 							<div>
@@ -248,9 +248,9 @@ export function About() {
 									Expertise professionnelle
 								</h4>
 								<p className="text-sm text-foreground/80">
-									Diplômée en diététique et nutrition, je vous accompagne avec
-									une approche scientifique et personnalisée pour votre
-									équilibre alimentaire et votre bien-être.
+									Diplômée en diététique et nutrition, je garantis des prises en
+									charge rigoureusement scientifiques, et adaptées selon vos
+									besoins individuels.
 								</p>
 							</div>
 							<div>
@@ -268,8 +268,8 @@ export function About() {
 									Approche bienveillante
 								</h4>
 								<p className="text-sm text-foreground/80">
-									Sans régime restrictif ni contrainte, je privilégie une
-									démarche respectueuse de votre relation à l&apos;alimentation
+									Sans régime restrictif ni contraintes, je privilégie une
+									démarche respectueuse et votre relation à l&apos;alimentation
 									pour retrouver le plaisir de manger.
 								</p>
 							</div>
@@ -278,9 +278,9 @@ export function About() {
 									Localisation pratique
 								</h4>
 								<p className="text-sm text-foreground/80">
-									Cabinet situé à Nantes (Loire-Atlantique) avec possibilité de
-									consultations à domicile et téléconsultations pour
-									s&apos;adapter à vos contraintes.
+									Mobile sur toute la région nantaise et communes limitrophes,
+									je propose des consultations à votre domicile, et des
+									téléconsultations pour m&apos;adapter à vos contraintes.
 								</p>
 							</div>
 						</div>
