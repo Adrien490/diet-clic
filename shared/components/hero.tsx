@@ -25,10 +25,7 @@ export function Hero() {
 					>
 						<span itemProp="name">Manon Chaillou</span>
 						<br />
-						<span itemProp="jobTitle">
-							Diététicienne Nutritionniste diplômée
-						</span>{" "}
-						à{" "}
+						<span itemProp="jobTitle">Diététicienne Nutritionniste</span> à{" "}
 						<span
 							itemProp="workLocation"
 							itemScope
@@ -40,22 +37,12 @@ export function Hero() {
 
 					{/* Description optimisée avec mots-clés et spécialisations à la première personne */}
 					<p className="max-w-2xl mx-auto text-lg md:text-xl text-muted-foreground text-center relative z-20">
-						Je suis diététicienne nutritionniste diplômée à{" "}
-						<span
-							itemProp="address"
-							itemScope
-							itemType="https://schema.org/PostalAddress"
-						>
-							<span itemProp="addressLocality">Nantes</span> (
-							<span itemProp="addressRegion">Loire-Atlantique</span>)
-						</span>
-						, spécialisée dans le{" "}
-						<span itemProp="knowsAbout">rééquilibrage alimentaire</span>, la{" "}
-						<span itemProp="knowsAbout">nutrition en cardiologie</span>, l&apos;
+						Diététicienne nutritionniste aux multiples casquettes :{" "}
 						<span itemProp="knowsAbout">
-							accompagnement de l&apos;obésité
-						</span>{" "}
-						et la <span itemProp="knowsAbout">nutrition clinique</span>.
+							diététicienne en milieu hospitalier
+						</span>
+						, <span itemProp="knowsAbout">suivi individualisé en libéral</span>,{" "}
+						<span itemProp="knowsAbout">présentations de groupe</span>.
 					</p>
 
 					{/* Informations professionnelles additionnelles */}
