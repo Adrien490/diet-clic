@@ -84,7 +84,7 @@ export function FAQ() {
 									</span>
 								</AccordionTrigger>
 								<AccordionContent
-									className="flex flex-col gap-4 text-left will-change-auto contain-layout"
+									className="text-left will-change-auto contain-layout bg-background/30 border border-border/20 rounded-b-md"
 									itemScope
 									itemType="https://schema.org/Answer"
 									itemProp="acceptedAnswer"
@@ -96,12 +96,12 @@ export function FAQ() {
 									<div id={`faq-${item.id}-description`} className="sr-only">
 										Réponse à la question {index + 1} : {item.question}
 									</div>
-									<div itemProp="text">
+									<div itemProp="text" className="px-4 py-6 space-y-4">
 										{item.answer.map(
 											(paragraph: string, paragraphIndex: number) => (
 												<p
 													key={paragraphIndex}
-													className="text-foreground/90 mb-4 last:mb-0"
+													className="text-foreground/90 leading-relaxed text-sm md:text-base"
 												>
 													{paragraph}
 												</p>
