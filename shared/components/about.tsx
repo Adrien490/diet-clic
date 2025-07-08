@@ -45,30 +45,6 @@ export function About() {
 								</p>
 							</Reveal>
 
-							{/* Local SEO Reinforcement */}
-							<div className="mt-4 text-sm text-muted-foreground">
-								<span>Zone d&apos;intervention : </span>
-								<span
-									itemProp="areaServed"
-									itemScope
-									itemType="https://schema.org/City"
-								>
-									<span itemProp="name">Nantes</span>
-								</span>{" "}
-								et
-								<span
-									itemProp="areaServed"
-									itemScope
-									itemType="https://schema.org/State"
-								>
-									<span itemProp="name"> Loire-Atlantique</span>
-								</span>
-								<span>
-									{" "}
-									- Consultations au cabinet, à domicile et en téléconsultation
-								</span>
-							</div>
-
 							{/* Lien interne contextuel */}
 							<p className="text-sm text-muted-foreground mt-4">
 								Découvrez{" "}
