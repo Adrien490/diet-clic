@@ -16,7 +16,7 @@ export function Contact() {
 						id="contact-title"
 						className="text-3xl lg:text-4xl font-bold text-foreground mb-6"
 					>
-						Contactez-moi
+						Contact - Prendre rendez-vous à Nantes
 					</h2>
 					<p
 						id="contact-description"
@@ -29,7 +29,6 @@ export function Contact() {
 					</p>
 				</div>
 
-				{/* Formulaire de contact */}
 				<div className="bg-muted/20 p-6 rounded-lg border border-border/30">
 					<h3 className="text-xl font-semibold text-foreground mb-6">
 						Formulaire de contact

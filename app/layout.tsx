@@ -1,5 +1,6 @@
 import { Footer } from "@/shared/components/footer";
 import { Navbar } from "@/shared/components/navbar";
+import { StructuredData } from "@/shared/components/structured-data";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Toaster } from "sonner";
@@ -94,6 +95,9 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="fr">
+			<head>
+				<StructuredData />
+			</head>
 			<body
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>

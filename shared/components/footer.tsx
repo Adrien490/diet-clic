@@ -43,16 +43,16 @@ export function Footer() {
 						<Link
 							href="/"
 							className="flex items-center gap-2 mb-4 hover:opacity-80 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 rounded-md p-1 -m-1"
-							aria-label="Manon Diététique - Retour à l'accueil"
+							aria-label="Manon Chaillou - Diététicienne Nutritionniste - Retour à l'accueil"
 						>
 							<Heart className="h-6 w-6 text-primary" aria-hidden="true" />
 							<span className="text-lg font-bold text-foreground">
-								Manon Diététique
+								Manon Chaillou
 							</span>
 						</Link>
 
 						<p className="text-sm text-foreground/70">
-							Votre équilibre nutritionnel sur mesure
+							Diététicienne Nutritionniste à Nantes
 						</p>
 					</div>
 

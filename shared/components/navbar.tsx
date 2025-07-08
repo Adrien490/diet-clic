@@ -44,6 +44,7 @@ export function Navbar() {
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
 					<div className="flex h-16 items-center justify-between">
 						{/* Logo avec amélioration accessibilité */}
+						{/* Logo avec amélioration accessibilité */}
 						<Link
 							href="/"
 							className="group flex items-center space-x-3 rounded-lg p-2 -m-2 transition-all duration-200 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring relative z-30"
@@ -65,7 +66,7 @@ export function Navbar() {
 									Manon Chaillou
 								</div>
 								<div className="text-xs text-foreground/70">
-									Diététicienne Nutritionniste
+									Diététicienne Nutritionniste • Nantes
 								</div>
 							</div>
 						</Link>

@@ -12,37 +12,23 @@ export const metadata: Metadata = {
 	keywords: [
 		"diététicienne Nantes",
 		"nutritionniste Nantes",
-		"consultation diététique",
-		"rééquilibrage alimentaire",
-		"nutrition cardiologie",
-		"perte de poids",
+		"consultation diététique Nantes",
+		"rééquilibrage alimentaire Nantes",
+		"nutrition cardiologie Nantes",
+		"accompagnement obésité Nantes",
+		"perte de poids Nantes",
 		"nutrition thérapeutique",
 		"diététique Loire-Atlantique",
-		"rendez-vous nutritionniste",
+		"rendez-vous nutritionniste Nantes",
+		"consultation nutritionnelle personnalisée",
+		"diététicienne diplômée Nantes",
+		"cabinet diététique Nantes",
+		"nutrition clinique Nantes",
+		"suivi nutritionnel Nantes",
+		"régime alimentaire personnalisé",
+		"consultation diététique en ligne",
+		"prise en charge nutritionnelle",
 	],
-	alternates: {
-		canonical: "https://manon-dietetique.fr",
-	},
-	openGraph: {
-		title: "Diététicienne Nutritionniste à Nantes - Manon Chaillou",
-		description:
-			"Consultation personnalisée avec Manon Chaillou, diététicienne nutritionniste diplômée à Nantes. Spécialisée en rééquilibrage alimentaire et nutrition cardiologie.",
-		url: "https://manon-dietetique.fr",
-		images: [
-			{
-				url: "/manon.png",
-				width: 1200,
-				height: 630,
-				alt: "Manon Chaillou - Diététicienne Nutritionniste à Nantes",
-			},
-		],
-	},
-	twitter: {
-		title: "Diététicienne Nutritionniste à Nantes - Manon Chaillou",
-		description:
-			"Consultation personnalisée avec Manon Chaillou, diététicienne nutritionniste diplômée à Nantes. Spécialisée en rééquilibrage alimentaire et nutrition cardiologie.",
-		images: ["/manon.png"],
-	},
 };
 
 export default function Home() {
