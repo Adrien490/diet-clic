@@ -240,7 +240,7 @@ export function About() {
 				<aside className="mt-16 text-center">
 					<div className="bg-background/50 p-8 rounded-lg border border-border/50">
 						<h3 className="text-xl font-semibold text-foreground mb-4">
-							Pourquoi consulter une diététicienne nutritionniste à Nantes ?
+							Pourquoi consulter une diététicienne nutritionniste ?
 						</h3>
 						<div className="grid md:grid-cols-2 gap-6 text-left">
 							<div>
