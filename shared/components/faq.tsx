@@ -34,17 +34,6 @@ export function FAQ() {
 				avec 8 ans&apos; expérience au CHU de Nantes.
 			</p>
 			<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
-				{/* Breadcrumb FAQ */}
-				<nav aria-label="FAQ Navigation" className="mb-8">
-					<div className="text-sm text-muted-foreground">
-						<Link href="/" className="hover:text-primary transition-colors">
-							Accueil
-						</Link>
-						<span className="mx-2">›</span>
-						<span>Questions fréquentes</span>
-					</div>
-				</nav>
-
 				<div className="text-left mb-12">
 					<h2
 						id="faq-title"
