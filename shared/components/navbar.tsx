@@ -1,5 +1,13 @@
 "use client";
 
+import {
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbLink,
+	BreadcrumbList,
+	BreadcrumbPage,
+	BreadcrumbSeparator,
+} from "@/shared/components/ui/breadcrumb";
 import { Button } from "@/shared/components/ui/button";
 import {
 	Sheet,
@@ -13,7 +21,7 @@ import { navbarItems } from "@/shared/constants/navbar-items";
 import { useActiveNavbarItem } from "@/shared/hooks/use-active-navbar-item";
 import { useIsScrolled } from "@/shared/hooks/use-is-scrolled";
 import { cn } from "@/shared/utils";
-import { Menu } from "lucide-react";
+import { Home, Menu } from "lucide-react";
 import Link from "next/link";
 import { useIsMobile } from "../hooks/use-mobile";
 
@@ -21,7 +29,35 @@ export function Navbar() {
 	const isMobile = useIsMobile();
 	const threshold = isMobile ? 25 : 100;
 	const isScrolled = useIsScrolled(threshold);
-	const { isMenuItemActive } = useActiveNavbarItem();
+	const { isMenuItemActive, activeSection } = useActiveNavbarItem();
+
+	// Generate breadcrumb items based on active section
+	const getBreadcrumbItems = () => {
+		const items = [
+			{
+				href: "/",
+				label: "Accueil",
+				isActive: activeSection === "home",
+			},
+		];
+
+		if (activeSection !== "home") {
+			const activeItem = navbarItems.find(
+				(item) => item.href === `/#${activeSection}`
+			);
+			if (activeItem) {
+				items.push({
+					href: activeItem.href,
+					label: activeItem.label,
+					isActive: true,
+				});
+			}
+		}
+
+		return items;
+	};
+
+	const breadcrumbItems = getBreadcrumbItems();
 
 	return (
 		<header role="banner" className="sticky top-0 z-50 w-full">
@@ -50,9 +86,8 @@ export function Navbar() {
 				</div>
 				<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
 					<div className="flex h-16 items-center justify-between">
-						{/* Logo avec amélioration accessibilité */}
-						{/* Logo avec amélioration accessibilité */}
 						<Link
+							itemProp="logo"
 							href="/"
 							className="group flex items-center space-x-3 rounded-lg p-2 -m-2 transition-all duration-200 hover:bg-accent focus-visible:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring relative z-30"
 							aria-label="Retour à l'accueil - Manon Chaillou, Diététicienne Nutritionniste"
@@ -208,6 +243,59 @@ export function Navbar() {
 						</Sheet>
 					</div>
 				</div>
+
+				{/* Breadcrumb */}
+				<nav aria-label="Fil d'Ariane" className="sr-only">
+					<div className="container mx-auto px-4 sm:px-6 lg:px-8 max-w-6xl">
+						<Breadcrumb className="py-2">
+							<BreadcrumbList
+								itemScope
+								itemType="https://schema.org/BreadcrumbList"
+							>
+								{breadcrumbItems.map((item, index) => (
+									<div key={item.href} className="flex items-center">
+										{index > 0 && <BreadcrumbSeparator />}
+										<BreadcrumbItem
+											itemProp="itemListElement"
+											itemScope
+											itemType="https://schema.org/ListItem"
+										>
+											<meta itemProp="position" content={String(index + 1)} />
+											{item.isActive && index === breadcrumbItems.length - 1 ? (
+												<BreadcrumbPage
+													itemProp="item"
+													itemScope
+													itemType="https://schema.org/WebPage"
+												>
+													<span itemProp="name">{item.label}</span>
+													<meta itemProp="url" content={item.href} />
+												</BreadcrumbPage>
+											) : (
+												<BreadcrumbLink
+													asChild
+													itemProp="item"
+													itemScope
+													itemType="https://schema.org/WebPage"
+												>
+													<Link href={item.href}>
+														{index === 0 && (
+															<Home
+																className="h-4 w-4 mr-1"
+																aria-hidden="true"
+															/>
+														)}
+														<span itemProp="name">{item.label}</span>
+														<meta itemProp="url" content={item.href} />
+													</Link>
+												</BreadcrumbLink>
+											)}
+										</BreadcrumbItem>
+									</div>
+								))}
+							</BreadcrumbList>
+						</Breadcrumb>
+					</div>
+				</nav>
 			</nav>
 		</header>
 	);
