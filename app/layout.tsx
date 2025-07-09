@@ -1,5 +1,3 @@
-import { Footer } from "@/shared/components/footer";
-import { Navbar } from "@/shared/components/navbar";
 import { StructuredData } from "@/shared/components/structured-data";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -102,11 +100,7 @@ export default function RootLayout({
 				className={`${geistSans.variable} ${geistMono.variable} antialiased`}
 			>
 				<Toaster position="top-right" richColors />
-				<Navbar />
-				<main role="main" className="min-h-screen bg-background">
-					{children}
-				</main>
-				<Footer />
+				{children}
 			</body>
 		</html>
 	);

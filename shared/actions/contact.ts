@@ -43,7 +43,6 @@ export const contact: ServerAction<
 			message: formData.get("message") as string,
 			attachments: attachments,
 		};
-		console.log("rawData", rawData);
 
 		// 2. Validation des données avec Zod
 		const validation = contactSchema.safeParse(rawData);
