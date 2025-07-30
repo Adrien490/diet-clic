@@ -4,11 +4,6 @@
 	"devCommand": "npm run dev",
 	"installCommand": "npm ci",
 	"framework": "nextjs",
-	"functions": {
-		"app/api/**/*.ts": {
-			"runtime": "nodejs18.x"
-		}
-	},
 	"headers": [
 		{
 			"source": "/(.*)",
