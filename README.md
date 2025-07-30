@@ -222,32 +222,43 @@ Configurez toutes les variables d'environnement dans votre plateforme de déploi
 3. **Code review** : Pull request obligatoire
 4. **Merge** : Intégration après validation
 
-### GitHub Actions (exemple)
+### Options d'implémentation
+
+#### Option 1 : Vercel + Build Command (RECOMMANDÉE)
+
+```json
+// vercel.json
+{
+	"buildCommand": "npm run test:coverage && npm run lint && npm run build"
+}
+```
+
+✅ **Avantages :** Simple, intégré, bloque les déploiements si tests échouent
+⚠️ **Limitation :** Pas d'audit de sécurité automatique
+
+#### Option 2 : GitHub Actions + Vercel
 
 ```yaml
-name: CI
-
-on:
-  push:
-    branches: [main, develop]
-  pull_request:
-    branches: [main]
+# .github/workflows/ci.yml
+name: CI Tests
+on: [push, pull_request]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
 
       - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm test
+      - run: npm run test:coverage
+      - run: npm audit --audit-level=moderate
 ```
+
+✅ **Avantages :** Contrôle total, audit sécurité, métriques détaillées
 
 ### Gestion des versions
 
@@ -353,52 +364,94 @@ npm run test:a11y
 
 ## 🧪 Tests
 
+### Harnais de test unitaire
+
+Le projet utilise **Jest** et **React Testing Library** pour les tests unitaires, configurés pour Next.js 14 avec TypeScript.
+
+#### Configuration
+
+```bash
+# Installation des dépendances
+npm install -D jest @testing-library/react @testing-library/jest-dom @testing-library/user-event jest-environment-jsdom @types/jest ts-jest
+
+# Scripts disponibles
+npm test          # Exécuter les tests
+npm test:watch    # Mode watch
+npm test:coverage # Avec couverture de code
+```
+
+#### Structure des tests
+
+```
+__tests__/
+├── shared/
+│   ├── actions/
+│   │   └── contact.test.ts         # Tests Server Actions
+│   ├── schemas/
+│   │   └── contact-schema.test.ts  # Tests validation Zod
+│   └── components/
+│       └── emails/
+│           └── contact-email-template.test.tsx
+```
+
+#### Tests de la fonctionnalité Contact
+
+##### 1. Tests de validation (Schéma Zod)
+
+- ✅ Validation du nom complet (format, longueur)
+- ✅ Validation de l'email (format RFC)
+- ✅ Validation du sujet (requis)
+- ✅ Validation du message (10-2000 caractères)
+- ✅ Validation des pièces jointes (max 3, URL valides)
+
+##### 2. Tests de l'action serveur
+
+- ✅ Envoi réussi avec données valides
+- ✅ Gestion des pièces jointes
+- ✅ Erreurs de validation
+- ✅ Erreurs d'envoi d'email
+- ✅ Cas limites (caractères spéciaux, longueur max)
+
+##### 3. Tests du template d'email
+
+- ✅ Rendu correct avec toutes les informations
+- ✅ Gestion des options de sujet
+- ✅ Affichage des pièces jointes
+- ✅ Formatage du message (sauts de ligne)
+
+#### Couverture de code
+
+La couverture actuelle se concentre sur la fonctionnalité de contact :
+
+- **Actions** : 89.42% (contact.ts)
+- **Schémas** : 100% (contact-schema.ts)
+- **Templates** : 99.44% (contact-email-template.tsx)
+
 ### Stratégie de tests
 
-#### 1. Tests unitaires (à implémenter)
+1. **Tests unitaires** : Validation de la logique métier
+2. **Tests d'intégration** : Vérification des interactions
+3. **Mocks** : Isolation des dépendances externes
+4. **Assertions** : Vérification exhaustive des cas
+
+### Exemple de test
 
 ```typescript
-// Exemple de test avec Jest et React Testing Library
-import { render, screen } from '@testing-library/react'
-import { Navbar } from '@/app/(public)/components/navbar'
+describe("contact server action", () => {
+	it("should send email with valid form data", async () => {
+		const formData = new FormData();
+		formData.append("fullName", "Jean Dupont");
+		formData.append("email", "jean@example.com");
+		formData.append("subject", "consultation");
+		formData.append("message", "Message de test");
 
-describe('Navbar', () => {
-  it('renders navigation links', () => {
-    render(<Navbar />)
-    expect(screen.getByRole('navigation')).toBeInTheDocument()
-    expect(screen.getByText('Accueil')).toBeInTheDocument()
-  })
-})
-```
+		const result = await contact(undefined, formData);
 
-#### 2. Tests d'intégration
-
-- Validation des formulaires
-- Flux d'authentification
-- Envoi d'emails
-- Upload de fichiers
-
-#### 3. Tests E2E (recommandés)
-
-```typescript
-// Exemple avec Playwright
-test("user can submit contact form", async ({ page }) => {
-	await page.goto("/contact");
-	await page.fill('[name="name"]', "Test User");
-	await page.fill('[name="email"]', "test@example.com");
-	await page.fill('[name="message"]', "Test message");
-	await page.click('button[type="submit"]');
-	await expect(page.locator(".success-message")).toBeVisible();
+		expect(result.status).toBe(ActionStatus.SUCCESS);
+		expect(mockSendEmail).toHaveBeenCalled();
+	});
 });
 ```
-
-### Couverture de code
-
-Objectif : 80% de couverture sur le code critique
-
-- Actions serveur : 100%
-- Composants UI : 70%
-- Utilitaires : 90%
 
 ## 📊 Performance et qualité
 
