@@ -1,190 +1,712 @@
-# Manon Diététique - Site Web
+# Diet-Clic - Application Web de Diététique et Nutrition
 
-Site web professionnel pour Manon Chaillou, diététicienne nutritionniste.
+Site web professionnel pour Manon Chaillou, diététicienne nutritionniste à Nantes.
 
-## Technologies utilisées
+## 📋 Sommaire
 
-- **Next.js 15** - Framework React avec App Router
-- **TypeScript** - Typage statique
-- **Tailwind CSS** - Framework CSS utilitaire
-- **Resend** - Service d'envoi d'emails
-- **UploadThing** - Gestion des fichiers uploadés
-- **Zod** - Validation des données
-- **React Hook Form** - Gestion des formulaires
+1. [Vue d'ensemble](#vue-densemble)
+2. [Architecture et technologies](#architecture-et-technologies)
+3. [Environnement de développement](#environnement-de-développement)
+4. [Installation et configuration](#installation-et-configuration)
+5. [Déploiement continu](#déploiement-continu)
+6. [Intégration continue](#intégration-continue)
+7. [Sécurité](#sécurité)
+8. [Accessibilité](#accessibilité)
+9. [Tests](#tests)
+10. [Performance et qualité](#performance-et-qualité)
+11. [Documentation technique](#documentation-technique)
+12. [Manuels](#manuels)
 
-## Installation
+## 🎯 Vue d'ensemble
 
-1. Clonez le repository :
+Diet-Clic est une application web moderne développée pour une diététicienne nutritionniste. Elle offre une présence en ligne professionnelle avec des fonctionnalités de prise de contact, de présentation des services et un espace d'administration sécurisé.
+
+### Fonctionnalités principales
+
+- **Site vitrine** : Présentation des services, parcours professionnel, FAQ
+- **Formulaire de contact** : Système d'envoi d'emails sécurisé avec validation
+- **Espace administration** : Dashboard protégé pour la gestion des contacts
+- **Authentification** : Système complet avec Better Auth (email/password, OAuth, passkeys)
+- **Responsive design** : Interface adaptée mobile/desktop avec animations fluides
+- **SEO optimisé** : Métadonnées structurées, sitemap automatique, schema.org
+
+## 🏗️ Architecture et technologies
+
+### Stack technique
+
+#### Frontend
+
+- **Framework** : Next.js 15.4 (App Router)
+- **Langage** : TypeScript 5.x
+- **Styles** : Tailwind CSS 3.x
+- **UI Components** : Radix UI + shadcn/ui
+- **Animations** : Motion (Framer Motion)
+- **Formulaires** : React Hook Form + Zod
+
+#### Backend
+
+- **Runtime** : Node.js
+- **Base de données** : PostgreSQL avec Prisma ORM
+- **Authentification** : Better Auth
+- **Emails** : Resend API
+- **Upload fichiers** : UploadThing
+- **Validation** : Zod schemas
+
+### Architecture logicielle
+
+```
+diet-clic/
+├── app/                      # Next.js App Router
+│   ├── (public)/            # Routes publiques
+│   ├── (protected)/         # Routes protégées (auth requise)
+│   ├── api/                 # Routes API
+│   ├── auth/                # Pages d'authentification
+│   └── generated/           # Code généré (Prisma)
+├── domains/                 # Logique métier par domaine
+│   ├── auth/               # Domaine authentification
+│   └── user/               # Domaine utilisateur
+├── shared/                  # Code partagé
+│   ├── components/         # Composants réutilisables
+│   ├── actions/            # Server Actions
+│   ├── hooks/              # React hooks personnalisés
+│   ├── lib/                # Utilitaires
+│   ├── schemas/            # Schémas de validation
+│   └── utils/              # Fonctions utilitaires
+├── prisma/                  # Configuration base de données
+└── public/                  # Assets statiques
+```
+
+### Paradigmes de développement
+
+- **Domain-Driven Design** : Organisation par domaines métier
+- **Component-Based Architecture** : Composants React modulaires et réutilisables
+- **Server Components** : Utilisation des React Server Components pour les performances
+- **Type Safety** : TypeScript strict mode avec inférence de types
+- **Functional Programming** : Fonctions pures, immutabilité, composition
+
+## 🛠️ Environnement de développement
+
+### Prérequis
+
+- Node.js 18.x ou supérieur
+- npm 9.x ou supérieur
+- PostgreSQL 14.x ou supérieur
+- Git
+
+### Outils de développement
+
+- **Éditeur** : VS Code recommandé avec extensions TypeScript, Tailwind CSS
+- **Linter** : ESLint avec configuration Next.js
+- **Formatter** : Prettier (optionnel)
+- **Type checking** : TypeScript compiler
+- **Hot reload** : Next.js Fast Refresh avec Turbopack
+
+### Configuration VS Code recommandée
+
+```json
+{
+	"editor.defaultFormatter": "esbenp.prettier-vscode",
+	"editor.formatOnSave": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"typescript.tsdk": "node_modules/typescript/lib"
+}
+```
+
+## 📦 Installation et configuration
+
+### 1. Cloner le repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/[votre-username]/diet-clic.git
 cd diet-clic
 ```
 
-2. Installez les dépendances :
+### 2. Installer les dépendances
 
 ```bash
 npm install
 ```
 
-3. Configurez les variables d'environnement :
-   - Créez un fichier `.env.local` à la racine du projet
-   - Copiez le contenu de `.env.example` et remplissez les valeurs
+### 3. Configuration de l'environnement
 
-4. Lancez le serveur de développement :
+Créez un fichier `.env.local` à la racine du projet :
+
+```env
+# Base de données PostgreSQL
+DATABASE_URL="postgresql://user:password@localhost:5432/diet_clic"
+
+# Authentification Better Auth
+BETTER_AUTH_SECRET="your-secret-key-min-32-chars"
+BETTER_AUTH_URL="http://localhost:3000"
+
+# OAuth Google (optionnel)
+GOOGLE_CLIENT_ID="your-google-client-id"
+GOOGLE_CLIENT_SECRET="your-google-client-secret"
+
+# Email avec Resend
+EMAIL="admin@example.com"
+RESEND_API_KEY="re_your_resend_api_key"
+RESEND_DOMAIN="your-domain.com" # Optionnel
+
+# UploadThing pour les uploads
+UPLOADTHING_SECRET="sk_your_uploadthing_secret"
+UPLOADTHING_APP_ID="your-app-id"
+
+# URL publique
+NEXT_PUBLIC_SITE_URL="http://localhost:3000"
+```
+
+### 4. Initialiser la base de données
+
+```bash
+# Générer le client Prisma
+npx prisma generate
+
+# Créer les tables
+npx prisma migrate dev
+```
+
+### 5. Lancer le serveur de développement
 
 ```bash
 npm run dev
 ```
 
-## Configuration des emails
+L'application sera accessible sur http://localhost:3000
 
-Le site utilise [Resend](https://resend.com) pour l'envoi d'emails avec une méthode générique réutilisable.
+## 🚀 Déploiement continu
 
-### Variables d'environnement requises
+### Protocole de déploiement
 
-```env
-# Email de l'administrateur (destinataire des messages)
-EMAIL=votre-email@exemple.com
+Le projet utilise un système de déploiement continu avec les étapes suivantes :
 
-# Clé API Resend (obligatoire)
-RESEND_API_KEY=re_votre_cle_api_resend
+1. **Build** : Compilation TypeScript et génération des assets
+2. **Tests** : Exécution des tests unitaires et de lint
+3. **Optimisation** : Minification, tree-shaking, compression
+4. **Déploiement** : Push vers l'environnement cible
 
-# Domaine Resend (optionnel - utilise onboarding@resend.dev par défaut)
-RESEND_DOMAIN=votre-domaine.com
+### Environnements
 
-# URL du site (pour la production)
-NEXT_PUBLIC_SITE_URL=https://votre-domaine.com
+- **Development** : Branche `develop`, déploiement automatique
+- **Staging** : Branche `staging`, tests d'intégration
+- **Production** : Branche `main`, déploiement manuel après validation
+
+### Configuration Vercel (recommandé)
+
+```json
+{
+	"buildCommand": "npm run build",
+	"outputDirectory": ".next",
+	"devCommand": "npm run dev",
+	"installCommand": "npm install",
+	"framework": "nextjs"
+}
 ```
 
-### Configuration Resend
+### Variables d'environnement de production
 
-1. **Créer un compte Resend** sur [resend.com](https://resend.com)
-2. **Obtenir votre clé API** dans le dashboard Resend
-3. **(Optionnel) Vérifier votre domaine** pour l'envoi d'emails personnalisés
-4. **Sans domaine vérifié** : L'application utilise automatiquement `onboarding@resend.dev`
+Configurez toutes les variables d'environnement dans votre plateforme de déploiement :
 
-### Utilisation de la méthode sendEmail
+- Vercel : Project Settings > Environment Variables
+- Netlify : Site Settings > Environment Variables
+- Autres : Consultez la documentation de votre hébergeur
 
-#### Méthode générique
+## 🔄 Intégration continue
+
+### Protocole d'intégration
+
+1. **Pre-commit hooks** : Lint et format du code
+2. **CI Pipeline** : Tests automatisés sur chaque push
+3. **Code review** : Pull request obligatoire
+4. **Merge** : Intégration après validation
+
+### GitHub Actions (exemple)
+
+```yaml
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run build
+      - run: npm test
+```
+
+### Gestion des versions
+
+- **Semantic Versioning** : MAJOR.MINOR.PATCH
+- **Git Flow** : main, develop, feature/_, hotfix/_
+- **Commits conventionnels** : feat:, fix:, docs:, etc.
+
+## 🔒 Sécurité
+
+### Mesures de sécurité implémentées
+
+#### 1. Protection contre les failles OWASP Top 10
+
+- **Injection SQL** : Utilisation de Prisma ORM avec requêtes préparées
+- **Authentification** : Better Auth avec sessions sécurisées
+- **XSS** : Sanitization automatique par React, CSP headers
+- **CSRF** : Protection via tokens de session
+- **Configuration** : Variables d'environnement pour les secrets
+- **Composants vulnérables** : Audit régulier avec `npm audit`
+- **Logging** : Journalisation des accès et erreurs
+- **Monitoring** : Alertes sur les tentatives d'intrusion
+
+#### 2. Headers de sécurité
 
 ```typescript
-import { sendEmail } from "./shared/actions/send-email";
-
-// Email simple avec HTML
-await sendEmail({
-	to: "destinataire@exemple.com",
-	subject: "Mon sujet",
-	html: "<h1>Bonjour</h1><p>Mon message</p>",
-});
-
-// Email avec template React
-await sendEmail({
-	to: ["user1@exemple.com", "user2@exemple.com"],
-	subject: "Email avec template",
-	react: MonTemplateReact({ data: "valeurs" }),
-	from: "nom@mon-domaine.com", // Optionnel
-	replyTo: "reponse@mon-domaine.com", // Optionnel
-});
+// next.config.ts
+headers: [
+	{
+		key: "X-Content-Type-Options",
+		value: "nosniff",
+	},
+	{
+		key: "X-Frame-Options",
+		value: "DENY",
+	},
+	{
+		key: "X-XSS-Protection",
+		value: "1; mode=block",
+	},
+	{
+		key: "Referrer-Policy",
+		value: "strict-origin-when-cross-origin",
+	},
+];
 ```
 
-#### Utilisation pour les emails de contact
+#### 3. Authentification et autorisation
+
+- Sessions sécurisées avec Better Auth
+- Rôles utilisateur (ADMIN, CLIENT)
+- Middleware de protection des routes
+- Expiration automatique des sessions
+- Support OAuth2 et passkeys
+
+#### 4. Protection des données
+
+- Chiffrement HTTPS obligatoire
+- Hashage des mots de passe
+- Validation stricte des entrées avec Zod
+- Sanitization des données utilisateur
+- Rate limiting sur les API sensibles
+
+## ♿ Accessibilité
+
+### Conformité WCAG 2.1 AA
+
+#### 1. Navigation et structure
+
+- **Skip links** : Navigation rapide au contenu principal
+- **Landmarks ARIA** : Structure sémantique claire
+- **Focus visible** : Indicateurs de focus personnalisés
+- **Navigation clavier** : 100% navigable au clavier
+
+#### 2. Contenu et médias
+
+- **Textes alternatifs** : Images décrites pour lecteurs d'écran
+- **Contraste** : Ratio minimum 4.5:1 (AA)
+- **Tailles de police** : Minimum 16px, redimensionnable
+- **Langue** : Déclaration de langue française
+
+#### 3. Formulaires
+
+- **Labels associés** : Tous les champs ont des labels
+- **Messages d'erreur** : Clairs et associés aux champs
+- **Instructions** : Aide contextuelle disponible
+- **Validation** : Feedback immédiat et accessible
+
+#### 4. Composants interactifs
+
+- **États ARIA** : aria-expanded, aria-current, etc.
+- **Rôles ARIA** : Sémantique renforcée
+- **Annonces** : Live regions pour les changements dynamiques
+
+### Tests d'accessibilité
+
+```bash
+# Audit avec Lighthouse
+npm run lighthouse
+
+# Tests avec axe-core
+npm run test:a11y
+```
+
+## 🧪 Tests
+
+### Stratégie de tests
+
+#### 1. Tests unitaires (à implémenter)
 
 ```typescript
-import { sendEmail } from "./shared/actions/send-email";
-import { ContactEmailTemplate } from "./shared/components/email-template";
+// Exemple de test avec Jest et React Testing Library
+import { render, screen } from '@testing-library/react'
+import { Navbar } from '@/app/(public)/components/navbar'
 
-// Email de contact avec template React
-await sendEmail({
-	to: process.env.NEXT_PUBLIC_EMAIL,
-	subject: "Nouvelle demande de contact",
-	react: ContactEmailTemplate({
-		fullName: "John Doe",
-		email: "john@exemple.com",
-		subject: "Demande d'information",
-		message: "Je souhaite plus d'informations...",
-		attachment: ["https://exemple.com/fichier.pdf"],
-	}),
-	replyTo: "john@exemple.com",
+describe('Navbar', () => {
+  it('renders navigation links', () => {
+    render(<Navbar />)
+    expect(screen.getByRole('navigation')).toBeInTheDocument()
+    expect(screen.getByText('Accueil')).toBeInTheDocument()
+  })
+})
+```
+
+#### 2. Tests d'intégration
+
+- Validation des formulaires
+- Flux d'authentification
+- Envoi d'emails
+- Upload de fichiers
+
+#### 3. Tests E2E (recommandés)
+
+```typescript
+// Exemple avec Playwright
+test("user can submit contact form", async ({ page }) => {
+	await page.goto("/contact");
+	await page.fill('[name="name"]', "Test User");
+	await page.fill('[name="email"]', "test@example.com");
+	await page.fill('[name="message"]', "Test message");
+	await page.click('button[type="submit"]');
+	await expect(page.locator(".success-message")).toBeVisible();
 });
 ```
 
-### Exemples d'utilisation
+### Couverture de code
 
-La méthode `sendEmail` est générique et peut être utilisée pour tous types d'emails :
+Objectif : 80% de couverture sur le code critique
 
-- Emails simples avec HTML
-- Templates React personnalisés
-- Destinataires multiples
-- Pièces jointes
+- Actions serveur : 100%
+- Composants UI : 70%
+- Utilitaires : 90%
 
-## Configuration UploadThing
+## 📊 Performance et qualité
 
-Pour la gestion des pièces jointes :
+### Critères de performance
 
-1. **Créez un compte** sur [uploadthing.com](https://uploadthing.com)
-2. **Créez une nouvelle app** et obtenez vos identifiants
-3. **Ajoutez à votre `.env.local`** :
+#### 1. Core Web Vitals
 
-```env
-UPLOADTHING_SECRET=sk_live_votre_secret
-UPLOADTHING_APP_ID=votre_app_id
+- **LCP** (Largest Contentful Paint) : < 2.5s
+- **FID** (First Input Delay) : < 100ms
+- **CLS** (Cumulative Layout Shift) : < 0.1
+
+#### 2. Optimisations implémentées
+
+- **Code splitting** : Chargement par route automatique
+- **Image optimization** : Next/Image avec formats modernes
+- **Font optimization** : Préchargement des polices
+- **Caching** : Headers de cache optimisés
+- **Compression** : Gzip/Brotli activé
+- **Lazy loading** : Composants et images
+
+#### 3. Monitoring
+
+```typescript
+// Exemple de monitoring des performances
+export function reportWebVitals(metric: NextWebVitalsMetric) {
+	if (metric.label === "web-vital") {
+		console.log(metric);
+		// Envoyer à votre service d'analytics
+	}
+}
 ```
 
-## Fonctionnalités
+### Critères de qualité
 
-- **Page d'accueil** avec présentation des services
-- **Section À propos** avec parcours et valeurs
-- **Services** détaillés avec descriptions
-- **FAQ** avec questions fréquentes
-- **Formulaire de contact** avec :
-  - Validation des données avec Zod
-  - Upload de pièces jointes via UploadThing
-  - Envoi d'emails avec server action et template React professionnel
-  - Gestion d'erreurs complète
-- **Système d'emails générique** :
-  - Méthode réutilisable pour différents types d'emails
-  - Support HTML et templates React
-  - Configuration automatique de l'expéditeur
-  - Gestion des pièces jointes
+- **TypeScript** : Mode strict, 0 erreurs
+- **ESLint** : 0 warnings, règles Next.js
+- **Build** : 0 erreurs, bundle size optimisé
+- **Accessibilité** : Score Lighthouse > 95
+- **SEO** : Score Lighthouse 100
 
-## Scripts disponibles
+## 📚 Documentation technique
 
-- `npm run dev` - Serveur de développement
-- `npm run build` - Build de production
-- `npm run start` - Serveur de production
-- `npm run lint` - Vérification du code
+### Architecture détaillée
 
-## Structure du projet
+#### 1. Flux de données
 
-```
-diet-clic/
-├── app/                    # App Router Next.js
-│   ├── api/               # Routes API
-│   ├── contact/           # Page de contact
-│   └── ...
-├── shared/                # Composants et utilitaires partagés
-│   ├── components/        # Composants React
-│   ├── actions/           # Server Actions
-│   │   ├── send-email.ts  # Méthode générique d'envoi d'emails
-│   │   └── contact.ts     # Actions spécifiques au contact
-│   ├── examples/          # Exemples d'utilisation
-│   ├── schemas/           # Schémas de validation
-│   └── ...
-└── public/               # Assets statiques
+```mermaid
+graph TD
+    A[Client Browser] --> B[Next.js Frontend]
+    B --> C[Server Actions]
+    C --> D[Prisma ORM]
+    D --> E[PostgreSQL]
+    C --> F[External APIs]
+    F --> G[Resend Email]
+    F --> H[UploadThing]
 ```
 
-## Déploiement
+#### 2. Modèle de données
 
-1. **Configurez les variables d'environnement** sur votre plateforme de déploiement
-2. **(Optionnel) Vérifiez votre domaine** sur Resend pour un email personnalisé
-3. **Mettez à jour** `NEXT_PUBLIC_SITE_URL` avec votre URL de production
-4. **Déployez** avec votre plateforme préférée (Vercel, Netlify, etc.)
+```prisma
+model User {
+  id              String   @id
+  name            String
+  email           String   @unique
+  role            UserRole @default(CLIENT)
+  emailVerified   Boolean
+  sessions        Session[]
+  accounts        Account[]
+  contactRequests ContactRequest[]
+}
 
-## Support
+model ContactRequest {
+  id          String @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  phone       String?
+  subject     String
+  message     String
+  status      ContactStatus @default(PENDING)
+  createdAt   DateTime @default(now())
+  user        User? @relation(...)
+}
+```
 
-Pour toute question ou problème, consultez la documentation des services utilisés :
+#### 3. Patterns et conventions
 
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Resend Documentation](https://resend.com/docs)
-- [UploadThing Documentation](https://docs.uploadthing.com)
+- **Naming** : camelCase pour les variables, PascalCase pour les composants
+- **Structure** : Un composant par fichier, index.ts pour les exports
+- **Types** : Interfaces pour les props, types pour le reste
+- **Async** : Server Actions pour les mutations, SWR/React Query pour les queries
+
+### API Documentation
+
+#### Server Actions
+
+```typescript
+// Contact form submission
+export async function submitContactForm(data: ContactFormData) {
+  // Validation avec Zod
+  const validated = contactSchema.parse(data)
+
+  // Sauvegarde en base
+  const contact = await prisma.contactRequest.create({
+    data: validated
+  })
+
+  // Envoi email
+  await sendEmail({
+    to: process.env.EMAIL,
+    subject: `Nouveau contact: ${validated.subject}`,
+    react: <ContactEmailTemplate {...validated} />
+  })
+
+  return { success: true, id: contact.id }
+}
+```
+
+## 📖 Manuels
+
+### Manuel de déploiement
+
+#### 1. Prérequis de production
+
+- Node.js 18.x LTS
+- PostgreSQL 14.x+
+- Domaine avec SSL
+- Compte Resend vérifié
+- Variables d'environnement configurées
+
+#### 2. Étapes de déploiement
+
+```bash
+# 1. Build de production
+npm run build
+
+# 2. Migration de base de données
+npx prisma migrate deploy
+
+# 3. Démarrage du serveur
+npm start
+```
+
+#### 3. Configuration serveur
+
+```nginx
+# Exemple Nginx
+server {
+    listen 443 ssl http2;
+    server_name your-domain.com;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+    }
+}
+```
+
+### Manuel d'utilisation
+
+#### Pour les administrateurs
+
+1. **Connexion** : `/auth/signin` avec email/mot de passe
+2. **Dashboard** : Vue d'ensemble des contacts
+3. **Gestion contacts** : Filtrage, tri, export
+4. **Paramètres** : Configuration du profil
+
+#### Pour les développeurs
+
+1. **Installation locale** : Suivre le guide d'installation
+2. **Ajout de fonctionnalités** : Créer une branche feature/\*
+3. **Tests** : Écrire les tests avant le merge
+4. **Documentation** : Mettre à jour ce README
+
+### Manuel de mise à jour
+
+#### 1. Mise à jour des dépendances
+
+```bash
+# Vérifier les mises à jour
+npm outdated
+
+# Mettre à jour (prudent)
+npm update
+
+# Mise à jour majeure
+npm install package@latest
+```
+
+#### 2. Mise à jour de la base de données
+
+```bash
+# Créer une migration
+npx prisma migrate dev --name description_of_change
+
+# Appliquer en production
+npx prisma migrate deploy
+```
+
+#### 3. Rollback
+
+```bash
+# Revenir à la version précédente
+git checkout tags/v1.0.0
+
+# Restaurer la base de données
+npx prisma migrate resolve --rolled-back
+```
+
+## 🎯 Cahier de recettes
+
+### Tests fonctionnels
+
+1. **Page d'accueil**
+   - [ ] Affichage correct sur mobile/desktop
+   - [ ] Navigation fonctionnelle
+   - [ ] Animations fluides
+   - [ ] Liens actifs
+
+2. **Formulaire de contact**
+   - [ ] Validation des champs
+   - [ ] Messages d'erreur clairs
+   - [ ] Envoi d'email réussi
+   - [ ] Message de confirmation
+
+3. **Authentification**
+   - [ ] Connexion email/password
+   - [ ] Connexion Google OAuth
+   - [ ] Déconnexion
+   - [ ] Gestion des erreurs
+
+4. **Dashboard admin**
+   - [ ] Accès protégé
+   - [ ] Liste des contacts
+   - [ ] Filtres fonctionnels
+   - [ ] Actions sur les contacts
+
+### Tests de sécurité
+
+- [ ] Injection SQL impossible
+- [ ] XSS bloqué
+- [ ] CSRF protégé
+- [ ] Headers de sécurité présents
+- [ ] Sessions sécurisées
+
+### Tests de performance
+
+- [ ] Temps de chargement < 3s
+- [ ] Score Lighthouse > 90
+- [ ] Pas de memory leaks
+- [ ] Bundle size optimisé
+
+## 🐛 Plan de correction des bogues
+
+### Processus de gestion des bugs
+
+1. **Identification** : Issue GitHub avec template
+2. **Priorisation** : P0 (critique) à P3 (mineur)
+3. **Assignation** : Développeur responsable
+4. **Correction** : Branch hotfix/\* pour P0/P1
+5. **Validation** : Tests + code review
+6. **Déploiement** : Selon la priorité
+
+### Template de bug report
+
+```markdown
+## Description
+
+Brève description du bug
+
+## Étapes de reproduction
+
+1. Aller sur...
+2. Cliquer sur...
+3. Observer...
+
+## Comportement attendu
+
+Ce qui devrait se passer
+
+## Comportement actuel
+
+Ce qui se passe réellement
+
+## Environnement
+
+- Browser:
+- OS:
+- Version:
+
+## Screenshots
+
+Si applicable
+```
+
+## 📞 Support
+
+- **Documentation Next.js** : https://nextjs.org/docs
+- **Documentation Prisma** : https://www.prisma.io/docs
+- **Documentation Better Auth** : https://better-auth.com
+- **Issues GitHub** : [Lien vers les issues]
+- **Contact développeur** : [Email du développeur]
+
+---
+
+_Dernière mise à jour : [Date]_
+_Version : 1.0.0_
