@@ -11,8 +11,8 @@ Une application web moderne développée avec Next.js 15, React 19, TypeScript e
 ## 📋 Sommaire
 
 - [🏗️ Architecture et Technologies](#️-architecture-et-technologies)
-- [🚀 GitHub Flow et Déploiement](#-github-flow-et-déploiement)
-  - [C2.1.1 - Stratégie GitHub Flow](#c211---stratégie-github-flow)
+- [🚀 Environnements et Intégration](#-environnements-et-intégration)
+  - [C2.1.1 - Environnements de Déploiement et Test](#c211---environnements-de-déploiement-et-test)
   - [C2.1.2 - Système d'Intégration Continue](#c212---système-dintégration-continue)
 - [🎯 Conception et Développement](#-conception-et-développement)
   - [C2.2.1 - Prototype de l'Application](#c221---prototype-de-lapplication)
@@ -50,11 +50,9 @@ app/                    # Structure Next.js App Router
 └── auth/              # Pages d'authentification
 
 domains/               # Logique métier par domaine
-├── auth/
-│   └── features/
-│       └── login/
-└── contact/
-    └── features/
+├── auth/              # Domaine authentification
+│   └── features/      # Fonctionnalités isolées
+└── user/              # Domaine utilisateur
 
 shared/                # Code partagé
 ├── components/        # Composants réutilisables
@@ -68,9 +66,9 @@ prisma/               # Configuration base de données
 
 ---
 
-## 🚀 GitHub Flow et Déploiement
+## 🚀 Environnements et Intégration
 
-### C2.1.1 - Stratégie GitHub Flow
+### C2.1.1 - Environnements de Déploiement et Test
 
 #### Le Protocole de Déploiement Continu
 
@@ -82,49 +80,49 @@ Le protocole suit 5 étapes automatisées :
 4. **Déploiement** : Push automatique vers l'environnement cible
 5. **Migrations** : Application automatique des migrations de base de données
 
-#### Stratégie GitHub Flow
+#### Environnements de Déploiement
 
-**Approche simplifiée :** Une seule branche principale `main` avec des branches feature temporaires.
+Le projet utilise une architecture à environnements multiples :
 
-| Environnement  | Branche    | Déploiement           | Usage               |
-| -------------- | ---------- | --------------------- | ------------------- |
-| **Production** | `main`     | Automatique sur merge | Environnement live  |
-| **Feature**    | Temporaire | Tests en PR           | Développement isolé |
+| Environnement     | Usage               | Configuration                  |
+| ----------------- | ------------------- | ------------------------------ |
+| **Développement** | Tests locaux        | Hot reload, debug activé       |
+| **Preview**       | Tests PR            | Build complet, données de test |
+| **Production**    | Utilisateurs finaux | Optimisé, monitoring actif     |
 
-**Avantages GitHub Flow :**
+#### Environnement de Développement Détaillé
 
-- ✅ Simplicité maximale
-- ✅ Déploiement continu rapide
-- ✅ Moins de branches à maintenir
-- ✅ Feedback immédiat en production
+**Éditeur et Outils :**
 
-#### Configuration Vercel - GitHub Flow
+- **IDE** : Cursor avec extensions TypeScript
+- **Runtime** : Node.js 20.x LTS
+- **Package Manager** : npm avec cache optimisé
+- **Dev Server** : Next.js avec Turbopack (hot reload)
 
-**Project Setup :**
+**Composants Techniques Identifiés :**
 
-- **Production** : Branche `main` → déploiement automatique
-- **Preview** : Toutes les branches feature → déploiements de preview
+| Composant                        | Technologie         | Rôle                      |
+| -------------------------------- | ------------------- | ------------------------- |
+| **Compilateur**                  | TypeScript 5.x      | Transformation TS → JS    |
+| **Serveur d'application**        | Next.js 15          | Rendu pages, API Routes   |
+| **Outils de gestion de sources** | Git + GitHub        | Versioning, collaboration |
+| **Base de données**              | PostgreSQL + Prisma | Persistance données       |
+| **Build System**                 | Next.js + Turbopack | Compilation optimisée     |
+
+#### Séquences de Déploiement
+
+**Séquence Complète :**
 
 ```bash
-# Commande de build pour toutes les branches
-buildCommand: "npm run test:coverage && npm run lint && npm run build"
+1. Code Push → GitHub
+2. Vercel Detection → Build Trigger
+3. Install Dependencies → npm ci
+4. Run Tests → npm run test:coverage
+5. Code Quality → npm run lint
+6. Build Application → npm run build
+7. Deploy to Environment → Vercel
+8. Health Check → Automatic verification
 ```
-
-**Avantages GitHub Flow + Vercel :**
-
-- ✅ Déploiement production sur chaque merge vers main
-- ✅ Preview deployments pour tester les PR
-- ✅ Blocage automatique si tests échouent
-- ✅ Rollback facile vers commit précédent
-- ✅ Feedback immédiat sur erreurs
-
-#### Outils de Monitoring
-
-- **Jest** : Couverture tests (seuil 80%)
-- **ESLint** : Analyse statique (zéro erreur)
-- **Lighthouse CI** : Audit performances (score ≥ 90)
-- **Vercel Analytics** : Core Web Vitals production
-- **npm audit** : Vérification vulnérabilités
 
 #### Critères de Performance
 
@@ -144,212 +142,34 @@ buildCommand: "npm run test:coverage && npm run lint && npm run build"
 
 ### C2.1.2 - Système d'Intégration Continue
 
-#### Séquences d'Intégration
+#### Le Protocole d'Intégration Continue
 
-**Solution Actuelle - Vercel :**
+**Approche GitHub Flow :** Une seule branche principale `main` avec intégration continue.
+
+**Séquences d'intégration automatisées :**
+
+1. **Push sur feature branch** → Tests automatiques en PR
+2. **Code review** → Validation par pair obligatoire
+3. **Merge vers main** → Déploiement automatique production
+4. **Tests post-déploiement** → Vérification sanité
+
+**Configuration Pipeline :**
 
 ```bash
+# Pipeline Vercel (solution actuelle)
 npm run test:coverage && npm run lint && npm run build
 ```
 
-**Alternative GitHub Actions :**
+#### Architecture Logicielle Structurée pour la Maintenabilité
 
-- Tests sur chaque push
-- Pipeline CI/CD sophistiqué
-- Mais complexité supplémentaire
+**Maintenabilité Assurée par :**
 
-#### Workflow GitHub Flow Détaillé
-
-**Principe :** Toutes les fonctionnalités partent de `main` et y retournent directement.
-
-```mermaid
-gitGraph
-    commit id: "v1.0.0"
-    branch feature/contact-form
-    checkout feature/contact-form
-    commit id: "Add form"
-    commit id: "Add tests"
-    checkout main
-    merge feature/contact-form
-    commit id: "Deploy v1.1.0"
-    branch feature/dashboard
-    checkout feature/dashboard
-    commit id: "Add dashboard"
-    checkout main
-    merge feature/dashboard
-    commit id: "Deploy v1.2.0"
-```
-
-**Commandes Pratiques :**
-
-```bash
-# 1. Créer une nouvelle fonctionnalité
-git checkout main
-git pull origin main
-git checkout -b feature/nouvelle-fonctionnalite
-
-# 2. Développer et tester
-git add .
-git commit -m "feat: ajout nouvelle fonctionnalité"
-git push -u origin feature/nouvelle-fonctionnalite
-
-# 3. Créer Pull Request sur GitHub (feature → main)
-# 4. Après merge automatique, nettoyer
-git checkout main
-git pull origin main
-git branch -d feature/nouvelle-fonctionnalite
-```
-
-#### Processus GitHub Flow
-
-1. **Branche feature** : Créer depuis `main` → `feature/nom-de-la-fonctionnalité`
-2. **Développement** : Commits réguliers sur la branche feature
-3. **Pull Request** : Ouvrir PR vers `main` avec code review obligatoire
-4. **Tests automatiques** : Validation CI/CD (Jest + ESLint + Build)
-5. **Merge vers main** : Déploiement automatique en production
-6. **Nettoyage** : Suppression automatique de la branche feature
-
-#### Guide Pratique GitHub Flow
-
-**🚀 Workflow Quotidien :**
-
-```bash
-# ═══════════════════════════════════════════════════════
-# 1. NOUVELLE FONCTIONNALITÉ
-# ═══════════════════════════════════════════════════════
-
-# Partir toujours de main à jour
-git checkout main
-git pull origin main
-
-# Créer la branche feature
-git checkout -b feature/contact-validation
-# ou: git checkout -b hotfix/urgent-bug
-# ou: git checkout -b docs/update-readme
-
-# ═══════════════════════════════════════════════════════
-# 2. DÉVELOPPEMENT
-# ═══════════════════════════════════════════════════════
-
-# Travailler normalement
-# ... faire les modifications ...
-
-# Commits réguliers avec messages clairs
-git add .
-git commit -m "feat: add email validation to contact form"
-
-# Pousser régulièrement (sauvegarde)
-git push -u origin feature/contact-validation
-
-# ═══════════════════════════════════════════════════════
-# 3. PULL REQUEST
-# ═══════════════════════════════════════════════════════
-
-# Sur GitHub : Créer PR feature/contact-validation → main
-# - Description claire des changements
-# - Screenshots si interface utilisateur
-# - Mention des tests ajoutés
-
-# ═══════════════════════════════════════════════════════
-# 4. APRÈS MERGE (automatique)
-# ═══════════════════════════════════════════════════════
-
-# Revenir sur main et nettoyer
-git checkout main
-git pull origin main
-git branch -d feature/contact-validation
-
-# La fonctionnalité est maintenant LIVE en production ! 🎉
-```
-
-**🔧 Cas Spéciaux :**
-
-```bash
-# HOTFIX URGENT (même processus, branche différente)
-git checkout main
-git pull origin main
-git checkout -b hotfix/security-patch
-# ... fix ...
-git commit -m "fix: patch critical security vulnerability"
-git push -u origin hotfix/security-patch
-# → PR immédiate vers main
-
-# PLUSIEURS COMMITS SUR UNE FEATURE
-git checkout feature/dashboard
-git add components/
-git commit -m "feat: add dashboard layout"
-git add api/
-git commit -m "feat: add dashboard API endpoints"
-git add tests/
-git commit -m "test: add dashboard component tests"
-git push origin feature/dashboard
-# → Une seule PR avec tous les commits
-
-# MISE À JOUR DEPUIS MAIN (si feature longue)
-git checkout feature/long-feature
-git merge main  # ou git rebase main
-git push origin feature/long-feature
-```
-
-**✅ Avantages de cette Approche :**
-
-- **Simplicité maximale** : Une seule branche principale
-- **Déploiement continu** : Chaque merge = nouvelle version en production
-- **Feedback rapide** : Les utilisateurs voient les changements immédiatement
-- **Moins de conflits** : Branches feature courtes et fréquentes
-- **Preview deployments** : Tester chaque PR avant merge
-- **Rollback facile** : `git revert` sur main si problème
-
-#### Configuration Vercel pour GitHub Flow
-
-**🎯 Setup Recommandé :**
-
-1. **Production Project :**
-
-   - **Nom :** `diet-clic`
-   - **Branche :** `main` uniquement
-   - **Auto-deploy :** ✅ Activé
-   - **Preview :** ✅ Pour toutes les branches
-
-2. **Build Settings :**
-
-   ```bash
-   # Build Command (avec validation complète)
-   npm run test:coverage && npm run lint && npm run build
-
-   # Install Command
-   npm ci
-
-   # Output Directory
-   .next
-   ```
-
-3. **Environment Variables :**
-   - Identiques pour production et preview
-   - Variables sensibles dans Vercel Dashboard
-   - `.env.example` pour la documentation
-
-**🚦 Workflow Automatique :**
-
-```mermaid
-graph TD
-    A[Feature Branch] --> B[Push vers GitHub]
-    B --> C[Vercel Preview Deploy]
-    C --> D[Tests Automatiques]
-    D --> E{Tests OK?}
-    E -->|❌ Échec| F[PR Bloquée]
-    E -->|✅ Succès| G[Code Review]
-    G --> H[Merge vers main]
-    H --> I[Production Deploy]
-    I --> J[Live sur diet-clic.vercel.app]
-```
-
-**⚡ Résultat :**
-
-- Chaque PR = URL de preview pour tester
-- Chaque merge vers main = déploiement production automatique
-- Tests bloquent les déploiements défaillants
-- Rollback instantané si problème
+- ✅ Séparation claire des responsabilités
+- ✅ Logique métier isolée dans les domaines
+- ✅ Composants UI réutilisables et centralisés
+- ✅ Actions serveur regroupées
+- ✅ Validation gérée par des schémas Zod typés
+- ✅ Possibilité d'itération progressive sans impact
 
 ---
 
@@ -357,11 +177,11 @@ graph TD
 
 ### C2.2.1 - Prototype de l'Application
 
-#### Description Générale
+#### Présentation du Prototype Réalisé
 
 Diet-Clic est une application web spécialisée pour diététicienne nutritionniste, offrant une présence en ligne professionnelle avec gestion des demandes de contact.
 
-#### Fonctionnalités de l'Interface
+**Fonctionnalités de l'Interface :**
 
 **Interface Publique :**
 
@@ -378,7 +198,7 @@ Diet-Clic est une application web spécialisée pour diététicienne nutritionni
 - 🔍 Filtres avancés (statut, date)
 - 🔎 Recherche par nom ou email
 
-#### Design Responsive
+**Design Responsive :**
 
 | Écran        | Résolution | Optimisations               |
 | ------------ | ---------- | --------------------------- |
@@ -386,29 +206,22 @@ Diet-Clic est une application web spécialisée pour diététicienne nutritionni
 | **Tablette** | ≥ 768px    | Navigation adaptée          |
 | **Desktop**  | ≤ 1920px+  | Expérience complète         |
 
-#### User Stories Implémentées
+#### Utilisation de Framework et Paradigmes de Développement
 
-- 👤 **Visiteur** : Consulter services et informations détaillées
-- 🏥 **Patient potentiel** : Envoyer demande personnalisée avec pièces jointes
-- 👨‍💼 **Administrateur** : Gérer toutes les demandes reçues
-- ♿ **Utilisateur handicapé** : Navigation clavier complète (WCAG 2.1 AA)
-
-#### Frameworks et Paradigmes
-
-**Frontend :**
+**Frameworks Frontend :**
 
 - **Next.js 15.4** : App Router, architecture moderne
 - **React 19** : Server Components, performances optimisées
 - **Tailwind CSS 4** : Design system cohérent
 - **Radix UI + shadcn/ui** : Composants accessibles
 
-**Backend :**
+**Frameworks Backend :**
 
 - **Prisma ORM** : Gestion type-safe PostgreSQL
 - **Better Auth** : Authentification OAuth + passkeys
 - **Zod** : Validation TypeScript runtime
 
-**Paradigmes :**
+**Paradigmes de Développement :**
 
 - **Domain-Driven Design** : Organisation par domaines métier
 - **Architecture composants** : Modulaire avec props typées
@@ -417,16 +230,16 @@ Diet-Clic est une application web spécialisée pour diététicienne nutritionni
 
 ### C2.2.2 - Harnais de Test Unitaire
 
-#### Configuration des Tests
+#### Jeu de Tests Unitaires
 
-**Stack de Test :**
+**Configuration des Tests :**
 
 - **Jest** : Framework de test principal
 - **React Testing Library** : Tests composants React
 - **jsdom** : Simulation environnement navigateur
 - **Services mockés** : Resend, UploadThing isolés
 
-#### Couverture de Tests
+**Couverture de Tests :**
 
 **46 tests** couvrent la fonctionnalité contact (cœur métier) :
 
@@ -436,32 +249,17 @@ Diet-Clic est une application web spécialisée pour diététicienne nutritionni
 | **Schemas (contact-schema.ts)**            | 100%       | Validation Zod  |
 | **Templates (contact-email-template.tsx)** | 99,44%     | Rendu emails    |
 
-#### Types de Tests
+**Types de Tests :**
 
-**Tests de Validation :**
-
-```typescript
-// Cas valide
-const validData = { email: "test@example.com", message: "Hello world" };
-// Cas invalide
-const invalidData = { email: "invalid-email", message: "Hi" };
-```
-
-**Tests d'Actions Serveur :**
-
-- Simulation envoi formulaires
-- Vérification emails envoyés
-- Validation données correctes
-
-**Tests de Templates :**
-
-- Rendu correct des emails
-- Présence de toutes les informations
-- Formatage approprié
+- **Tests de validation** : Cas valides et invalides des schémas Zod
+- **Tests d'actions serveur** : Simulation envoi formulaires et vérification emails
+- **Tests de templates** : Rendu correct des emails avec données complètes
 
 ### C2.2.3 - Évolutivité et Sécurisation
 
-#### Mesures de Sécurité - Protection OWASP Top 10
+#### Mesures de Sécurité Mises en Œuvre
+
+**Protection OWASP Top 10 :**
 
 | Faille                           | Protection  | Implémentation                                 |
 | -------------------------------- | ----------- | ---------------------------------------------- |
@@ -470,7 +268,7 @@ const invalidData = { email: "invalid-email", message: "Hi" };
 | **Cross-Site Scripting (XSS)**   | React + CSP | Sanitization automatique + headers restrictifs |
 | **Protection CSRF**              | Better Auth | Tokens automatiques + headers SameSite         |
 
-#### Headers de Sécurité
+**Headers de Sécurité :**
 
 ```javascript
 // next.config.ts
@@ -494,14 +292,9 @@ const securityHeaders = [
 ];
 ```
 
-#### Gestion Sécurisée des Secrets
+#### Actions pour l'Accessibilité
 
-- ✅ Variables d'environnement exclusivement
-- ✅ Rotation automatique tokens API
-- ✅ Chiffrement données sensibles en BDD
-- ✅ Audit régulier dépendances (`npm audit`)
-
-#### Actions pour l'Accessibilité - WCAG 2.1 AA
+**Conformité WCAG 2.1 AA :**
 
 **Navigation Clavier :**
 
@@ -539,34 +332,23 @@ const securityHeaders = [
 
 #### Historique des Versions
 
-##### Version 1.0.0 - 15 janvier 2024 (Production)
+**Version 1.0.0 - 15 janvier 2024 (Production)**
 
-**Version majeure en production incluant :**
+Version majeure marquant la mise en production avec :
 
-**🏗️ Architecture :**
-
-- Architecture Domain-Driven Design complète
-- Frontend Next.js 15 + React 19
-- Authentification Better Auth (OAuth Google + passkeys)
-
-**✨ Fonctionnalités :**
-
+- Architecture complète Domain-Driven Design
+- Frontend moderne Next.js 15 + React 19
+- Authentification sécurisée Better Auth (OAuth Google + passkeys)
 - Formulaire contact avec validation Zod
 - Dashboard administrateur protégé
 - Configuration headers sécurité complète
-
-**🔒 Sécurité :**
-
 - Protection OWASP Top 10
 - Conformité WCAG 2.1 AA
-- Navigation clavier complète
+- 46 tests unitaires et documentation technique complète
 
-**🧪 Tests :**
+#### Version Fonctionnelle du Logiciel
 
-- 46 tests unitaires
-- Documentation technique complète
-
-#### Statut Opérationnel Version 1.0.0
+**Statut Opérationnel Version 1.0.0 :**
 
 **✅ Fonctionnelle :**
 
@@ -583,31 +365,7 @@ const securityHeaders = [
 - Déployée en production
 - Utilisateurs actifs quotidiens
 
-#### Fonctionnalités Opérationnelles
-
-**Interface Publique :**
-
-- Page d'accueil responsive
-- Navigation fluide entre sections
-- Formulaire contact validation temps réel
-- Upload fichiers via UploadThing
-- Envoi emails automatique via Resend
-
-**Espace Administration :**
-
-- Authentification sécurisée (email/password + OAuth Google)
-- Dashboard avec liste contacts
-- Filtres et recherche avancée
-- Gestion statuts et réponses
-
-**Infrastructure :**
-
-- Base de données PostgreSQL stable
-- Déploiement continu Vercel
-- Monitoring performances continu
-- Sauvegardes automatiques
-
-#### Métriques de Fiabilité
+**Métriques de Fiabilité :**
 
 | Métrique              | Performance                       |
 | --------------------- | --------------------------------- |
@@ -622,21 +380,14 @@ const securityHeaders = [
 
 ### C2.3.1 - Cahier de Recettes
 
-#### Tests Fonctionnels Page d'Accueil
+#### Tests Fonctionnels
 
-**Test d'Affichage Responsive :**
+**Tests Page d'Accueil :**
 
-- **Critères :** Adaptation layout desktop (1920x1080), mobile (375x667), tablette (768x1024)
-- **Validation :** Aucun scroll horizontal, police ≥ 16px, éléments cliquables ≥ 44px
+- **Test d'affichage responsive** : Adaptation layout desktop/mobile/tablette
+- **Test de navigation principale** : Liens d'ancrage vers sections
 
-**Test de Navigation Principale :**
-
-- **Critères :** Liens d'ancrage vers sections À propos, Prestations, FAQ, Contact
-- **Validation :** Animations défilement fluides (< 1 seconde)
-
-#### Tests du Formulaire de Contact
-
-**Validation des Champs :**
+**Tests Formulaire de Contact :**
 
 | Champ       | Valeur Invalide  | Message Erreur Attendu                            |
 | ----------- | ---------------- | ------------------------------------------------- |
@@ -644,31 +395,16 @@ const securityHeaders = [
 | **Email**   | "email-invalide" | "L'email doit être valide"                        |
 | **Message** | < 10 caractères  | "Le message doit contenir au moins 10 caractères" |
 
-**Test d'Envoi Réussi :**
+**Tests de Sécurité OWASP :**
 
-- **Critères :** Tous champs correctement remplis
-- **Validation :** Email reçu dans 30 secondes + formulaire réinitialisé
+- **Test XSS** : Saisie `<script>alert('XSS')</script>` → Script correctement échappé
+- **Test Injection SQL** : Saisie `'; DROP TABLE users; --` → Traité comme chaîne
+- **Headers de sécurité** : Présence X-Frame-Options, X-Content-Type-Options, CSP
 
-#### Tests de Sécurité OWASP
+**Tests de Performance :**
 
-**Test XSS :**
-
-- **Saisie :** `<script>alert('XSS')</script>`
-- **Validation :** Script correctement échappé, ne s'exécute pas
-
-**Test Injection SQL :**
-
-- **Saisie :** `'; DROP TABLE users; --`
-- **Validation :** Traité comme chaîne de caractères
-
-**Headers de Sécurité :**
-
-- **Validation :** Présence X-Frame-Options, X-Content-Type-Options, CSP
-
-#### Tests de Performance
-
-- **Audit Lighthouse :** Score performance ≥ 90
-- **Core Web Vitals :** LCP < 2,5s, FID < 100ms, CLS < 0,1
+- **Audit Lighthouse** : Score performance ≥ 90
+- **Core Web Vitals** : LCP < 2,5s, FID < 100ms, CLS < 0,1
 
 #### Critères de Validation Globaux
 
@@ -715,46 +451,14 @@ const securityHeaders = [
 6. **Merge + Déploiement** : Après approbation
 7. **Validation** : Tests complets + fermeture issue
 
-#### Template de Rapport de Bogue
-
-```markdown
-## Description
-
-[Description claire du problème]
-
-## Étapes de Reproduction
-
-1. [Étape 1]
-2. [Étape 2]
-3. [Étape 3]
-
-## Comportement Attendu
-
-[Ce qui devrait se passer]
-
-## Comportement Actuel
-
-[Ce qui se passe réellement]
-
-## Environnement
-
-- **Navigateur :** [Chrome 120, Firefox 121, etc.]
-- **OS :** [Windows 11, macOS 14, etc.]
-- **Version :** [v1.0.0]
-
-## Captures d'écran
-
-[Si nécessaire]
-```
-
 #### Analyse d'Amélioration Continue
 
-**Pour chaque bogue corrigé :**
+Pour chaque bogue corrigé :
 
-- **Post-mortem :** Identification cause racine
-- **Prévention :** Mesures futures
-- **Tests manquants :** Identification lacunes
-- **Documentation :** Mise à jour si nécessaire
+- **Post-mortem** : Identification cause racine
+- **Prévention** : Mesures futures
+- **Tests manquants** : Identification lacunes
+- **Documentation** : Mise à jour si nécessaire
 
 ---
 
@@ -764,7 +468,7 @@ const securityHeaders = [
 
 #### Manuel de Déploiement
 
-##### Prérequis Techniques Production
+**Prérequis Techniques Production :**
 
 | Composant      | Version Minimum        | Recommandation         |
 | -------------- | ---------------------- | ---------------------- |
@@ -773,142 +477,64 @@ const securityHeaders = [
 | **SSL/TLS**    | Let's Encrypt          | Certificat valide      |
 | **Ressources** | 2GB RAM, 20GB stockage | 4GB RAM, 50GB stockage |
 
-##### Services Externes Requis
+**Services Externes Requis :**
 
 - ✅ **Resend** : Compte vérifié envoi emails
 - ✅ **UploadThing** : Gestion uploads fichiers
 - ✅ **PostgreSQL** : Base de données accessible production
 
-##### Procédure de Déploiement
-
-**1. Préparation :**
+**Procédure de Déploiement :**
 
 ```bash
+# 1. Préparation
 git clone [repository]
 npm ci --production
-```
 
-**2. Configuration :**
+# 2. Configuration
+# Créer .env.production avec variables requises
 
-```bash
-# Créer .env.production
-DATABASE_URL="postgresql://..."
-AUTH_SECRET="..."
-AUTH_GOOGLE_ID="..."
-AUTH_GOOGLE_SECRET="..."
-RESEND_API_KEY="..."
-UPLOADTHING_SECRET="..."
-UPLOADTHING_APP_ID="..."
-NEXT_PUBLIC_URL="https://..."
-```
-
-**3. Base de Données :**
-
-```bash
+# 3. Base de Données
 npx prisma generate
 npx prisma migrate deploy
-npx prisma db pull  # Vérification
-```
 
-**4. Build et Démarrage :**
-
-```bash
+# 4. Build et Démarrage
 npm run build
-npm run start  # Test local port 3000
+npm run start
 ```
-
-##### Vérifications Post-Déploiement
-
-- ✅ **HTTPS** : Accès sécurisé fonctionnel
-- ✅ **Formulaire contact** : Emails envoyés correctement
-- ✅ **Authentification** : Connexion/déconnexion opérationnelle
-- ✅ **Base de données** : Temps de réponse acceptables
-- ✅ **Uploads** : UploadThing fonctionnel
-- ✅ **Performance** : Temps de chargement satisfaisants
 
 #### Manuel d'Utilisation
 
-##### Navigation Visiteurs
-
-**Accès au Site :**
+**Navigation Visiteurs :**
 
 - **URL principale** : Affichage page d'accueil
 - **Sections disponibles** : À propos, Prestations, FAQ, Contact
+- **Formulaire contact** : 4 champs obligatoires + 3 pièces jointes max
 
-**Utilisation Formulaire Contact :**
+**Gestion Administrative :**
 
-- **4 champs obligatoires :** Nom complet, email, sujet, message
-- **Pièces jointes :** Jusqu'à 3 fichiers
-- **Validation** : Temps réel des champs
-- **Confirmation** : Message d'envoi à l'écran
-
-##### Gestion Administrative
-
-**Connexion Espace Administration :**
-
-- **URL :** `/auth/signin`
-- **3 options :** Email/password, Google OAuth, passkeys
-
-**Dashboard Principal :**
-
-- Vue d'ensemble statistiques
-- Derniers contacts reçus
-- Actions rapides (traiter, archiver)
-
-**Gestion des Contacts :**
-
-- Liste complète avec filtres (statut, date)
-- Recherche par nom ou email
-- Actions : traiter, archiver, répondre, exporter CSV
-
-##### Résolution Problèmes Courants
-
-**Email Non Reçu :**
-
-1. Vérifier dossier spams/indésirables
-2. Confirmer adresse email saisie
-3. Contacter administrateur si délai > 5 minutes
-
-**Problème Connexion Administration :**
-
-1. Vérifier identifiants
-2. Utiliser "Mot de passe oublié"
-3. Essayer connexion Google alternative
-4. Vider cache navigateur
+- **Connexion** : `/auth/signin` (email/password, Google OAuth, passkeys)
+- **Dashboard** : Vue d'ensemble statistiques, derniers contacts
+- **Gestion contacts** : Liste, filtres, recherche, actions (traiter, archiver, exporter)
 
 #### Manuel de Mise à Jour
 
-##### Gestion des Dépendances
-
-**Vérifications Régulières :**
+**Gestion des Dépendances :**
 
 ```bash
+# Vérifications régulières
 npm outdated        # Mises à jour disponibles
 npm audit          # Vulnérabilités sécurité
-```
 
-**Mises à Jour Prudentes :**
-
-```bash
+# Mises à jour prudentes
 npm update                    # Mises à jour mineures
 npm install package@latest    # Mise à jour ciblée
 npm test                     # Vérification post-update
 ```
 
-**Mises à Jour Majeures :**
+**Évolution Base de Données :**
 
 ```bash
-npx npm-check-updates -u
-npm install
-npm run test:coverage
-npm run build
-```
-
-##### Évolution Base de Données
-
-**Création Migration :**
-
-```bash
+# Création migration
 # 1. Modifier schéma Prisma
 # 2. Générer migration
 npx prisma migrate dev --name add_new_feature
@@ -916,37 +542,7 @@ npx prisma migrate dev --name add_new_feature
 npx prisma migrate deploy
 ```
 
-**Sauvegarde Préventive :**
-
-```bash
-pg_dump database_name > backup_$(date +%Y%m%d).sql
-```
-
-**Restauration :**
-
-```bash
-psql database_name < backup_20240115.sql
-```
-
-##### Procédures de Rollback
-
-**Rollback Application :**
-
-```bash
-git checkout tags/v1.0.0
-npm ci
-npm run build
-npm restart
-```
-
-**Rollback Base de Données :**
-
-```bash
-npx prisma migrate resolve --rolled-back migration_name
-npx prisma migrate deploy
-```
-
-##### Planning de Maintenance Préventive
+**Planning de Maintenance Préventive :**
 
 | Fréquence       | Type                 | Actions                       |
 | --------------- | -------------------- | ----------------------------- |
@@ -954,12 +550,6 @@ npx prisma migrate deploy
 | **Mensuel**     | Maintenance courante | Dépendances patches/mineures  |
 | **Trimestriel** | Évolution majeure    | Frameworks versions majeures  |
 | **Semestriel**  | Optimisation         | Base de données, performances |
-
-**Fenêtre de Maintenance :**
-
-- **Horaire :** Dimanche 2h-4h du matin
-- **Notification :** 48h à l'avance
-- **Procédure :** Tests feature branch → Sauvegarde → Merge main → Vérification
 
 ---
 
@@ -969,7 +559,6 @@ npx prisma migrate deploy
 - **📂 Code source :** [Lien GitHub du projet]
 - **📚 Documentation technique :** [Lien vers la documentation]
 - **🧪 Tests automatisés :** Intégrés au pipeline CI/CD
-- **📊 Monitoring :** Vercel Analytics et Lighthouse CI
 
 ---
 
@@ -977,6 +566,6 @@ npx prisma migrate deploy
 
 **Diet-Clic** - Une application web pour diététicienne nutritionniste
 
-\_Développée avec Next.js 15 + React 19 + TypeScript
+_Développée avec Next.js 15 + React 19 + TypeScript_
 
 </div>
