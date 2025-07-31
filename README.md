@@ -82,25 +82,40 @@ Le protocole suit 5 étapes automatisées :
 4. **Déploiement** : Push automatique vers l'environnement cible
 5. **Migrations** : Application automatique des migrations de base de données
 
-#### Environnements
+#### Stratégie GitHub Flow
 
-| Environnement     | Branche   | Déploiement            | Usage                      |
-| ----------------- | --------- | ---------------------- | -------------------------- |
-| **Développement** | `develop` | Automatique sur commit | Tests rapides développeurs |
-| **Staging**       | `staging` | Tests d'intégration    | Validation fonctionnelle   |
-| **Production**    | `main`    | Release                | Environnement live         |
+**Approche simplifiée :** Une seule branche principale `main` avec des branches feature temporaires.
 
-#### Configuration Vercel
+| Environnement  | Branche    | Déploiement           | Usage               |
+| -------------- | ---------- | --------------------- | ------------------- |
+| **Production** | `main`     | Automatique sur merge | Environnement live  |
+| **Feature**    | Temporaire | Tests en PR           | Développement isolé |
+
+**Avantages GitHub Flow :**
+
+- ✅ Simplicité maximale
+- ✅ Déploiement continu rapide
+- ✅ Moins de branches à maintenir
+- ✅ Feedback immédiat en production
+
+#### Configuration Vercel - GitHub Flow
+
+**Project Setup :**
+
+- **Production** : Branche `main` → déploiement automatique
+- **Preview** : Toutes les branches feature → déploiements de preview
 
 ```bash
-# Commande de build intégrée
+# Commande de build pour toutes les branches
 buildCommand: "npm run test:coverage && npm run lint && npm run build"
 ```
 
-**Avantages :**
+**Avantages GitHub Flow + Vercel :**
 
+- ✅ Déploiement production sur chaque merge vers main
+- ✅ Preview deployments pour tester les PR
 - ✅ Blocage automatique si tests échouent
-- ✅ Intégration native Vercel
+- ✅ Rollback facile vers commit précédent
 - ✅ Feedback immédiat sur erreurs
 
 #### Outils de Monitoring
@@ -143,13 +158,56 @@ npm run test:coverage && npm run lint && npm run build
 - Pipeline CI/CD sophistiqué
 - Mais complexité supplémentaire
 
-#### Processus de Fusion du Code
+#### Workflow GitHub Flow Détaillé
 
-1. **Développement** : Branches `feature/nom-de-la-fonctionnalité`
-2. **Pull Request** : Code review obligatoire par un pair
-3. **Tests automatiques** : Validation via pipeline CI
-4. **Validation** : Approbation requise
-5. **Merge** : Autorisé uniquement si tests au vert
+**Principe :** Toutes les fonctionnalités partent de `main` et y retournent directement.
+
+```mermaid
+gitGraph
+    commit id: "v1.0.0"
+    branch feature/contact-form
+    checkout feature/contact-form
+    commit id: "Add form"
+    commit id: "Add tests"
+    checkout main
+    merge feature/contact-form
+    commit id: "Deploy v1.1.0"
+    branch feature/dashboard
+    checkout feature/dashboard
+    commit id: "Add dashboard"
+    checkout main
+    merge feature/dashboard
+    commit id: "Deploy v1.2.0"
+```
+
+**Commandes Pratiques :**
+
+```bash
+# 1. Créer une nouvelle fonctionnalité
+git checkout main
+git pull origin main
+git checkout -b feature/nouvelle-fonctionnalite
+
+# 2. Développer et tester
+git add .
+git commit -m "feat: ajout nouvelle fonctionnalité"
+git push -u origin feature/nouvelle-fonctionnalite
+
+# 3. Créer Pull Request sur GitHub (feature → main)
+# 4. Après merge automatique, nettoyer
+git checkout main
+git pull origin main
+git branch -d feature/nouvelle-fonctionnalite
+```
+
+#### Processus GitHub Flow
+
+1. **Branche feature** : Créer depuis `main` → `feature/nom-de-la-fonctionnalité`
+2. **Développement** : Commits réguliers sur la branche feature
+3. **Pull Request** : Ouvrir PR vers `main` avec code review obligatoire
+4. **Tests automatiques** : Validation CI/CD (Jest + ESLint + Build)
+5. **Merge vers main** : Déploiement automatique en production
+6. **Nettoyage** : Suppression automatique de la branche feature
 
 ---
 
@@ -617,26 +675,6 @@ npm run build
 npm run start  # Test local port 3000
 ```
 
-##### Configuration Nginx (Optionnelle)
-
-```nginx
-server {
-    listen 443 ssl http2;
-    server_name diet-clic.com;
-
-    ssl_certificate /etc/letsencrypt/live/diet-clic.com/fullchain.pem;
-    ssl_certificate_key /etc/letsencrypt/live/diet-clic.com/privkey.pem;
-
-    location / {
-        proxy_pass http://localhost:3000;
-        proxy_set_header Host $host;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
-}
-```
-
 ##### Vérifications Post-Déploiement
 
 - ✅ **HTTPS** : Accès sécurisé fonctionnel
@@ -783,54 +821,6 @@ npx prisma migrate deploy
 
 ---
 
-## 🏁 Conclusion
-
-Ce projet présente une application web complète développée selon les meilleures pratiques du développement logiciel moderne. **Diet-Clic** démontre une maîtrise technique approfondie avec une architecture moderne basée sur Next.js 15, des frameworks éprouvés et des paradigmes de développement reconnus.
-
-### Points Forts
-
-**🏗️ Architecture Moderne :**
-
-- Domain-Driven Design pour une maintenabilité optimale
-- Stack technique à jour (Next.js 15, React 19, TypeScript)
-- Séparation claire des responsabilités
-
-**🔒 Sécurité Exemplaire :**
-
-- Protection complète contre OWASP Top 10
-- Authentification robuste (OAuth + passkeys)
-- Headers de sécurité configurés optimalement
-
-**♿ Accessibilité Complète :**
-
-- Conformité WCAG 2.1 niveau AA
-- Navigation clavier intégrale
-- Support lecteurs d'écran complet
-
-**🧪 Qualité Logicielle :**
-
-- 46 tests automatisés (couverture > 80%)
-- Code TypeScript en mode strict
-- Documentation exhaustive
-
-**🚀 Performances Optimisées :**
-
-- Core Web Vitals respectées
-- Score Lighthouse ≥ 90
-- Déploiement continu automatisé
-
-### Évolutivité
-
-L'architecture garantit :
-
-- **Maintenabilité** à long terme
-- **Extensibilité** pour nouvelles fonctionnalités
-- **Scalabilité** selon croissance activité
-
-Le prototype fonctionnel déployé en production répond parfaitement aux besoins identifiés tout en garantissant **évolutivité** et **maintenabilité** pour accompagner la croissance de l'activité professionnelle.
-
----
-
 ## 🔗 Liens Utiles
 
 - **🌐 Application en ligne :** [https://diet-clic.vercel.app](https://diet-clic.vercel.app)
@@ -843,8 +833,8 @@ Le prototype fonctionnel déployé en production répond parfaitement aux besoin
 
 <div align="center">
 
-**Diet-Clic** - Une application web moderne pour diététicienne nutritionniste
+**Diet-Clic** - Une application web pour diététicienne nutritionniste
 
-_Développée avec ❤️ en Next.js 15 + React 19 + TypeScript_
+\_Développée avec Next.js 15 + React 19 + TypeScript
 
 </div>
