@@ -11,8 +11,8 @@ Une application web moderne développée avec Next.js 15, React 19, TypeScript e
 ## 📋 Sommaire
 
 - [🏗️ Architecture et Technologies](#️-architecture-et-technologies)
-- [🚀 Environnements de Déploiement](#-environnements-de-déploiement)
-  - [C2.1.1 - Environnements de Déploiement et Test](#c211---environnements-de-déploiement-et-test)
+- [🚀 GitHub Flow et Déploiement](#-github-flow-et-déploiement)
+  - [C2.1.1 - Stratégie GitHub Flow](#c211---stratégie-github-flow)
   - [C2.1.2 - Système d'Intégration Continue](#c212---système-dintégration-continue)
 - [🎯 Conception et Développement](#-conception-et-développement)
   - [C2.2.1 - Prototype de l'Application](#c221---prototype-de-lapplication)
@@ -68,9 +68,9 @@ prisma/               # Configuration base de données
 
 ---
 
-## 🚀 Environnements de Déploiement
+## 🚀 GitHub Flow et Déploiement
 
-### C2.1.1 - Environnements de Déploiement et Test
+### C2.1.1 - Stratégie GitHub Flow
 
 #### Le Protocole de Déploiement Continu
 
@@ -208,6 +208,145 @@ git branch -d feature/nouvelle-fonctionnalite
 4. **Tests automatiques** : Validation CI/CD (Jest + ESLint + Build)
 5. **Merge vers main** : Déploiement automatique en production
 6. **Nettoyage** : Suppression automatique de la branche feature
+
+#### Guide Pratique GitHub Flow
+
+**🚀 Workflow Quotidien :**
+
+```bash
+# ═══════════════════════════════════════════════════════
+# 1. NOUVELLE FONCTIONNALITÉ
+# ═══════════════════════════════════════════════════════
+
+# Partir toujours de main à jour
+git checkout main
+git pull origin main
+
+# Créer la branche feature
+git checkout -b feature/contact-validation
+# ou: git checkout -b hotfix/urgent-bug
+# ou: git checkout -b docs/update-readme
+
+# ═══════════════════════════════════════════════════════
+# 2. DÉVELOPPEMENT
+# ═══════════════════════════════════════════════════════
+
+# Travailler normalement
+# ... faire les modifications ...
+
+# Commits réguliers avec messages clairs
+git add .
+git commit -m "feat: add email validation to contact form"
+
+# Pousser régulièrement (sauvegarde)
+git push -u origin feature/contact-validation
+
+# ═══════════════════════════════════════════════════════
+# 3. PULL REQUEST
+# ═══════════════════════════════════════════════════════
+
+# Sur GitHub : Créer PR feature/contact-validation → main
+# - Description claire des changements
+# - Screenshots si interface utilisateur
+# - Mention des tests ajoutés
+
+# ═══════════════════════════════════════════════════════
+# 4. APRÈS MERGE (automatique)
+# ═══════════════════════════════════════════════════════
+
+# Revenir sur main et nettoyer
+git checkout main
+git pull origin main
+git branch -d feature/contact-validation
+
+# La fonctionnalité est maintenant LIVE en production ! 🎉
+```
+
+**🔧 Cas Spéciaux :**
+
+```bash
+# HOTFIX URGENT (même processus, branche différente)
+git checkout main
+git pull origin main
+git checkout -b hotfix/security-patch
+# ... fix ...
+git commit -m "fix: patch critical security vulnerability"
+git push -u origin hotfix/security-patch
+# → PR immédiate vers main
+
+# PLUSIEURS COMMITS SUR UNE FEATURE
+git checkout feature/dashboard
+git add components/
+git commit -m "feat: add dashboard layout"
+git add api/
+git commit -m "feat: add dashboard API endpoints"  
+git add tests/
+git commit -m "test: add dashboard component tests"
+git push origin feature/dashboard
+# → Une seule PR avec tous les commits
+
+# MISE À JOUR DEPUIS MAIN (si feature longue)
+git checkout feature/long-feature
+git merge main  # ou git rebase main
+git push origin feature/long-feature
+```
+
+**✅ Avantages de cette Approche :**
+
+- **Simplicité maximale** : Une seule branche principale
+- **Déploiement continu** : Chaque merge = nouvelle version en production  
+- **Feedback rapide** : Les utilisateurs voient les changements immédiatement
+- **Moins de conflits** : Branches feature courtes et fréquentes
+- **Preview deployments** : Tester chaque PR avant merge
+- **Rollback facile** : `git revert` sur main si problème
+
+#### Configuration Vercel pour GitHub Flow
+
+**🎯 Setup Recommandé :**
+
+1. **Production Project :**
+   - **Nom :** `diet-clic` 
+   - **Branche :** `main` uniquement
+   - **Auto-deploy :** ✅ Activé
+   - **Preview :** ✅ Pour toutes les branches
+
+2. **Build Settings :**
+   ```bash
+   # Build Command (avec validation complète)
+   npm run test:coverage && npm run lint && npm run build
+   
+   # Install Command  
+   npm ci
+   
+   # Output Directory
+   .next
+   ```
+
+3. **Environment Variables :**
+   - Identiques pour production et preview
+   - Variables sensibles dans Vercel Dashboard
+   - `.env.example` pour la documentation
+
+**🚦 Workflow Automatique :**
+
+```mermaid
+graph TD
+    A[Feature Branch] --> B[Push vers GitHub]
+    B --> C[Vercel Preview Deploy]
+    C --> D[Tests Automatiques]
+    D --> E{Tests OK?}
+    E -->|❌ Échec| F[PR Bloquée]
+    E -->|✅ Succès| G[Code Review]
+    G --> H[Merge vers main]
+    H --> I[Production Deploy]
+    I --> J[Live sur diet-clic.vercel.app]
+```
+
+**⚡ Résultat :**
+- Chaque PR = URL de preview pour tester
+- Chaque merge vers main = déploiement production automatique
+- Tests bloquent les déploiements défaillants
+- Rollback instantané si problème
 
 ---
 
@@ -817,7 +956,7 @@ npx prisma migrate deploy
 
 - **Horaire :** Dimanche 2h-4h du matin
 - **Notification :** 48h à l'avance
-- **Procédure :** Tests staging → Sauvegarde → Déploiement → Vérification
+- **Procédure :** Tests feature branch → Sauvegarde → Merge main → Vérification
 
 ---
 
