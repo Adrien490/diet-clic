@@ -228,6 +228,39 @@ Diet-Clic est une application web spécialisée pour diététicienne nutritionni
 - **Programmation fonctionnelle** : Fonctions pures, immutabilité
 - **Sécurité de type** : TypeScript strict + validation runtime
 
+#### Justification des Choix Technologiques
+
+**Architecture & Framework :**
+
+- **Next.js 15** : Choisi pour le SSR natif (SEO crucial pour visibilité professionnelle), App Router moderne, et excellent DX TypeScript
+- **React 19** : Server Components pour performances optimales (-40% JS client), concurrent features pour UX fluide
+- **TypeScript** : Type-safety obligatoire pour maintenabilité long terme et prévention bugs production
+
+**Base de données & ORM :**
+
+- **PostgreSQL** : Robustesse production éprouvée, support JSON natif pour données patient flexibles, performances requises
+- **Prisma ORM** : Type-safety bout-en-bout, migrations versionnées, excellente intégration TypeScript
+
+**Authentification & Sécurité :**
+
+- **Better Auth** : sessions sécurisées par défaut
+- **Zod** : Validation runtime + inférence TypeScript, protection contre données malformées
+
+**UI & Styling :**
+
+- **Tailwind CSS 4** : Design system cohérent, tree-shaking optimal, maintenance facilitée
+- **Radix UI + shadcn/ui** : Composants accessibles ARIA par défaut, personnalisation complète
+
+**Tests & Qualité :**
+
+- **Jest + RTL** : Standard industrie React, philosophie tests utilisateur, mocking intégré
+- **ESLint** : Détection des problèmes, règles Next.js spécifiques
+
+**Déploiement & Hosting :**
+
+- **Vercel** : Intégration native Next.js, CI/CD zéro-config
+- **Git + GitHub** : Versioning distribué, intégration Vercel automatique
+
 ### C2.2.2 - Harnais de Test Unitaire
 
 #### Jeu de Tests Unitaires
