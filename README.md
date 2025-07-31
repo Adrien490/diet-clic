@@ -279,7 +279,7 @@ git checkout feature/dashboard
 git add components/
 git commit -m "feat: add dashboard layout"
 git add api/
-git commit -m "feat: add dashboard API endpoints"  
+git commit -m "feat: add dashboard API endpoints"
 git add tests/
 git commit -m "test: add dashboard component tests"
 git push origin feature/dashboard
@@ -294,7 +294,7 @@ git push origin feature/long-feature
 **✅ Avantages de cette Approche :**
 
 - **Simplicité maximale** : Une seule branche principale
-- **Déploiement continu** : Chaque merge = nouvelle version en production  
+- **Déploiement continu** : Chaque merge = nouvelle version en production
 - **Feedback rapide** : Les utilisateurs voient les changements immédiatement
 - **Moins de conflits** : Branches feature courtes et fréquentes
 - **Preview deployments** : Tester chaque PR avant merge
@@ -305,19 +305,21 @@ git push origin feature/long-feature
 **🎯 Setup Recommandé :**
 
 1. **Production Project :**
-   - **Nom :** `diet-clic` 
+
+   - **Nom :** `diet-clic`
    - **Branche :** `main` uniquement
    - **Auto-deploy :** ✅ Activé
    - **Preview :** ✅ Pour toutes les branches
 
 2. **Build Settings :**
+
    ```bash
    # Build Command (avec validation complète)
    npm run test:coverage && npm run lint && npm run build
-   
-   # Install Command  
+
+   # Install Command
    npm ci
-   
+
    # Output Directory
    .next
    ```
@@ -343,6 +345,7 @@ graph TD
 ```
 
 **⚡ Résultat :**
+
 - Chaque PR = URL de preview pour tester
 - Chaque merge vers main = déploiement production automatique
 - Tests bloquent les déploiements défaillants
