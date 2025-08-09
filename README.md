@@ -126,14 +126,14 @@ prisma/           # Schéma & migrations
 
 **Service Level Objectives (SLO) :**
 
-| Métrique             | Objectif     | Mesure Actuelle | Évidence                  |
-| -------------------- | ------------ | --------------- | ------------------------- |
-| **Taux d'erreur**    | < 1%         | À surveiller    | Sentry Dashboard          |
-| **Performance**      | ≥ 90         | 92/100          | `npm run lighthouse:prod` |
-| **Accessibilité**    | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
-| **Bonnes pratiques** | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
-| **SEO**              | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
-| **Couverture tests** | ≥ 30% global | 95.1% réussite  | `npm run test:coverage`   |
+| Métrique             | Objectif     | Mesure Actuelle          | Évidence                  |
+| -------------------- | ------------ | ------------------------ | ------------------------- |
+| **Taux d'erreur**    | < 1%         | À surveiller             | Sentry Dashboard          |
+| **Performance**      | ≥ 90         | 92/100                   | `npm run lighthouse:prod` |
+| **Accessibilité**    | ≥ 95         | 100/100                  | `npm run lighthouse:prod` |
+| **Bonnes pratiques** | ≥ 95         | 100/100                  | `npm run lighthouse:prod` |
+| **SEO**              | ≥ 95         | 100/100                  | `npm run lighthouse:prod` |
+| **Couverture tests** | ≥ 30% global | 54.16% lignes/statements | `npm run test:coverage`   |
 
 ---
 
@@ -147,14 +147,14 @@ prisma/           # Schéma & migrations
 
 #### Badge de Couverture
 
-![Coverage Badge](https://img.shields.io/badge/coverage-35%25-brightgreen)
-![Tests Status](https://img.shields.io/badge/tests-791%2F832%20passing-brightgreen)
-![Test Success Rate](https://img.shields.io/badge/success%20rate-95.1%25-brightgreen)
+![Coverage Badge](https://img.shields.io/badge/coverage-significativement_améliorée-brightgreen)
+![Tests Status](https://img.shields.io/badge/tests-983%2F1041%20passing-brightgreen)
+![Test Success Rate](https://img.shields.io/badge/success%20rate-94.4%25-brightgreen)
 
 **Qualité du Code :**
 
 - ESLint + TypeScript strict configurés
-- Tests unitaires Jest (contact uniquement)
+- Tests unitaires Jest (composants UI, animations, pages, formulaires)
 - Build validation dans Vercel
 
 ---
@@ -216,74 +216,42 @@ prisma/           # Schéma & migrations
 ### 3.2 C2.2.2 – Harnais de tests unitaires
 
 **Outils** : Jest, RTL, jsdom, mocks (Resend, UploadThing, Better Auth)
-**Couverture** : 791 tests passants sur 832 (95.1% de réussite) – actions serveur, schémas Zod, templates email, composants UI, hooks, utils, autocomplete, Hero component, Badge, Textarea, PageHeader, CheckboxField, Dashboard, hooks actifs
+**Couverture** : 983 tests passants sur 1041 (94.4% de réussite) avec 54.16% de couverture de code (statements/lines) – actions serveur, schémas Zod, templates email, composants UI (Accordion, Avatar, Checkbox, Dialog, Progress, Table, DropdownMenu, Form, Popover, RadioGroup, Sheet), animations (Rotate, Slide, Stagger), hooks, utils, autocomplete, Hero component, Badge, Textarea, PageHeader, CheckboxField, Dashboard, Footer, ContactForm, page d'accueil
 
-#### Plan d'Amélioration de la Couverture (Objectif : 60-70%)
+#### Améliorations Apportées à la Couverture
 
-**État actuel :** 35% de couverture globale estimée avec 95.1% de réussite
-
-**Modules prioritaires à tester (manquants/partiels) :**
-
-| Module/Dossier               | Couverture Estimée | Priorité | Actions                                     |
-| ---------------------------- | ------------------ | -------- | ------------------------------------------- |
-| **API Routes** (`app/api/*`) | 15%                | P0       | Tests d'intégration pour tous les endpoints |
-| **Middleware** auth          | 40%                | P0       | Tests des règles d'autorisation RBAC        |
-| **Actions serveur** business | 60%                | P1       | Tests des cas d'erreur et edge cases        |
-| **Database layers** (Prisma) | 20%                | P1       | Tests d'intégration avec base de test       |
-| **Components complexes**     | 70%                | P2       | Tests d'interaction utilisateur avancés     |
-| **Utils crypto/security**    | 30%                | P0       | Tests de sécurité et validation             |
-
-**Stratégie d'amélioration (3 phases) :**
-
-**Phase 1 - Sécurité & Core (Priorité P0)**
-
-- Tests du middleware d'authentification avec mocks Better Auth
-- Couverture complète des validations Zod (schémas, edge cases)
-- Tests des API routes critiques (`/api/contact`, `/api/auth/*`)
-- Tests de sécurité (injection, XSS, validation)
-
-**Phase 2 - Business Logic (Priorité P1)**
-
-- Tests d'intégration des actions serveur avec base de données de test
-- Couverture des cas d'erreur et exceptions
-- Tests des hooks métier complexes
-- Tests de performance (composants lourds)
-
-**Phase 3 - UX & Edge Cases (Priorité P2)**
-
-- Tests end-to-end avec Playwright pour parcours complets
-- Tests d'accessibilité automatisés
-- Tests de responsive design programmés
-- Tests de charge et stress
+**État actuel :** Couverture de code de 54.16% avec 94.4% de réussite des tests
 
 **Scripts npm disponibles :**
 
 ```bash
-# Tests existants
+# Tests (fonctionnels)
 npm test               # Tous les tests Jest
 npm run test:watch     # Tests en mode watch
 npm run test:coverage  # Coverage détaillé avec rapports
 
-# Audits qualité (implémentés)
+# Audits qualité (fonctionnels)
 npm run lighthouse     # Audit Lighthouse local
 npm run lighthouse:prod # Audit Lighthouse production
-npm run test:a11y      # Tests accessibilité pa11y
+npm run test:a11y      # Tests accessibilité pa11y local
+npm run test:a11y:prod # Tests accessibilité pa11y production
+npm run audit:security # Audit de sécurité npm
+
+# Development & Build
+npm run dev            # Serveur de développement
+npm run build          # Build de production
+npm run lint           # Linter ESLint
+npm run type-check     # Vérification TypeScript
+npm run analyze        # Analyse du bundle
 
 # Scripts à implémenter (roadmap)
 npm run test:unit       # Tests unitaires uniquement
 npm run test:integration # Tests d'intégration avec DB
 npm run test:e2e        # Tests end-to-end Playwright
-npm run test:security   # Tests de sécurité spécifiques
 npm run coverage:html   # Rapport HTML détaillé
 npm run coverage:badge  # Génération badge couverture
 npm run coverage:ci     # Validation seuil minimum CI/CD
 ```
-
-**Objectifs quantifiés :**
-
-- **Fin janvier 2025 :** 50% de couverture (Phase 1)
-- **Fin février 2025 :** 65% de couverture (Phase 2)
-- **Mars 2025 :** 70% de couverture + tests e2e (Phase 3)
 
 #### Couverture Réelle (Dernière Exécution)
 
@@ -296,7 +264,7 @@ npm run coverage:ci     # Validation seuil minimum CI/CD
 | Form Context            | 10/10          | 10           | 100%             | ✅ PASS     |
 | UI Components           | 90%+           | Variable     | 90%+             | ✅ PASS     |
 | Shared Utils            | 90%+           | Variable     | 90%+             | ✅ PASS     |
-| **GLOBAL (Tous tests)** | **791**        | **832**      | **95.1%**        | ✅ **PASS** |
+| **GLOBAL (Tous tests)** | **983**        | **1041**     | **94.4%**        | ✅ **PASS** |
 
 **Améliorations Récentes :**
 
@@ -305,10 +273,11 @@ npm run coverage:ci     # Validation seuil minimum CI/CD
 - Correction complète des tests du composant Hero (20/20 tests passent)
 - Correction des tests d'Autocomplete avec gestion correcte de `asChild` et `minQueryLength`
 - Création des tests Form Context avec mocks appropriés pour `@tanstack/react-form`
-- Tests passants : 791/832 (95.1% de réussite) - amélioration de +35 tests totale
+- Tests passants : 983/1041 (94.4% de réussite) - amélioration de +192 tests depuis la base
 - Corrections majeures : Badge, Textarea, PageHeader, CheckboxField, Dashboard page, use-active-navbar-item hook
 - Tests d'autocomplete entièrement fonctionnels
 - Gestion des animations mockées dans les tests
+- Métriques de couverture détaillées : 54.16% statements/lines, 74.27% branches, 62.61% functions
 
 ---
 
@@ -536,7 +505,7 @@ const allowedMimeTypes = [
 
 #### Tests Unitaires Implémentés
 
-**Modules testés (791/832 tests passants - 95.1%) :**
+**Modules testés (983/1041 tests passants - 94.4%) :**
 
 - ✅ **Pages app/** - Home, Dashboard, Client, Layouts publics/protégés
 - ✅ **Validation des schémas** - Contact, auth, sign-in/sign-up
@@ -591,7 +560,6 @@ npm run test:e2e         # Tests end-to-end (Playwright)
 **BUG-001 : Validation email incorrecte dans le formulaire de contact**
 
 **Priorité :** P2 (Élevée)  
-**Date de détection :** 03/01/2025  
 **Statut :** ✅ CORRIGÉ
 
 **Description :**
@@ -616,7 +584,6 @@ Le champ email acceptait des adresses invalides comme "test@" ou "invalid.email"
 **BUG-002 : Upload de fichiers > 4MB non bloqué côté client**
 
 **Priorité :** P1 (Critique)  
-**Date de détection :** 05/01/2025  
 **Statut :** ✅ CORRIGÉ
 
 **Description :**
@@ -641,7 +608,6 @@ Les utilisateurs pouvaient sélectionner des fichiers > 4MB, générant une erre
 **BUG-003 : Dashboard inaccessible sur Safari mobile**
 
 **Priorité :** P2 (Élevée)  
-**Date de détection :** 07/01/2025  
 **Statut :** ✅ CORRIGÉ
 
 **Description :**
@@ -656,7 +622,6 @@ L'authentification Better Auth échouait sur Safari iOS, bloquant l'accès au da
 **Solution :**
 
 - Mise à jour de la configuration Better Auth
-- Ajout du flag `sameSite: "lax"` pour les cookies
 - Test sur multiple navigateurs mobiles
 
 **Commit :** `fix: safari mobile auth compatibility (c3d4e5f)`
@@ -666,7 +631,6 @@ L'authentification Better Auth échouait sur Safari iOS, bloquant l'accès au da
 **BUG-004 : Faille XSS potentielle dans l'affichage des messages**
 
 **Priorité :** P0 (Critique)  
-**Date de détection :** 08/01/2025  
 **Statut :** ✅ CORRIGÉ
 
 **Description :**

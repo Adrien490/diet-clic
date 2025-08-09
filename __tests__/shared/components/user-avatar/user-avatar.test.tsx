@@ -35,6 +35,45 @@ jest.mock("@/shared/utils", () => ({
 	cn: jest.fn((...classes) => classes.filter(Boolean).join(" ")),
 }));
 
+// Mock des composants UI
+jest.mock("@/shared/components/ui/avatar", () => ({
+	Avatar: ({ children, className, ...props }: any) => (
+		<button data-testid="avatar" className={className} role="button" {...props}>
+			{children}
+		</button>
+	),
+	AvatarImage: ({ src, alt }: any) =>
+		src ? <img data-testid="avatar-image" src={src} alt={alt} /> : null,
+	AvatarFallback: ({ children, className }: any) => (
+		<span data-testid="avatar-fallback" className={className}>
+			{children}
+		</span>
+	),
+}));
+
+jest.mock("@/shared/components/ui/dropdown-menu", () => ({
+	DropdownMenu: ({ children }: any) => (
+		<div data-testid="dropdown-menu">{children}</div>
+	),
+	DropdownMenuTrigger: ({ children, asChild, ...props }: any) =>
+		asChild ? (
+			<>{children}</>
+		) : (
+			<button role="button" {...props}>
+				{children}
+			</button>
+		),
+	DropdownMenuContent: ({ children }: any) => (
+		<div data-testid="dropdown-content">{children}</div>
+	),
+	DropdownMenuItem: ({ children, className }: any) => (
+		<div data-testid="dropdown-item" className={className}>
+			{children}
+		</div>
+	),
+	DropdownMenuSeparator: () => <hr data-testid="dropdown-separator" />,
+}));
+
 describe("UserAvatar", () => {
 	const mockUser = {
 		id: "1",

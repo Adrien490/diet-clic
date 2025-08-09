@@ -22,6 +22,37 @@ jest.mock("next/image", () => {
 	};
 });
 
+// Mock des composants UI
+jest.mock("@/shared/components/ui/dropdown-menu", () => ({
+	DropdownMenu: ({ children }: any) => (
+		<div data-testid="dropdown-menu">{children}</div>
+	),
+	DropdownMenuTrigger: ({ children, asChild }: any) =>
+		asChild ? <>{children}</> : <button role="button">{children}</button>,
+	DropdownMenuContent: ({ children }: any) => (
+		<div data-testid="dropdown-content">{children}</div>
+	),
+	DropdownMenuItem: ({ children, className }: any) => (
+		<div data-testid="dropdown-item" className={className}>
+			{children}
+		</div>
+	),
+	DropdownMenuSeparator: () => <hr data-testid="dropdown-separator" />,
+}));
+
+jest.mock("@/shared/components/ui/sidebar", () => ({
+	SidebarMenuButton: ({ children, size, className, ...props }: any) => (
+		<button
+			data-testid="sidebar-menu-button"
+			data-size={size}
+			className={className}
+			{...props}
+		>
+			{children}
+		</button>
+	),
+}));
+
 describe("UserDropdown", () => {
 	const mockUser = {
 		id: "1",
