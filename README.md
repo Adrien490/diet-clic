@@ -961,21 +961,5 @@ SENTRY_ENVIRONMENT="production"
 ### 7.2 Commit Convention (Conventional Commits)
 
 `feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:` …
-**Versioning** : SemVer, tags `vX.Y.Z`
-
-### 7.3 Règles de sécurité HTTP (Next.js)
-
-```ts
-// next.config.ts (extrait)
-const securityHeaders = [
-	{ key: "X-Content-Type-Options", value: "nosniff" },
-	{ key: "X-Frame-Options", value: "DENY" },
-	{ key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-	{
-		key: "Strict-Transport-Security",
-		value: "max-age=63072000; includeSubDomains; preload",
-	},
-];
-```
 
 ---
