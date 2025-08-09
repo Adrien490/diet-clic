@@ -33,3 +33,5 @@ export const contactSchema = z.object({
 		.max(3, "Maximum 3 pièces jointes autorisées")
 		.default([]),
 });
+
+export type ContactFormData = z.infer<typeof contactSchema>;

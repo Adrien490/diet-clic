@@ -1,5 +1,6 @@
 import "@testing-library/jest-dom";
 import { ImageProps } from "next/image";
+import { createElement } from "react";
 
 // Polyfill for TextDecoder/TextEncoder
 import { TextDecoder, TextEncoder } from "util";
@@ -28,7 +29,13 @@ jest.mock("next/navigation", () => ({
 jest.mock("next/image", () => ({
 	__esModule: true,
 	default: function Image(props: ImageProps) {
-		return props;
+		return createElement("img", {
+			src: props.src,
+			alt: props.alt,
+			width: props.width,
+			height: props.height,
+			className: props.className,
+		});
 	},
 }));
 
@@ -36,6 +43,28 @@ jest.mock("next/image", () => ({
 process.env.NEXT_PUBLIC_SITE_URL = "http://localhost:3000";
 process.env.EMAIL = "test@example.com";
 process.env.RESEND_API_KEY = "test_resend_api_key";
+
+// Mock better-auth to avoid ESM issues
+jest.mock("better-auth", () => ({
+	betterAuth: jest.fn(() => ({
+		api: {
+			getSession: jest.fn(),
+			signOut: jest.fn(),
+		},
+		$Infer: {
+			Session: {},
+			User: {},
+		},
+	})),
+}));
+
+jest.mock("@better-auth/utils", () => ({
+	generateId: jest.fn(() => "mock-id"),
+}));
+
+jest.mock("better-auth/adapters/prisma", () => ({
+	prismaAdapter: jest.fn(() => ({})),
+}));
 
 // Suppress console errors during tests
 const originalError = console.error;

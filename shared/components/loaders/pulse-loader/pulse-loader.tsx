@@ -24,6 +24,7 @@ export function PulseLoader({
 			)}
 		>
 			<motion.div
+				data-testid="motion-div"
 				variants={loaderAnimations.pulse}
 				initial="initial"
 				animate="animate"

@@ -1,7 +1,7 @@
 import { PageContainer } from "@/shared/components/page-container";
 import { PageHeader } from "@/shared/components/page-header";
 
-export default async function AdminPage() {
+export default function AdminPage() {
 	return (
 		<PageContainer>
 			<PageHeader
