@@ -103,34 +103,6 @@ prisma/           # Schéma & migrations
   - Tailwind CSS IntelliSense (bradlc.vscode-tailwindcss)
   - TypeScript Importer (pmneo.tsimporter)
 
-**Outils Locaux :**
-
-```bash
-# Base de données locale
-npm run db:up    # Docker PostgreSQL + adminer
-npm run db:seed  # Données de test
-npm run db:down  # Arrêt container
-
-# SMTP de développement
-npm run mail:dev # Maildev sur :1080
-
-# Santé application
-npm run health   # Vérification DB + env
-```
-
-**Formatage Automatique :**
-
-```json
-// .vscode/settings.json
-{
-	"editor.formatOnSave": true,
-	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
-	},
-	"typescript.preferences.importModuleSpecifier": "relative"
-}
-```
-
 #### Protocole de Déploiement Continu (CD)
 
 1. **Push vers GitHub** (`feature/*`, `fix/*`)
@@ -139,8 +111,7 @@ npm run health   # Vérification DB + env
 4. **Validation** : recette + Sentry (erreurs/perfs)
 5. **Merge sur `main`** : déploiement Production
 6. **Migrations** : `prisma migrate deploy`
-7. **Vérifications** : smoke tests + health check + Sentry release health
-8. **Rollback** (si besoin) : redeploy version précédente
+7. **Rollback** (si besoin) : redeploy version précédente
 
 #### Composants Techniques Identifiés
 
@@ -170,28 +141,6 @@ npm run health   # Vérification DB + env
 | **Lighthouse**       | ≥ 90                        | 96/100 (Performance) | lighthouse-2025-01-15.html |
 | **Couverture tests** | ≥ 80% global, ≥ 90% contact | 89.4% contact        | Istanbul reports           |
 
-#### Routes de Santé
-
-**Endpoint Santé :**
-
-```typescript
-// /api/health
-{
-  "ok": true,
-  "db": true,
-  "version": "1.2.3",
-  "sha": "abc123",
-  "timestamp": "2025-01-15T10:30:00Z",
-  "environment": "production"
-}
-```
-
-**Commande Locale :**
-
-```bash
-npm run health  # Ping DB + env vars + version
-```
-
 ---
 
 ### 2.2 C2.1.2 – Intégration continue
@@ -201,34 +150,6 @@ npm run health  # Ping DB + env vars + version
 - Branches `feature/*` → PR obligatoire vers `main`
 - 1 review approuvée minimale, checks CI requis
 - Squash & merge, Conventional Commits
-
-#### Seuils de Couverture Bloquants
-
-```json
-// jest.config.ts (extrait)
-{
-	"coverageThreshold": {
-		"global": {
-			"branches": 80,
-			"functions": 80,
-			"lines": 80,
-			"statements": 80
-		},
-		"./shared/actions/contact.ts": {
-			"branches": 90,
-			"functions": 90,
-			"lines": 90,
-			"statements": 90
-		},
-		"./shared/schemas/contact-schema.ts": {
-			"branches": 100,
-			"functions": 100,
-			"lines": 100,
-			"statements": 100
-		}
-	}
-}
-```
 
 #### Badge de Couverture
 
