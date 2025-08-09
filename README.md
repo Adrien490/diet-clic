@@ -93,7 +93,7 @@ prisma/           # Schéma & migrations
 
 **Poste de Développement :**
 
-- **Éditeur :** IDE moderne avec :
+- **Éditeur :** Cursor avec :
   - ESLint intégré
   - Prisma ORM avec auto-complétion
   - Tailwind CSS IntelliSense
@@ -126,11 +126,14 @@ prisma/           # Schéma & migrations
 
 **Service Level Objectives (SLO) :**
 
-| Métrique             | Objectif     | Mesure Actuelle | Évidence                |
-| -------------------- | ------------ | --------------- | ----------------------- |
-| **Taux d'erreur**    | < 1%         | À mesurer       | Sentry Issues           |
-| **Lighthouse**       | ≥ 90         | À mesurer       | `npm run lighthouse`    |
-| **Couverture tests** | ≥ 80% global | 12.8% global    | `npm run test:coverage` |
+| Métrique             | Objectif     | Mesure Actuelle | Évidence                  |
+| -------------------- | ------------ | --------------- | ------------------------- |
+| **Taux d'erreur**    | < 1%         | À surveiller    | Sentry Dashboard          |
+| **Performance**      | ≥ 90         | 92/100          | `npm run lighthouse:prod` |
+| **Accessibilité**    | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
+| **Bonnes pratiques** | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
+| **SEO**              | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
+| **Couverture tests** | ≥ 80% global | 2.95% global    | `npm run test:coverage`   |
 
 ---
 
