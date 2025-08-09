@@ -216,57 +216,6 @@ prisma/           # Schéma & migrations
 | **Tablette** | 768px - 1023px | Navigation horizontale, grille 2 colonnes           | Tests iPad, Surface         |
 | **Desktop**  | 1024px+        | Layout complet, sidebar, interactions hover         | Tests 1920x1080, 2560x1440  |
 
-**Design Mobile-First :**
-
-```css
-/* Approche mobile-first */
-.hero-section {
-	padding: 2rem 1rem; /* Mobile */
-}
-
-@media (min-width: 768px) {
-	.hero-section {
-		padding: 4rem 2rem; /* Tablette */
-	}
-}
-
-@media (min-width: 1024px) {
-	.hero-section {
-		padding: 6rem 4rem; /* Desktop */
-	}
-}
-```
-
-#### Sécurité du Prototype
-
-**CSP (Content Security Policy) :**
-
-```typescript
-// next.config.ts
-const csp = [
-	"default-src 'self'",
-	"script-src 'self' 'nonce-__NONCE__'",
-	"style-src 'self' 'unsafe-inline'",
-	"img-src 'self' data: blob:",
-	"connect-src 'self' https://api.resend.com https://*.sentry.io",
-	"frame-ancestors 'none'",
-	"base-uri 'self'",
-].join("; ");
-```
-
-**Protection Anti-Bot (Formulaire Contact) :**
-
-```typescript
-// Honeypot + Rate Limiting
-export const contactLimiter = rateLimit({
-	windowMs: 15 * 60 * 1000, // 15 minutes
-	max: 5, // Max 5 soumissions par IP
-	message: "Trop de tentatives, réessayez dans 15 minutes",
-	standardHeaders: true,
-	legacyHeaders: false,
-});
-```
-
 ---
 
 ### 3.2 C2.2.2 – Harnais de tests unitaires
