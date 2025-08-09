@@ -401,8 +401,6 @@ export const FEATURES = {
 - ✅ Entrée en base de données avec statut "nouveau"
 - ✅ Interface utilisateur responsive
 
-**Évidences :** [Screenshot](docs/tests/TC-001.png) | [Video](docs/tests/TC-001.mp4) | [DB Entry](docs/tests/TC-001.json)
-
 ---
 
 #### TC-002 : Validation Erreurs Formulaire
