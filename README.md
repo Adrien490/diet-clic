@@ -166,7 +166,7 @@ prisma/           # Schéma & migrations
 
 ## 3. Conception & Développement
 
-### 3.1 C2.2.1 – Prototype (⭐ ÉLIMINATOIRE)
+### 3.1 C2.2.1 – Prototype
 
 **Objectif :** Site vitrine professionnel + gestion des demandes de contact.
 
@@ -269,7 +269,7 @@ export const contactLimiter = rateLimit({
 
 ---
 
-### 3.2 C2.2.2 – Harnais de tests unitaires (⭐ ÉLIMINATOIRE)
+### 3.2 C2.2.2 – Harnais de tests unitaires
 
 **Outils** : Jest, RTL, jsdom, mocks (Resend, UploadThing)
 **Couverture** : 46 tests (contact) – actions serveur, schémas Zod, templates email
@@ -354,7 +354,7 @@ test("Contact form submission flow", async ({ page }) => {
 
 ---
 
-### 3.3 C2.2.3 – Évolutivité, sécurité, accessibilité (⭐ ÉLIMINATOIRE)
+### 3.3 C2.2.3 – Évolutivité, sécurité, accessibilité
 
 #### Tableau OWASP Top 10 (2021) - Couverture Sécurité
 
@@ -600,7 +600,7 @@ export async function GET() {
 
 ## 4. Tests & Qualité
 
-### 4.1 C2.3.1 – Cahier de recettes (⭐ ÉLIMINATOIRE)
+### 4.1 C2.3.1 – Cahier de recettes
 
 #### Couverture Exhaustive des Fonctionnalités
 
