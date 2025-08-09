@@ -1,7 +1,6 @@
 # Diet-Clic – Application Web pour Diététicienne Nutritionniste
 
 > **BLOC 2 : CONCEVOIR ET DÉVELOPPER DES APPLICATIONS LOGICIELLES**
-> Dossier conforme au référentiel (Activités, Compétences, Évaluation)
 
 **Production :** [https://diet-clic.vercel.app](https://diet-clic.vercel.app)
 
@@ -38,7 +37,7 @@
 **Auth :** Better Auth (OAuth + Passkeys)
 **UI :** Tailwind CSS 4, Radix UI, shadcn/ui
 **Tests :** Jest + React Testing Library (RTL)
-**E2E :** Playwright
+**E2E :** À configurer (Playwright prévu)
 **Déploiement :** Vercel (Git Integration)
 **Observabilité :** Sentry (Errors, Performance, Replays), Vercel Analytics
 
@@ -96,12 +95,14 @@ prisma/           # Schéma & migrations
 
 **Poste de Développement :**
 
-- **Éditeur :** VSCode 1.95+ avec extensions :
-  - ESLint (dbaeumer.vscode-eslint)
-  - Prettier (esbenp.prettier-vscode)
-  - Prisma (Prisma.prisma)
-  - Tailwind CSS IntelliSense (bradlc.vscode-tailwindcss)
-  - TypeScript Importer (pmneo.tsimporter)
+- **Éditeur :** Cursor (AI-powered IDE) avec fonctionnalités :
+  - ESLint intégré avec auto-fix IA
+  - Prettier avec formatage automatique
+  - Prisma ORM avec auto-complétion intelligente
+  - Tailwind CSS IntelliSense natif
+  - TypeScript strict avec suggestions IA
+  - GitHub Copilot intégré pour génération de code
+  - Chat IA contextuel pour debugging et refactoring
 
 #### Protocole de Déploiement Continu (CD)
 
@@ -239,20 +240,20 @@ prisma/           # Schéma & migrations
 
 ### 3.3 C2.2.3 – Évolutivité, sécurité, accessibilité
 
-#### Tableau OWASP Top 10 (2021) - Couverture Sécurité
+#### Tableau OWASP - Couverture Sécurité
 
-| Faille                                 | Contrôle                    | Test                    | Preuve                     |
-| -------------------------------------- | --------------------------- | ----------------------- | -------------------------- |
-| **A01 - Broken Access Control**        | Middleware auth + RBAC      | Tests rôles admin/user  | `auth.middleware.test.ts`  |
-| **A02 - Cryptographic Failures**       | HTTPS + env secrets         | Audit npm + headers     | Vercel SSL + .env.example  |
-| **A03 - Injection**                    | Prisma ORM + Zod validation | Tests payloads hostiles | `contact-schema.test.ts`   |
-| **A04 - Insecure Design**              | Security by design          | Threat modeling         | Architecture review        |
-| **A05 - Security Misconfiguration**    | Headers sécurité + CSP      | Tests headers           | `security-headers.test.ts` |
-| **A06 - Vulnerable Components**        | npm audit + Dependabot      | CI/CD automatique       | GitHub Security tab        |
-| **A07 - Identification/Auth Failures** | Better Auth + passkeys      | Tests auth flow         | `auth-flow.e2e.ts`         |
-| **A08 - Software/Data Integrity**      | SRI + build reproductible   | Hash verification       | Vercel build logs          |
-| **A09 - Security Logging Failures**    | Sentry + audit logs         | Monitoring actif        | Sentry dashboard           |
-| **A10 - Server-Side Request Forgery**  | Whitelist URLs + validation | Tests SSRF              | Input validation tests     |
+| Faille                                 | Contrôle                    | Test                    | Preuve                            |
+| -------------------------------------- | --------------------------- | ----------------------- | --------------------------------- |
+| **A01 - Broken Access Control**        | Middleware auth + RBAC      | Rôles ADMIN/CLIENT      | `middleware.ts` + `UserRole` enum |
+| **A02 - Cryptographic Failures**       | HTTPS + env secrets         | npm audit               | `npm audit` 0 vulnerabilities     |
+| **A03 - Injection**                    | Prisma ORM + Zod validation | Tests payloads hostiles | `contact-schema.test.ts`          |
+| **A04 - Insecure Design**              | Security by design          | DDD + Auth patterns     | Architecture DDD + Better Auth    |
+| **A05 - Security Misconfiguration**    | Headers sécurité + CSP      | Configuration headers   | `next.config.ts` + `vercel.json`  |
+| **A06 - Vulnerable Components**        | npm audit + Dependabot      | Audit automatique       | `npm audit` clean report          |
+| **A07 - Identification/Auth Failures** | Better Auth + passkeys      | Session + role checks   | `auth.ts` + `getSession()`        |
+| **A08 - Software/Data Integrity**      | SRI + build reproductible   | Vercel build hash       | Build artifacts Vercel            |
+| **A09 - Security Logging Failures**    | Sentry + audit logs         | Monitoring actif        | `sentry.server.config.ts`         |
+| **A10 - Server-Side Request Forgery**  | Prisma + validation input   | Zod schema validation   | `contact-schema.ts` validation    |
 
 #### Accessibilité WCAG 2.1 AA
 
@@ -313,7 +314,7 @@ const allowedMimeTypes = [
 **Feature Flag Actuel - Nouveau Formulaire Contact :**
 
 ```typescript
-// lib/feature-flags.ts
+// Exemple de feature flags (à implémenter)
 export const FEATURES = {
 	NEW_CONTACT_FORM: {
 		enabled: process.env.FF_NEW_CONTACT_FORM === "true",
@@ -334,61 +335,14 @@ export const FEATURES = {
 | 20/01 | 50%         | Conversion > 95% baseline | Montée en charge    |
 | 25/01 | 100%        | Satisfaction utilisateur  | Déploiement complet |
 
-#### Smoke Tests Post-Déploiement
+#### Traçabilité des Versions
 
-**Script de Vérification :**
+**Variables d'environnement Vercel disponibles :**
 
-```bash
-#!/bin/bash
-# smoke-tests.sh
-
-echo "Running smoke tests..."
-
-# Test santé API
-curl -f https://diet-clic.vercel.app/api/health || exit 1
-
-# Test page d'accueil
-curl -f https://diet-clic.vercel.app/ | grep -q "Diet-Clic" || exit 1
-
-# Test auth
-curl -f https://diet-clic.vercel.app/auth/signin || exit 1
-
-# Test assets
-curl -f https://diet-clic.vercel.app/favicon.ico || exit 1
-
-echo "Smoke tests passed!"
-```
-
-**Rapport Smoke Tests :**
-
-```json
-{
-	"timestamp": "2025-01-15T10:30:00Z",
-	"version": "v1.2.3",
-	"tests": [
-		{ "name": "Health Check", "status": "PASS", "duration": "45ms" },
-		{ "name": "Homepage", "status": "PASS", "duration": "120ms" },
-		{ "name": "Auth Routes", "status": "PASS", "duration": "80ms" },
-		{ "name": "Static Assets", "status": "PASS", "duration": "25ms" }
-	],
-	"summary": { "total": 4, "passed": 4, "failed": 0, "duration": "270ms" }
-}
-```
-
-#### Endpoint de Version
-
-```typescript
-// /api/version
-export async function GET() {
-	return Response.json({
-		version: process.env.npm_package_version || "1.2.3",
-		sha: process.env.VERCEL_GIT_COMMIT_SHA || "abc123f",
-		branch: process.env.VERCEL_GIT_COMMIT_REF || "main",
-		deployedAt: process.env.VERCEL_DEPLOYMENT_DATE || new Date().toISOString(),
-		environment: process.env.VERCEL_ENV || "development",
-	});
-}
-```
+- `VERCEL_GIT_COMMIT_SHA` : Hash du commit
+- `VERCEL_GIT_COMMIT_REF` : Branche source
+- `VERCEL_ENV` : Environnement (production/preview)
+- `npm_package_version` : Version du package.json
 
 #### VCS et Traçabilité
 
@@ -396,7 +350,7 @@ export async function GET() {
 - **Tags de release** : v1.2.3 avec CHANGELOG automatisé
 - **Déploiement** : Vercel auto sur main et preview sur PR
 - **Migrations** : `prisma migrate deploy` à chaque déploiement
-- **Vérif post-deploy** : smoke tests + Sentry release health
+- **Vérif post-deploy** : Sentry release health + Vercel Analytics
 - **Rollback** : redeploy build précédent + migrate rollback si nécessaire
 
 ---
@@ -581,7 +535,7 @@ export async function GET() {
 **3. Analyse Cause Racine :**
 
 ```typescript
-// Code problématique dans contact-schema.ts
+// Exemple de validation dans contact-schema.ts
 export const contactSchema = z.object({
 	email: z.string().regex(/^[^@]+@[^@]+$/, "Email invalide"), // TROP SIMPLE
 });
@@ -823,11 +777,10 @@ TXT   @              "v=spf1 include:spf.vercel.com ~all"
 
 ```bash
 # Tests de santé
-curl -f https://diet-clic.com/api/health
-curl -f https://diet-clic.com/api/version
+curl -f https://diet-clic.vercel.app/
 
 # Smoke tests complets
-npm run smoke-tests:prod
+npm run test
 ```
 
 #### Configuration des Services Externes
@@ -944,8 +897,8 @@ En cas de problème :
 # Sauvegarde base de données
 pg_dump dietclic_prod > backup_$(date +%Y%m%d_%H%M%S).sql
 
-# Vérification santé application
-curl -f https://diet-clic.com/api/health
+# Vérification application
+curl -f https://diet-clic.vercel.app/
 
 # Création branche release
 git checkout -b release/v1.3.0
@@ -979,14 +932,15 @@ npx prisma migrate deploy
 **4. Vérification Post-Mise à Jour :**
 
 ```bash
-# Smoke tests
-npm run smoke-tests:prod
+# Tests existants
+npm run test
+npm run test:coverage
 
-# Vérification version
-curl https://diet-clic.com/api/version
+# Audit sécurité
+npm run audit:security
 
-# Tests fonctionnels critiques
-npm run test:critical
+# Vérification type-checking
+npm run type-check
 ```
 
 #### Maintenance Programmée
@@ -1004,8 +958,8 @@ npx prisma db execute --file scripts/cleanup.sql
 npm update
 npm audit fix
 
-# 4. Optimisation images
-npm run optimize:images
+# 4. Vérification build
+npm run build
 
 # 5. Test de restauration (DB staging)
 pg_restore -d dietclic_staging monthly_backup_$(date +%Y%m%d).sql
@@ -1024,8 +978,8 @@ npx prisma migrate reset
 pg_restore -d dietclic_prod backup_YYYYMMDD_HHMMSS.sql
 
 # 3. Vérification services
-curl -f https://diet-clic.com/api/health
-npm run smoke-tests:prod
+curl -f https://diet-clic.vercel.app/
+npm run test
 
 # 4. Communication incident
 # - Statut page mise à jour
@@ -1045,10 +999,10 @@ createdb dietclic_dr_test
 pg_restore -d dietclic_dr_test backup_latest.sql
 
 # 3. Vérification intégrité données
-npm run test:data-integrity
+npm run test
 
 # 4. Test fonctionnel complet
-npm run test:e2e:dr
+npm run test:coverage
 
 # 5. Mesure temps de restauration (objectif < 30min)
 echo "Restauration complétée en: $(duration)min"
