@@ -231,9 +231,9 @@ npm run test:watch     # Tests en mode watch
 npm run test:coverage  # Coverage détaillé avec rapports
 
 # Audits qualité (fonctionnels)
-npm run lighthouse     # Audit Lighthouse local
+npm run lighthouse     # Audit Lighthouse local (nécessite serveur dev)
 npm run lighthouse:prod # Audit Lighthouse production
-npm run test:a11y      # Tests accessibilité pa11y local
+npm run test:a11y      # Tests accessibilité pa11y local (nécessite serveur dev)
 npm run test:a11y:prod # Tests accessibilité pa11y production
 npm run audit:security # Audit de sécurité npm
 
@@ -252,6 +252,41 @@ npm run coverage:html   # Rapport HTML détaillé
 npm run coverage:badge  # Génération badge couverture
 npm run coverage:ci     # Validation seuil minimum CI/CD
 ```
+
+**📋 Instructions d'utilisation :**
+
+Pour les audits locaux (Lighthouse et Pa11y), démarrer d'abord le serveur de développement :
+
+```bash
+# Terminal 1 : Démarrer le serveur
+npm install
+npm run dev
+
+# Terminal 2 : Lancer les audits
+npm run lighthouse
+npm run test:a11y
+```
+
+Les audits production fonctionnent directement sans serveur local :
+
+```bash
+npm run lighthouse:prod  # ✅ Fonctionne immédiatement
+npm run test:a11y:prod   # ✅ Fonctionne immédiatement
+```
+
+**🔧 Dépannage des erreurs courantes :**
+
+- **Erreur `ERR_CONNECTION_REFUSED`** : Le serveur dev n'est pas démarré
+
+  ```bash
+  # Solution : Démarrer le serveur d'abord
+  npm run dev
+  ```
+
+- **Erreur Pa11y timeout** : Attendre que le serveur soit complètement démarré
+  ```bash
+  # Attendre l'affichage de "Ready in [Xms]" avant de lancer pa11y
+  ```
 
 #### Couverture Réelle (Dernière Exécution)
 
