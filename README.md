@@ -226,8 +226,6 @@ prisma/           # Schéma & migrations
 
 #### Couverture Réelle (Dernière Exécution)
 
-![Coverage Report](docs/coverage/coverage-summary.png)
-
 **Résultats Par Fichier :**
 
 | Fichier                      | Statements | Branches  | Functions | Lines     | Statut      |
@@ -236,70 +234,6 @@ prisma/           # Schéma & migrations
 | `contact-schema.ts`          | 100%       | 100%      | 100%      | 100%      | ✅ PASS     |
 | `contact-email-template.tsx` | 99.44%     | 40%       | 100%      | 99.44%    | ✅ PASS     |
 | **GLOBAL**                   | **89.4%**  | **86.2%** | **100%**  | **89.4%** | ✅ **PASS** |
-
-#### Tests de Régression (Exemples)
-
-**Test Anti-XSS :**
-
-```typescript
-describe("XSS Protection", () => {
-	it("should escape malicious scripts in contact form", async () => {
-		const maliciousInput = '<script>alert("XSS")</script>';
-		const result = contactSchema.shape.message.safeParse(maliciousInput);
-
-		expect(result.success).toBe(true);
-		// Le contenu est traité comme texte, pas exécuté
-		expect(result.data).toBe(maliciousInput); // Stockage sécurisé
-	});
-});
-```
-
-**Test Rate Limiting :**
-
-```typescript
-describe("Rate Limiting", () => {
-	it("should block after 5 submissions in 15 minutes", async () => {
-		// Simuler 5 soumissions rapides
-		for (let i = 0; i < 5; i++) {
-			await contact(undefined, validFormData);
-		}
-
-		// 6ème tentative doit être bloquée
-		const result = await contact(undefined, validFormData);
-		expect(result.status).toBe(ActionStatus.ERROR);
-		expect(result.message).toContain("Trop de tentatives");
-	});
-});
-```
-
-#### Tests E2E (Playwright - Happy Path)
-
-```typescript
-// e2e/contact-flow.spec.ts
-test("Contact form submission flow", async ({ page }) => {
-	// 1. Navigation vers formulaire
-	await page.goto("/");
-	await page.click('[href="#contact"]');
-
-	// 2. Remplissage formulaire
-	await page.fill('[name="fullName"]', "Jean Dupont");
-	await page.fill('[name="email"]', "jean@test.com");
-	await page.selectOption('[name="subject"]', "premiere-consultation");
-	await page.fill('[name="message"]', "Message de test pour consultation");
-
-	// 3. Soumission
-	await page.click('[type="submit"]');
-
-	// 4. Vérification succès
-	await expect(page.locator(".success-message")).toContainText(
-		"envoyé avec succès"
-	);
-
-	// 5. Vérification base de données (via API)
-	const response = await page.request.get("/api/contacts/test-verify");
-	expect(response.status()).toBe(200);
-});
-```
 
 ---
 
@@ -319,50 +253,6 @@ test("Contact form submission flow", async ({ page }) => {
 | **A08 - Software/Data Integrity**      | SRI + build reproductible   | Hash verification       | Vercel build logs          |
 | **A09 - Security Logging Failures**    | Sentry + audit logs         | Monitoring actif        | Sentry dashboard           |
 | **A10 - Server-Side Request Forgery**  | Whitelist URLs + validation | Tests SSRF              | Input validation tests     |
-
-#### CSP Complète et Protection CSRF
-
-**Content Security Policy :**
-
-```typescript
-// next.config.ts - CSP stricte
-const csp = [
-	"default-src 'self'",
-	"script-src 'self' 'nonce-__NONCE__'",
-	"style-src 'self' 'unsafe-inline'",
-	"img-src 'self' data: blob: https://images.unsplash.com",
-	"connect-src 'self' https://api.resend.com https://*.sentry.io https://vercel-analytics.com",
-	"font-src 'self' https://fonts.gstatic.com",
-	"frame-ancestors 'none'",
-	"base-uri 'self'",
-	"form-action 'self'",
-	"upgrade-insecure-requests",
-].join("; ");
-```
-
-**Protection CSRF :**
-
-```typescript
-// Server Actions avec tokens CSRF automatiques
-// + cookies SameSite=strict
-export async function contact(prevState: any, formData: FormData) {
-	// Better Auth gère automatiquement la protection CSRF
-	// via les tokens de session et SameSite cookies
-
-	const session = await auth.api.getSession({ headers });
-	if (!session && isProtectedAction) {
-		throw new Error("Unauthorized");
-	}
-
-	// Double submit cookie pattern pour formulaires publics
-	const csrfToken = formData.get("csrf-token");
-	const sessionCsrf = cookies().get("csrf-token")?.value;
-
-	if (csrfToken !== sessionCsrf) {
-		throw new Error("CSRF token mismatch");
-	}
-}
-```
 
 #### Accessibilité WCAG 2.1 AA
 
@@ -387,42 +277,6 @@ export async function contact(prevState: any, formData: FormData) {
 | **Services**  | 0 violations   | Navigation clavier | ✅ PASS |
 | **Contact**   | 0 violations   | Erreurs annoncées  | ✅ PASS |
 | **Dashboard** | 0 violations   | Landmarks ARIA     | ✅ PASS |
-
-#### RBAC et Audit
-
-**Schéma des Rôles :**
-
-```typescript
-enum Role {
-	ADMIN = "admin", // Accès complet
-	STAFF = "staff", // Lecture + modification contacts
-	VIEWER = "viewer", // Lecture seule
-}
-
-// Permissions par rôle
-const permissions = {
-	admin: ["read", "write", "delete", "manage_users"],
-	staff: ["read", "write"],
-	viewer: ["read"],
-};
-```
-
-**Exemple d'Événement d'Audit :**
-
-```json
-{
-	"id": "audit_001",
-	"timestamp": "2025-01-15T10:30:00Z",
-	"user_id": "user_123",
-	"action": "contact_status_update",
-	"resource": "contact_47",
-	"old_value": "nouveau",
-	"new_value": "traité",
-	"ip_address": "192.168.1.1",
-	"user_agent": "Mozilla/5.0...",
-	"session_id": "sess_xyz"
-}
-```
 
 #### Upload et Gestion des Fichiers
 
