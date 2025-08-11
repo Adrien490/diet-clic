@@ -32,13 +32,13 @@
 ## 1. Architecture & Technologies
 
 **Frontend :** Next.js 15, React 19, TypeScript strict
-**Backend :** Next.js API Routes + Server Actions, Prisma ORM
+**Backend :** Server Actions, Prisma ORM
 **Base de données :** PostgreSQL
-**Auth :** Better Auth (OAuth + Passkeys)
+**Auth :** Better Auth
 **UI :** Tailwind CSS 4, Radix UI, shadcn/ui
-**Tests :** Jest + React Testing Library (RTL)
-**Déploiement :** Vercel (Git Integration)
-**Observabilité :** Sentry (Errors, Performance)
+**Tests :** Jest + React Testing Library
+**Déploiement :** Vercel (avec git)
+**Observabilité :** Sentry
 
 ### Architecture (DDD léger)
 
@@ -65,13 +65,13 @@ prisma/           # Schéma & migrations
 
 ### Choix Techniques Justifiés
 
-| Technologie     | Alternative Évaluée | Justification du Choix                  |
-| --------------- | ------------------- | --------------------------------------- |
-| **Next.js 15**  | Nuxt.js, Gatsby     | SSR natif, App Router, écosystème React |
-| **Better Auth** | NextAuth, Clerk     | Passkeys natifs, configuration simple   |
-| **Prisma ORM**  | Drizzle, TypeORM    | Type-safety, migrations versioning      |
-| **Radix UI**    | Chakra, Mantine     | Accessibilité native, personnalisation  |
-| **Vercel**      | Netlify, Railway    | Intégration Next.js, CI/CD zéro-config  |
+| Technologie     | Alternative Évaluée | Justification du Choix                 |
+| --------------- | ------------------- | -------------------------------------- |
+| **Next.js 15**  | Nuxt.js, Gatsby     | SSR natif, écosystème React            |
+| **Better Auth** | NextAuth, Clerk     | Passkeys natifs, configuration simple  |
+| **Prisma ORM**  | Drizzle, TypeORM    | Type-safety, migrations versioning     |
+| **Radix UI**    | Chakra, Mantine     | Accessibilité native, personnalisation |
+| **Vercel**      | Netlify, Railway    | Intégration Next.js, CI/CD zéro-config |
 
 ---
 
@@ -82,7 +82,7 @@ prisma/           # Schéma & migrations
 | Environnement  | Usage        | Particularités                      |
 | -------------- | ------------ | ----------------------------------- |
 | **Local**      | Dev locale   | Hot reload, logs verbeux, DB locale |
-| **Preview**    | PR/feature   | Vercel Preview, DB staging          |
+| **Preview**    | PR/feature   | Vercel Preview                      |
 | **Production** | Utilisateurs | Monitoring complet, Sentry          |
 
 ---
@@ -94,46 +94,46 @@ prisma/           # Schéma & migrations
 **Poste de Développement :**
 
 - **Éditeur :** Cursor avec :
-  - ESLint intégré
-  - Prisma ORM avec auto-complétion
-  - Tailwind CSS IntelliSense
-  - TypeScript strict
-  - Support Git intégré
+  - ESLint
+  - Prisma ORM
+  - Tailwind CSS
+  - TypeScript
+  - Git
 
 #### Protocole de Déploiement Continu (CD)
 
 1. **Push vers GitHub** (`feature/*`, `fix/*`)
 2. **Build Vercel** : lint + typecheck + tests + build
 3. **Prévisualisation** : déploiement Vercel Preview
-4. **Validation** : recette + Sentry (erreurs/perfs)
+4. **Validation** : recette + Sentry
 5. **Merge sur `main`** : déploiement Production
 6. **Migrations** : `prisma migrate deploy`
 
 #### Composants Techniques Identifiés
 
-| Composant                 | Technologie            | Rôle                       | Preuve                    |
-| ------------------------- | ---------------------- | -------------------------- | ------------------------- |
-| **Compilateur**           | TypeScript 5.x         | Transformation TS → JS     | `tsc --noEmit`            |
-| **Serveur d'application** | Next.js 15 (Node 20.x) | Rendu pages, API Routes    | Build artifacts Vercel    |
-| **Gestion de sources**    | Git + GitHub           | Versioning                 | Repository GitHub         |
-| **Runner de tests**       | Jest 30.x              | Exécution tests unitaires  | Coverage reports          |
-| **Build System**          | Next.js + Turbopack    | Compilation optimisée      | `.next/` output           |
-| **Base de données**       | PostgreSQL 15 + Prisma | Persistance + migrations   | `prisma migrate status`   |
-| **Audit Performance**     | Lighthouse CLI         | Métriques CWV (script npm) | `npm run lighthouse:prod` |
-| **Audit Accessibilité**   | pa11y                  | Tests a11y (script npm)    | `npm run test:a11y`       |
+| Composant                 | Technologie            | Rôle                      | Preuve                    |
+| ------------------------- | ---------------------- | ------------------------- | ------------------------- |
+| **Compilateur**           | TypeScript 5.x         | Transformation TS → JS    | `tsc --noEmit`            |
+| **Serveur d'application** | Next.js 15 (Node 20.x) | Rendu pages, API Routes   | Build artifacts Vercel    |
+| **Gestion de sources**    | Git + GitHub           | Versioning                | Repository GitHub         |
+| **Runner de tests**       | Jest 30.x              | Exécution tests unitaires | Coverage reports          |
+| **Build System**          | Next.js + Turbopack    | Compilation optimisée     | `.next/` output           |
+| **Base de données**       | PostgreSQL 15 + Prisma | Persistance + migrations  | `prisma migrate status`   |
+| **Audit Performance**     | Lighthouse CLI         | Métriques script npm      | `npm run lighthouse:prod` |
+| **Audit Accessibilité**   | pa11y                  | Tests a11y (script npm)   | `npm run test:a11y`       |
 
 #### Critères Qualité & Performance (SLO)
 
 **Service Level Objectives (SLO) :**
 
-| Métrique             | Objectif     | Mesure Actuelle          | Évidence                  |
-| -------------------- | ------------ | ------------------------ | ------------------------- |
-| **Taux d'erreur**    | < 1%         | À surveiller             | Sentry Dashboard          |
-| **Performance**      | ≥ 90         | 92/100                   | `npm run lighthouse:prod` |
-| **Accessibilité**    | ≥ 95         | 100/100                  | `npm run lighthouse:prod` |
-| **Bonnes pratiques** | ≥ 95         | 100/100                  | `npm run lighthouse:prod` |
-| **SEO**              | ≥ 95         | 100/100                  | `npm run lighthouse:prod` |
-| **Couverture tests** | ≥ 30% global | 54.16% lignes/statements | `npm run test:coverage`   |
+| Métrique             | Objectif     | Mesure Actuelle | Évidence                  |
+| -------------------- | ------------ | --------------- | ------------------------- |
+| **Taux d'erreur**    | < 1%         | À surveiller    | Sentry Dashboard          |
+| **Performance**      | ≥ 90         | 92/100          | `npm run lighthouse:prod` |
+| **Accessibilité**    | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
+| **Bonnes pratiques** | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
+| **SEO**              | ≥ 95         | 100/100         | `npm run lighthouse:prod` |
+| **Couverture tests** | ≥ 30% global | 54.16%          | `npm run test:coverage`   |
 
 ---
 
@@ -167,7 +167,7 @@ prisma/           # Schéma & migrations
 
 #### Présentation du Prototype Réalisé
 
-**Version actuelle :** v0.1.0 - Déployée sur Vercel
+**Version actuelle :** v1.0 - Déployée sur Vercel
 
 #### User Stories Détaillées
 
@@ -353,22 +353,6 @@ npm run test:a11y:prod   # ✅ Fonctionne immédiatement
 - Taille max : 4MB par fichier
 - Limitation : 3 fichiers par soumission
 
-**Politique de Sécurité :**
-
-```typescript
-const allowedMimeTypes = [
-	"application/pdf",
-	"application/msword",
-	"application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-	"image/jpeg",
-	"image/png",
-	"image/webp",
-];
-
-// Stockage : UploadThing S3 avec chiffrement
-// Rétention : 2 ans puis purge automatique (RGPD)
-```
-
 ---
 
 ### 3.4 C2.2.4 – Déploiement continu
@@ -410,7 +394,7 @@ const allowedMimeTypes = [
 
 **Prérequis :**
 
-- Navigateur Chrome/Firefox dernière version
+- Navigateur
 - Connexion internet stable
 - Environnement : Production (https://diet-clic.vercel.app)
 
@@ -419,15 +403,14 @@ const allowedMimeTypes = [
 1. Naviguer vers la page d'accueil
 2. Faire défiler vers la section "Contact" ou cliquer sur "Contact" dans le menu
 3. Remplir le formulaire :
-   - Nom complet : "Jean Dupont"
-   - Email : "jean.dupont@example.com"
-   - Sujet : Sélectionner "Consultation individuelle"
-   - Message : "Je souhaite une consultation pour un rééquilibrage alimentaire."
+   - Nom complet
+   - Email
+   - Sujet
+   - Message
 4. Cliquer sur "Envoyer le message"
 
 **Résultat attendu :**
 
-- Message de confirmation "Votre message a été envoyé avec succès"
 - Toast de succès
 - Email de confirmation reçu à l'adresse email de la diététicienne
 - Contact visible dans le dashboard admin
@@ -519,13 +502,6 @@ const allowedMimeTypes = [
 ---
 
 **TC-005 : Tests de responsive design**
-
-**Appareils testés :**
-
-- 📱 iPhone 14 (375x812)
-- 📱 Samsung Galaxy S21 (360x800)
-- 💻 iPad Air (820x1180)
-- 🖥️ Desktop (1920x1080)
 
 **Critères de validation :**
 
@@ -663,30 +639,6 @@ L'authentification Better Auth échouait sur Safari iOS, bloquant l'accès au da
 
 ---
 
-**BUG-004 : Faille XSS potentielle dans l'affichage des messages**
-
-**Priorité :** P0 (Critique)  
-**Statut :** ✅ CORRIGÉ
-
-**Description :**
-Les messages de contact affichés dans le dashboard n'étaient pas échappés, permettant l'injection de HTML/JavaScript.
-
-**Reproduction :**
-
-1. Soumettre un contact avec message : `<script>alert('XSS')</script>`
-2. Consulter le dashboard admin
-3. Script exécuté dans le navigateur
-
-**Solution :**
-
-- Utilisation systématique de `dangerouslySetInnerHTML` supprimée
-- Sanitisation des données avec DOMPurify
-- Headers CSP renforcés dans `next.config.ts`
-
-**Commit :** `fix: prevent XSS in contact messages display (d4e5f6g)`
-
----
-
 **BUG-005 : Performance dégradée sur mobile avec les animations**
 
 **Priorité :** P3 (Mineure)  
@@ -704,9 +656,7 @@ Les animations CSS causaient des ralentissements sur les appareils mobiles moins
 
 **Solution :**
 
-- Implémentation de `prefers-reduced-motion`
-- Optimisation des animations avec `transform` et `opacity` uniquement
-- Ajout de `will-change` approprié
+- Réduire les animations
 
 **Commit :** `fix: optimize animations for mobile performance (e5f6g7h)`
 
@@ -786,15 +736,15 @@ Les animations CSS causaient des ralentissements sur les appareils mobiles moins
 - Resend (emails)
 - UploadThing (fichiers)
 
-#### Procédure de Déploiement Local
+#### Procédure de lancement du projet en Local
 
 ```bash
 # Clone du repository
-git clone https://github.com/diet-clic/diet-clic.git
+git clone https://github.com/Adrien490/diet-clic.git
 cd diet-clic
 
 # Installation des dépendances
-npm ci
+npm install
 
 # Variables d'environnement
 cp .env.example .env.local
@@ -861,7 +811,7 @@ UPLOADTHING_APP_ID="xxx"
 3. **Remplissage :**
    - Nom complet (requis)
    - Email valide (requis)
-   - Sujet de consultation (liste déroulante)
+   - Sujet de consultation (select)
    - Message détaillé (10-500 caractères)
    - Pièces jointes (optionnel, max 3 fichiers de 4MB)
 4. **Envoi :** Clic "Envoyer le message"
@@ -916,12 +866,12 @@ Le déploiement en production est automatique :
 
 ### Sous-traitants et DPA
 
-| Sous-traitant   | Service           | Données transférées | Transfert hors UE |
-| --------------- | ----------------- | ------------------- | ----------------- |
-| **Vercel**      | Hébergement       | Toutes données app  | 🇺🇸 USA (SCCs)     |
-| **Sentry**      | Monitoring        | Logs d'erreur       | 🇺🇸 USA (SCCs)     |
-| **Resend**      | Emails            | Nom, email contact  | 🇺🇸 USA (SCCs)     |
-| **UploadThing** | Stockage fichiers | Fichiers joints     | 🇺🇸 USA (SCCs)     |
+| Sous-traitant   | Service           | Données transférées |
+| --------------- | ----------------- | ------------------- |
+| **Vercel**      | Hébergement       | Toutes données app  |
+| **Sentry**      | Monitoring        | Logs d'erreur       |
+| **Resend**      | Emails            | Nom, email contact  |
+| **UploadThing** | Stockage fichiers | Fichiers joints     |
 
 ### Mesures de Sécurité
 
