@@ -128,3 +128,4 @@ describe("Alert composition", () => {
 		expect(screen.getByText("Something went wrong")).toBeInTheDocument();
 	});
 });
+

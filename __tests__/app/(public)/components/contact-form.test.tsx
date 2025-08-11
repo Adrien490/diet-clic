@@ -300,3 +300,5 @@ describe("ContactForm Component", () => {
 		expect(textarea).toHaveAttribute("maxLength", "2000");
 	});
 });
+
+

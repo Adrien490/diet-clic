@@ -428,11 +428,11 @@ const allowedMimeTypes = [
 **Résultat attendu :**
 
 - Message de confirmation "Votre message a été envoyé avec succès"
-- Redirection ou toast de succès
-- Email de confirmation reçu à l'adresse contact@diet-clic.com
-- Contact visible dans le dashboard admin avec statut "Nouveau"
+- Toast de succès
+- Email de confirmation reçu à l'adresse email de la diététicienne
+- Contact visible dans le dashboard admin
 
-**Résultat obtenu :** ✅ **CONFORME** - Testé le 09/01/2025
+**Résultat obtenu :** ✅ **CONFORME**
 
 - ✅ Toast de succès affiché
 - ✅ Email reçu via Resend
@@ -464,7 +464,7 @@ const allowedMimeTypes = [
 - ❌ Fichier > 4MB rejeté avec message d'erreur
 - ✅ Soumission réussie avec fichiers joints
 
-**Résultat obtenu :** ✅ **CONFORME** - Testé le 09/01/2025
+**Résultat obtenu :** ✅ **CONFORME**
 
 ---
 
@@ -489,7 +489,7 @@ const allowedMimeTypes = [
 - ✅ Interface admin accessible
 - ✅ Liste des contacts visible
 
-**Résultat obtenu :** ✅ **CONFORME** - Testé le 09/01/2025
+**Résultat obtenu :** ✅ **CONFORME**
 
 ---
 
@@ -514,7 +514,7 @@ const allowedMimeTypes = [
 - ✅ Note sauvegardée
 - ✅ Filtres de statut fonctionnels
 
-**Résultat obtenu :** ✅ **CONFORME** - Testé le 09/01/2025
+**Résultat obtenu :** ✅ **CONFORME**
 
 ---
 
@@ -534,7 +534,7 @@ const allowedMimeTypes = [
 - Lisibilité du contenu
 - Interactions tactiles appropriées
 
-**Résultat obtenu :** ✅ **CONFORME** - Testé le 09/01/2025
+**Résultat obtenu :** ✅ **CONFORME**
 
 ---
 
@@ -570,12 +570,12 @@ npm run test:e2e         # Tests end-to-end (Playwright)
 
 **Résultats des audits :**
 
-| Métrique       | Score | Statut | Dernière mesure |
-| -------------- | ----- | ------ | --------------- |
-| Performance    | 92    | ✅     | 09/01/2025      |
-| Accessibilité  | 100   | ✅     | 09/01/2025      |
-| SEO            | 100   | ✅     | 09/01/2025      |
-| Best Practices | 100   | ✅     | 09/01/2025      |
+| Métrique       | Score | Statut |
+| -------------- | ----- | ------ |
+| Performance    | 92    | ✅     |
+| Accessibilité  | 100   | ✅     |
+| SEO            | 100   | ✅     |
+| Best Practices | 100   | ✅     |
 
 ---
 

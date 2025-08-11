@@ -119,3 +119,4 @@ describe("Skeleton", () => {
 		expect(skeleton).toHaveAttribute("role", "status");
 	});
 });
+

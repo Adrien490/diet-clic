@@ -159,3 +159,4 @@ describe("Label", () => {
 		expect(label).toBeEmptyDOMElement();
 	});
 });
+

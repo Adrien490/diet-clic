@@ -79,3 +79,4 @@ describe("WaveLoader", () => {
 		expect(screen.getAllByTestId("wave-bar")).toHaveLength(5);
 	});
 });
+

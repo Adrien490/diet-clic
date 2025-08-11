@@ -166,3 +166,4 @@ describe("Bounce", () => {
 		expect(transition.ease).toBe("easeOut");
 	});
 });
+
